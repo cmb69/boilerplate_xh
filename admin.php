@@ -141,15 +141,18 @@ function Boilerplate_edit($name)
 	e('cntopen', 'file', $fn);
 	return false;
     }
-    $action = $sn . '?&amp;boilerplate&amp;admin=plugin_main&amp;action=save&amp;boilerplate_name=' . urlencode($name);
-    $o = '<div class="plugineditcaption">Boilerplate: ' . $name . '</div>'
-	. '<form class="plugineditform" action="' . $action . '" method="post">'
-	. '<textarea class="plugintextarea" name="boilerplate_text" style="height: ' . $cf['editor']['height'] . 'px">'
-	. htmlspecialchars($content, ENT_NOQUOTES, 'UTF-8') . '</textarea>'
-	. (!function_exists('init_editor') || $cf['editor']['external'] == ''
-	    ? tag('input type="submit" class="submit" value="' . ucfirst($tx['action']['save']) . '"')
-	    : '')
-	. '</form>';
+    $labels = array(
+	'heading' => "Boilerplate: $name",
+	'save' => ucfirst($tx['action']['save'])
+    );
+    $url = "$sn?&amp;boilerplate";
+    $editorHeight = $cf['editor']['height'];
+    $content = Boilerplate_hsc($content);
+    $showSubmit = !function_exists('init_editor')
+	|| $cf['editor']['external'] == '';
+    $bag = compact('labels', 'name', 'url', 'editorHeight', 'content',
+		   'showSubmit');
+    $o = Boilerplate_render('edit', $bag);
     init_editor(array('plugintextarea'));
     return $o;
 }
@@ -281,7 +284,7 @@ if (isset($boilerplate) && $boilerplate == 'true') {
 	    $o .= Boilerplate_edit(stsl($_GET['boilerplate_name']));
 	    break;
 	case 'save':
-	    $o .= Boilerplate_save(stsl($_GET['boilerplate_name']));
+	    $o .= Boilerplate_save(stsl($_POST['boilerplate_name']));
 	    break;
 	case 'delete':
 	    $o .= Boilerplate_delete(stsl($_POST['boilerplate_name']));
