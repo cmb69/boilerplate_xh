@@ -21,52 +21,6 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 
 
 /**
- * Returns the plugin information view.
- *
- * @return string  The (X)HTML.
- */
-function Boilerplate_info() // RELEASE-TODO
-{
-    global $pth, $tx, $plugin_tx;
-
-    $ptx = $plugin_tx['boilerplate'];
-    $labels = array(
-	'syscheck' => $ptx['syscheck_title'],
-	'about' => $ptx['about']
-    );
-    $labels = array_map('Boilerplate_hsc', $labels);
-    $phpVersion = '4.3.0';
-    foreach (array('ok', 'warn', 'fail') as $state) {
-        $images[$state] = $pth['folder']['plugins']
-	    . "boilerplate/images/$state.png";
-    }
-    $checks = array();
-    $checks[sprintf($ptx['syscheck_phpversion'], $phpVersion)] =
-        version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'ok' : 'fail';
-    foreach (array('pcre') as $ext) {
-	$checks[sprintf($ptx['syscheck_extension'], $ext)] =
-	    extension_loaded($ext) ? 'ok' : 'fail';
-    }
-    $checks[$ptx['syscheck_magic_quotes']] =
-        !get_magic_quotes_runtime() ? 'ok' : 'fail';
-    $checks[$ptx['syscheck_encoding']] =
-        strtoupper($tx['meta']['codepage']) == 'UTF-8' ? 'ok' : 'warn';
-    foreach (array('config/', 'css', 'languages/') as $folder) {
-	$folders[] = $pth['folder']['plugins'] . 'boilerplate/' . $folder;
-    }
-    $folders[] = Boilerplate_dataFolder();
-    foreach ($folders as $folder) {
-	$checks[sprintf($ptx['syscheck_writable'], $folder)] =
-            is_writable($folder) ? 'ok' : 'warn';
-    }
-    $icon = $pth['folder']['plugins'] . 'boilerplate/boilerplate.png';
-    $version = BOILERPLATE_VERSION;
-    $bag = compact('labels', 'images', 'checks', 'icon', 'version');
-    return Boilerplate_render('info', $bag);
-}
-
-
-/**
  * Creates a new boilerplate file.
  * Redirects to the edit view on success;
  * shows the main administration on failure.
@@ -95,46 +49,6 @@ function Boilerplate_new($name)
 	e('alreadyexists', 'file', $fn);
 	return Boilerplate_admin();
     }
-}
-
-
-/**
- * Returns the boilerplate edit view.
- *
- * @global string  The site name.
- * @global array  The paths of system files and folders.
- * @global array  The configuration of the core.
- * @global array  The localization of the core.
- * @param string $name
- * @param string $content
- * @return string  The (X)HTML.
- */
-function Boilerplate_edit($name, $content = null)
-{
-    global $sn, $pth, $cf, $tx;
-
-    $fn = Boilerplate_filename($name);
-    if (!isset($content)) {
-	if (($content = file_get_contents($fn)) === false) {
-	    e('cntopen', 'file', $fn);
-	    return false;
-	}
-    }
-    $labels = array(
-	'heading' => "Boilerplate: $name",
-	'save' => ucfirst($tx['action']['save'])
-    );
-    $labels = array_map('Boilerplate_hsc', $labels);
-    $url = "$sn?&amp;boilerplate";
-    $editorHeight = $cf['editor']['height'];
-    $content = Boilerplate_hsc($content);
-    $showSubmit = !function_exists('init_editor')
-	|| $cf['editor']['external'] == '';
-    $bag = compact('labels', 'name', 'url', 'editorHeight', 'content',
-		   'showSubmit');
-    $o = Boilerplate_render('edit', $bag);
-    init_editor(array('plugintextarea'));
-    return $o;
 }
 
 
@@ -211,6 +125,92 @@ function Boilerplate_render($_template, $_bag)
     if (!$_xhtml) {
 	$o = str_replace('/>', '>', $o);
     }
+    return $o;
+}
+
+
+/**
+ * Returns the plugin information view.
+ *
+ * @return string  The (X)HTML.
+ */
+function Boilerplate_info() // RELEASE-TODO
+{
+    global $pth, $tx, $plugin_tx;
+
+    $ptx = $plugin_tx['boilerplate'];
+    $labels = array(
+	'syscheck' => $ptx['syscheck_title'],
+	'about' => $ptx['about']
+    );
+    $labels = array_map('Boilerplate_hsc', $labels);
+    $phpVersion = '4.3.0';
+    foreach (array('ok', 'warn', 'fail') as $state) {
+        $images[$state] = $pth['folder']['plugins']
+	    . "boilerplate/images/$state.png";
+    }
+    $checks = array();
+    $checks[sprintf($ptx['syscheck_phpversion'], $phpVersion)] =
+        version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'ok' : 'fail';
+    foreach (array('pcre') as $ext) {
+	$checks[sprintf($ptx['syscheck_extension'], $ext)] =
+	    extension_loaded($ext) ? 'ok' : 'fail';
+    }
+    $checks[$ptx['syscheck_magic_quotes']] =
+        !get_magic_quotes_runtime() ? 'ok' : 'fail';
+    $checks[$ptx['syscheck_encoding']] =
+        strtoupper($tx['meta']['codepage']) == 'UTF-8' ? 'ok' : 'warn';
+    foreach (array('config/', 'css', 'languages/') as $folder) {
+	$folders[] = $pth['folder']['plugins'] . 'boilerplate/' . $folder;
+    }
+    $folders[] = Boilerplate_dataFolder();
+    foreach ($folders as $folder) {
+	$checks[sprintf($ptx['syscheck_writable'], $folder)] =
+            is_writable($folder) ? 'ok' : 'warn';
+    }
+    $icon = $pth['folder']['plugins'] . 'boilerplate/boilerplate.png';
+    $version = BOILERPLATE_VERSION;
+    $bag = compact('labels', 'images', 'checks', 'icon', 'version');
+    return Boilerplate_render('info', $bag);
+}
+
+
+/**
+ * Returns the boilerplate edit view.
+ *
+ * @global string  The site name.
+ * @global array  The paths of system files and folders.
+ * @global array  The configuration of the core.
+ * @global array  The localization of the core.
+ * @param string $name
+ * @param string $content
+ * @return string  The (X)HTML.
+ */
+function Boilerplate_edit($name, $content = null)
+{
+    global $sn, $pth, $cf, $tx;
+
+    $fn = Boilerplate_filename($name);
+    if (!isset($content)) {
+	if (($content = file_get_contents($fn)) === false) {
+	    e('cntopen', 'file', $fn);
+	    return false;
+	}
+    }
+    $labels = array(
+	'heading' => "Boilerplate: $name",
+	'save' => ucfirst($tx['action']['save'])
+    );
+    $labels = array_map('Boilerplate_hsc', $labels);
+    $url = "$sn?&amp;boilerplate";
+    $editorHeight = $cf['editor']['height'];
+    $content = Boilerplate_hsc($content);
+    $showSubmit = !function_exists('init_editor')
+	|| $cf['editor']['external'] == '';
+    $bag = compact('labels', 'name', 'url', 'editorHeight', 'content',
+		   'showSubmit');
+    $o = Boilerplate_render('edit', $bag);
+    init_editor(array('plugintextarea'));
     return $o;
 }
 
