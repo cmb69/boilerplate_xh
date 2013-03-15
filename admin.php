@@ -202,20 +202,26 @@ function Boilerplate_delete($name)
  * Renders a template.
  *
  * @global array  The paths of system files and folders.
+ * @global array  The configuration of the core.
  * @param  string  $_template  The name of the template.
  * @param  string  $_bag  Variables available in the template.
  * @return string  The (X)HTML.
  */
 function Boilerplate_render($_template, $_bag)
 {
-    global $pth;
+    global $pth, $cf;
 
     $_template = "{$pth['folder']['plugins']}boilerplate/views/$_template.htm";
-    unset($pth);
+    $_xhtml = $cf['xhtml']['endtags'];
+    unset($pth, $cf);
     extract($_bag);
     ob_start();
     include $_template;
-    return ob_get_clean(); // TODO: xhtml:endtags
+    $o = ob_get_clean();
+    if (!$_xhtml) {
+	$o = str_replace('/>', '>', $o);
+    }
+    return $o;
 }
 
 

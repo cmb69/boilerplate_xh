@@ -6,23 +6,17 @@
 	<tr>
 	    <td>
 		<form action="<?php echo $url;?>" method="post" onsubmit="return confirm('<?php echo $labels['confirm'];?>');">
-		    <input type="image" src="<?php echo $deleteImage;?>"
-		    alt="<?php echo $labels['delete'];?>" title="<?php echo
-		    $labels['delete'];?>"/>
+		    <input type="image" src="<?php echo $deleteImage;?>" alt="<?php echo $labels['delete'];?>" title="<?php echo $labels['delete'];?>"/>
 		    <input type="hidden" name="admin" value="plugin_main"/>
 		    <input type="hidden" name="action" value="delete"/>
-		    <input type="hidden" name="boilerplate_name" value="<?php
-		    echo $name;?>"/>
+		    <input type="hidden" name="boilerplate_name" value="<?php echo $name;?>"/>
 		</form>
 	    </td>
 	    <td>
-		<a href="<?php echo $boilerplate['editURL'];?>" title="<?php
-		echo $labels['edit'];?>"><?php echo $name;?></a>
+		<a href="<?php echo $boilerplate['editURL'];?>" title="<?php echo $labels['edit'];?>"><?php echo $name;?></a>
 	    </td>
 	    <td>
-		<input type="text" readonly="readonly"
-		value="{{{PLUGIN:boilerplate('<?php echo $name;?>');}}}"
-		onclick="this.select()"/>
+		<input type="text" readonly="readonly" value="{{{PLUGIN:boilerplate('<?php echo $name;?>');}}}" onclick="this.select()"/>
 	    </td>
 	</tr>
 <?php endforeach;?>
@@ -31,7 +25,6 @@
 	<input type="text" name="boilerplate_name"/>
 	<input type="hidden" name="admin" value="plugin_main"/>
 	<input type="hidden" name="action" value="new"/>
-	<input type="submit" class="submit" value="<?php echo
-	$labels['create'];?>"/>
+	<input type="submit" class="submit" value="<?php echo $labels['create'];?>"/>
     </form>
 </div>
