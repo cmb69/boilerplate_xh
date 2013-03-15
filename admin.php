@@ -91,7 +91,9 @@ function boilerplate_systemCheck() // RELEASE-TODO
 
 
 /**
- * Creates a new boilerplate file, if it doesn't exist. Returns the edit view.
+ * Creates a new boilerplate file.
+ * Redirects to the edit view on success;
+ * shows the main administration on failure.
  *
  * @param string $name
  * @return string  The (X)HTML.
@@ -99,17 +101,24 @@ function boilerplate_systemCheck() // RELEASE-TODO
 function Boilerplate_new($name)
 {
     if (!Boilerplate_validName($name)) {
-	return Boilerplate_admin($name);
+	return Boilerplate_admin();
     }
     $fn = Boilerplate_filename($name);
     if (!file_exists($fn)) {
-	if (($fh = fopen($fn, 'x')) === false) {
-	    e('cntwriteto', 'file', $fn);
-	} else {
+	if (($fh = fopen($fn, 'x')) !== false) {
 	    fclose($fh);
+	    $qs = '?boilerplate&admin=plugin_main&action=edit&boilerplate_name='
+		. $name;
+	    header('Location: ' . BOILERPLATE_URL . $qs, true, 303);
+	    exit;
+	} else {
+	    e('cntwriteto', 'file', $fn);
+	    return Boilerplate_admin();
 	}
+    } else {
+	e('alreadyexists', 'file', $fn);
+	return Boilerplate_admin();
     }
-    return Boilerplate_edit($name);
 }
 
 
@@ -168,18 +177,24 @@ function Boilerplate_save($name)
 
 
 /**
- * Deletes the boilerplate $name. Returns the main administration view.
+ * Deletes the boilerplate $name.
+ * Redirects to the main administration view on success;
+ * shows the main administration on failure.
  *
  * @param string $name
  * @return string  The (X)HTML.
  */
-function boilerplate_delete($name)
+function Boilerplate_delete($name)
 {
     $fn = Boilerplate_filename($name);
-    if (!unlink($fn)) {
+    if (unlink($fn)) {
+	$qs = '?boilerplate&admin=plugin_main&action=plugin_tx';
+	header('Location: ' . BOILERPLATE_URL . $qs, true, 303);
+	exit;
+    } else {
 	e('cntdelete', 'file', $fn);
+	return Boilerplate_admin();
     }
-    return Boilerplate_admin();
 }
 
 

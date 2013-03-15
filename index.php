@@ -26,6 +26,16 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 define('BOILERPLATE_VERSION', '1beta1');
 
 
+/**
+ * The base URI.
+ */
+define('BOILERPLATE_URL', 'http'
+   . (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 's' : '')
+   . '://' . $_SERVER['SERVER_NAME']
+   . ($_SERVER['SERVER_PORT'] < 1024 ? '' : ':' . $_SERVER['SERVER_PORT'])
+   . preg_replace('/index.php$/', '', $_SERVER['SCRIPT_NAME']));
+
+
 /*
  * For backward compatibility CMSimple_XH < 1.5
  */
