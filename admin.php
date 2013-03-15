@@ -130,21 +130,25 @@ function Boilerplate_new($name)
  * @global array  The configuration of the core.
  * @global array  The localization of the core.
  * @param string $name
+ * @param string $content
  * @return string  The (X)HTML.
  */
-function Boilerplate_edit($name)
+function Boilerplate_edit($name, $content = null)
 {
     global $sn, $pth, $cf, $tx;
 
     $fn = Boilerplate_filename($name);
-    if (($content = file_get_contents($fn)) === false) {
-	e('cntopen', 'file', $fn);
-	return false;
+    if (!isset($content)) {
+	if (($content = file_get_contents($fn)) === false) {
+	    e('cntopen', 'file', $fn);
+	    return false;
+	}
     }
     $labels = array(
 	'heading' => "Boilerplate: $name",
 	'save' => ucfirst($tx['action']['save'])
     );
+    $labels = array_map('Boilerplate_hsc', $labels);
     $url = "$sn?&amp;boilerplate";
     $editorHeight = $cf['editor']['height'];
     $content = Boilerplate_hsc($content);
@@ -159,23 +163,30 @@ function Boilerplate_edit($name)
 
 
 /**
- * Saves the boilerplate. Returns the main administration view.
+ * Saves a boilerplate text.
+ * Redirects to the main administration on success;
+ * returns the edit view on failure.
  *
- * @param string $name
+ * @param  string $name
  * @return string  The (X)HTML.
  */
 function Boilerplate_save($name)
 {
     $fn = Boilerplate_filename($name);
-    if (($fh = fopen($fn, 'w')) === false
-	|| fwrite($fh, stsl($_POST['boilerplate_text'])) === false)
-    {
-	e('cntsave', 'file', $fn);
-    }
+    $content = stsl($_POST['boilerplate_text']);
+    $ok = ($fh = fopen($fn, 'w')) !== false
+	&& fwrite($fh, $content) !== false;
     if ($fh) {
 	fclose($fh);
     }
-    return Boilerplate_admin();
+    if ($ok) {
+	$qs = '?boilerplate&admin=plugin_main&action=plugin_tx';
+	header('Location: ' . BOILERPLATE_URL . $qs, true, 303);
+	exit;
+    } else {
+	e('cntsave', 'file', $fn);
+        return Boilerplate_edit($name, $content);
+    }
 }
 
 
