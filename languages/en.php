@@ -13,6 +13,8 @@ $plugin_tx['boilerplate']['syscheck_encoding']="Encoding 'UTF-8' configured";
 $plugin_tx['boilerplate']['syscheck_magic_quotes']="magic_quotes_runtime off";
 $plugin_tx['boilerplate']['syscheck_writable']="Folder '%s' writable";
 
+$plugin_tx['boilerplate']['about']="About Boilerplate_XH";
+
 $plugin_tx['boilerplate']['cf_folder_data']="Path of a folder relative to the CMSimple root directory, where to store the plugin's data, e.g. \"userfiles/boilerplate/\". Leave empty to store in the plugin's data/ folder.";
 
 ?>
