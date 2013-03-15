@@ -1,4 +1,4 @@
 #boilerplate_admin {}
 
-#boilerplate_admin table {width: 100%}
+#boilerplate_admin table {width: 100%; margin: 1em 0}
 #boilerplate_admin table input[type=text] {width: 95%}

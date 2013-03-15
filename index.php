@@ -38,6 +38,18 @@ if (!function_exists('evaluate_scripting')) {
 
 
 /**
+ * Returns a text with special characters converted to HTML entities.
+ *
+ * @param  string $text
+ * @return string  The (X)HTML.
+ */
+function Boilerplate_hsc($text)
+{
+    return htmlspecialchars($text, ENT_COMPAT, 'UTF-8');
+}
+
+
+/**
  * Returns the data folder path. Creates it, if necessary.
  * Emits error messages on failure.
  *

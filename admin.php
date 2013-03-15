@@ -222,11 +222,13 @@ function Boilerplate_admin()
 	'heading' => "Boilerplate: $ptx[menu_main]",
 	'edit' => ucfirst($tx['action']['edit']),
 	'delete' => ucfirst($tx['action']['delete']),
-	'create' => $ptx['label_create']
+	'create' => $ptx['label_create'],
+	'confirm' => addcslashes($ptx['confirm_delete'], "\r\n\\\'")
     );
+    $labels = array_map('Boilerplate_hsc', $labels);
     $deleteImage = $pth['folder']['plugins'] . 'boilerplate/images/delete.png';
+    $url = $sn.'?&amp;boilerplate';
     $baseURL = $sn.'?&amp;boilerplate&amp;admin=plugin_main&amp;action=';
-    $newURL = $baseURL . 'new';
     $boilerplates = array();
     foreach (glob(Boilerplate_filename('*')) as $file) {
 	$name = basename($file, '.dat');
@@ -235,7 +237,7 @@ function Boilerplate_admin()
 	    'deleteURL' => $baseURL . 'delete&amp;boilerplate_name=' . $name
 	);
     }
-    $bag = compact('labels', 'deleteImage', 'newURL', 'boilerplates');
+    $bag = compact('labels', 'deleteImage', 'url', 'boilerplates');
     return Boilerplate_render('admin', $bag);
 }
 
@@ -261,7 +263,7 @@ if (isset($boilerplate) && $boilerplate == 'true') {
 	    $o .= Boilerplate_save(stsl($_GET['boilerplate_name']));
 	    break;
 	case 'delete':
-	    $o .= Boilerplate_delete(stsl($_GET['boilerplate_name']));
+	    $o .= Boilerplate_delete(stsl($_POST['boilerplate_name']));
 	    break;
 	default: $o .= Boilerplate_admin();
 	}
