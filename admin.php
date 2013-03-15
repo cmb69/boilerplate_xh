@@ -246,7 +246,7 @@ function Boilerplate_admin()
     $baseURL = $sn.'?&amp;boilerplate&amp;admin=plugin_main&amp;action=';
     $boilerplates = array();
     foreach (glob(Boilerplate_filename('*')) as $file) {
-	$name = basename($file, '.dat');
+	$name = basename($file, '.htm');
 	$boilerplates[$name] = array(
 	    'editURL' => $baseURL . 'edit&amp;boilerplate_name=' . $name,
 	    'deleteURL' => $baseURL . 'delete&amp;boilerplate_name=' . $name

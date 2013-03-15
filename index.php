@@ -98,7 +98,7 @@ function Boilerplate_dataFolder()
  */
 function Boilerplate_filename($name)
 {
-    return Boilerplate_dataFolder() . $name . '.dat';
+    return Boilerplate_dataFolder() . $name . '.htm';
 }
 
 /**
