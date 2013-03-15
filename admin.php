@@ -197,29 +197,28 @@ function Boilerplate_admin()
     global $pth, $sn, $tx, $plugin_tx;
 
     $ptx = $plugin_tx['boilerplate'];
-    $o = '<div id="boilerplate_admin" class="plugineditcaption">Boilerplate: '
-	. $ptx['menu_main'] . '</div>'
-	.'<ul>';
+    $o = '<div id="boilerplate_admin"><div class="plugineditcaption">Boilerplate: '
+	. $ptx['menu_main'] . '</div>';
     $baseurl = $sn.'?&amp;boilerplate&amp;admin=plugin_main&amp;action=';
-    $o .= '<li><form action="' . $baseurl . 'new" method="post">'
+    $o .= '<form action="' . $baseurl . 'new" method="post">'
 	. tag('input type="text" name="boilerplate_name"')
 	. tag('input type="submit" class="submit" value="' . $ptx['label_create'] . '"')
-	. '</form></li>';
+	. '</form><table>';
     $url = $baseurl . 'edit&amp;boilerplate_name=';
     foreach (glob(Boilerplate_filename('*')) as $file) {
 	$name = basename($file, '.dat');
-	$o .= '<li>'
-	    . '<a href="' . $url . urlencode($name) . '" title="' . ucfirst($tx['action']['edit']) . '" style="float: left">'
-	    . $name . '</a>'
-	    . '<form action="' . $baseurl . 'delete&amp;boilerplate_name=' . urlencode($name) . '"'
+	$o .= '<tr>'
+	    . '<td><a href="' . $url . urlencode($name) . '" title="' . ucfirst($tx['action']['edit']) . '">'
+	    . $name . '</a></td>'
+	    . '<td><form action="' . $baseurl . 'delete&amp;boilerplate_name=' . urlencode($name) . '"'
 	    . ' method="post" style="float:left; margin-left: 1em">'
 	    . tag('input type="image" src="' . $pth['folder']['plugins'] . 'boilerplate/images/delete.png"'
 	    . ' alt="' . ucfirst($tx['action']['delete']) . '" title="' . ucfirst($tx['action']['delete']) . '"')
-	    . '</form>'
-	    . tag('input type="text" readonly="readonly" value="{{{PLUGIN:boilerplate(\'' . $name . '\');}}}" onclick="this.select()" style="float: left; margin-left: 1em"')
-	    . '</li>';
+	    . '</form></td>'
+	    . '<td>' . tag('input type="text" readonly="readonly" value="{{{PLUGIN:boilerplate(\'' . $name . '\');}}}" onclick="this.select()"') . '</td>'
+	    . '</tr>';
     }
-    $o .= '</ul>';
+    $o .= '</table></div>';
     return $o;
 }
 
