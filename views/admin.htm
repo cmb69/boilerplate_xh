@@ -1,0 +1,32 @@
+<!-- Boilerplate_XH: administration -->
+<div id="boilerplate_admin">
+    <div class="plugineditcaption"><?php echo $labels['heading'];?></div>
+    <form action="<?php echo $newURL;?>" method="post">
+	<input type="text" name="boilerplate_name"/>
+	<input type="submit" class="submit" value="<?php echo
+	$labels['create'];?>"/>
+    </form>
+    <table>
+<?php foreach ($boilerplates as $name => $boilerplate):?>
+	<tr>
+	    <td>
+		<a href="<?php echo $boilerplate['editURL'];?>" title="<?php
+		echo $labels['edit'];?>"><?php echo $name;?></a>
+	    </td>
+	    <td>
+		<form action="<?php echo $boilerplate['deleteURL'];?>"
+		method="post">
+		    <input type="image" src="<?php echo $deleteImage;?>"
+		    alt="<?php echo $labels['delete'];?>" title="<?php echo
+		    $labels['delete'];?>"/>
+		</form>
+	    </td>
+	    <td>
+		<input type="text" readonly="readonly"
+		value="{{{PLUGIN:boilerplate('<?php echo $name;?>');}}}"
+		onclick="this.select()"/>
+	    </td>
+	</tr>
+<?php endforeach;?>
+    </table>
+</div>

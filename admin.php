@@ -184,6 +184,27 @@ function boilerplate_delete($name)
 
 
 /**
+ * Renders a template.
+ *
+ * @global array  The paths of system files and folders.
+ * @param  string  $_template  The name of the template.
+ * @param  string  $_bag  Variables available in the template.
+ * @return string  The (X)HTML.
+ */
+function Boilerplate_render($_template, $_bag)
+{
+    global $pth;
+
+    $_template = "{$pth['folder']['plugins']}boilerplate/views/$_template.htm";
+    unset($pth);
+    extract($_bag);
+    ob_start();
+    include $_template;
+    return ob_get_clean(); // TODO: xhtml:endtags
+}
+
+
+/**
  * Returns the main administration view.
  *
  * @global array  The paths of system files and folders.
@@ -197,29 +218,25 @@ function Boilerplate_admin()
     global $pth, $sn, $tx, $plugin_tx;
 
     $ptx = $plugin_tx['boilerplate'];
-    $o = '<div id="boilerplate_admin"><div class="plugineditcaption">Boilerplate: '
-	. $ptx['menu_main'] . '</div>';
-    $baseurl = $sn.'?&amp;boilerplate&amp;admin=plugin_main&amp;action=';
-    $o .= '<form action="' . $baseurl . 'new" method="post">'
-	. tag('input type="text" name="boilerplate_name"')
-	. tag('input type="submit" class="submit" value="' . $ptx['label_create'] . '"')
-	. '</form><table>';
-    $url = $baseurl . 'edit&amp;boilerplate_name=';
+    $labels = array(
+	'heading' => "Boilerplate: $ptx[menu_main]",
+	'edit' => ucfirst($tx['action']['edit']),
+	'delete' => ucfirst($tx['action']['delete']),
+	'create' => $ptx['label_create']
+    );
+    $deleteImage = $pth['folder']['plugins'] . 'boilerplate/images/delete.png';
+    $baseURL = $sn.'?&amp;boilerplate&amp;admin=plugin_main&amp;action=';
+    $newURL = $baseURL . 'new';
+    $boilerplates = array();
     foreach (glob(Boilerplate_filename('*')) as $file) {
 	$name = basename($file, '.dat');
-	$o .= '<tr>'
-	    . '<td><a href="' . $url . urlencode($name) . '" title="' . ucfirst($tx['action']['edit']) . '">'
-	    . $name . '</a></td>'
-	    . '<td><form action="' . $baseurl . 'delete&amp;boilerplate_name=' . urlencode($name) . '"'
-	    . ' method="post" style="float:left; margin-left: 1em">'
-	    . tag('input type="image" src="' . $pth['folder']['plugins'] . 'boilerplate/images/delete.png"'
-	    . ' alt="' . ucfirst($tx['action']['delete']) . '" title="' . ucfirst($tx['action']['delete']) . '"')
-	    . '</form></td>'
-	    . '<td>' . tag('input type="text" readonly="readonly" value="{{{PLUGIN:boilerplate(\'' . $name . '\');}}}" onclick="this.select()"') . '</td>'
-	    . '</tr>';
+	$boilerplates[$name] = array(
+	    'editURL' => $baseURL . 'edit&amp;boilerplate_name=' . $name,
+	    'deleteURL' => $baseURL . 'delete&amp;boilerplate_name=' . $name
+	);
     }
-    $o .= '</table></div>';
-    return $o;
+    $bag = compact('labels', 'deleteImage', 'newURL', 'boilerplates');
+    return Boilerplate_render('admin', $bag);
 }
 
 
