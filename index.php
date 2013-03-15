@@ -105,7 +105,7 @@ function Boilerplate_validName($name)
     global $e, $plugin_tx;
 
     $ptx = $plugin_tx['boilerplate'];
-    $valid = preg_match('/^[a-z0-9_\-]*$/su', $name);
+    $valid = preg_match('/^[a-z0-9_\-]+$/su', $name);
     if (!$valid) {
 	$e .= '<li><b>' . $ptx['error_invalid_name'] . '</b>' . tag('br')
 	    . $name . '</li>' . PHP_EOL;
