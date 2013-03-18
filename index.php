@@ -23,7 +23,7 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 /**
  * The version number of the plugin.
  */
-define('BOILERPLATE_VERSION', '1beta1');
+define('BOILERPLATE_VERSION', '1rc1');
 
 
 /**

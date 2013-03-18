@@ -1,5 +1,11 @@
-TODO
-    search function
+Version 1rc1 - released 2013-03-18
+cmb     changed extensions of data files to .htm
+cmb     updated English manual and added German manual
+cmb     added German localization
+cmb     added Russian and Slovak localization (contributed by Old resp. Tata)
+cmb     improved admin interface
+cmb     refactored and cleaned up code
+cmb     implemented RPG pattern
 
 Version 1beta1 - released 2012-05-10
 cmb	initial release
