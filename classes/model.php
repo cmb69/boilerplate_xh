@@ -12,6 +12,8 @@
 
 
 /**
+ * The model of Boilerplate_XH.
+ *
  * @package Boilerplate
  */
 class Boilerplate_Model

@@ -59,7 +59,7 @@ require_once $pth['folder']['plugin_classes'] . 'model.php';
  *
  * @global string  Error messages to emit in the (X)HTML.
  * @global array  The localization of the plugins.
- * @global object  The model.
+ * @global Boilerplate_Model  The model.
  * @param  string $name
  * @return string  The (X)HTML.
  */

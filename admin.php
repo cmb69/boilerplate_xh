@@ -65,7 +65,7 @@ function Boilerplate_render($_template, $_bag)
  * @global array  The paths of system files and folders.
  * @global array  The localization of the core.
  * @global array  The localization of the plugins.
- * @global object  The model.
+ * @global Boilerplate_Model  The model.
  * @return string  The (X)HTML.
  */
 function Boilerplate_info() // RELEASE-TODO
@@ -116,7 +116,7 @@ function Boilerplate_info() // RELEASE-TODO
  *
  * @global string  Error message to emit in the (X)HTML.
  * @global array   The localization of the plugins.
- * @global object  The model.
+ * @global Boilerplate_Model  The model.
  * @param  string $name
  * @return string  The (X)HTML.
  */
@@ -155,7 +155,7 @@ function Boilerplate_new($name)
  * @global array  The paths of system files and folders.
  * @global array  The configuration of the core.
  * @global array  The localization of the core.
- * @global object  The model.
+ * @global Boilerplate_Model  The model.
  * @param string $name
  * @param string $content
  * @return string  The (X)HTML.
@@ -194,7 +194,7 @@ function Boilerplate_edit($name, $content = null)
  * Redirects to the main administration on success;
  * returns the edit view on failure.
  *
- * @global object  The model.
+ * @global Boilerplate_Model  The model.
  * @param  string $name
  * @return string  The (X)HTML.
  */
@@ -220,7 +220,7 @@ function Boilerplate_save($name)
  * Redirects to the main administration view on success;
  * shows the main administration on failure.
  *
- * @global object  The model.
+ * @global Boilerplate_Model  The model.
  * @param string $name
  * @return string  The (X)HTML.
  */
@@ -246,7 +246,7 @@ function Boilerplate_delete($name)
  * @global array  The paths of system files and folders.
  * @global array  The localization of the core.
  * @global array  The localization of the plugins.
- * @global object  The model.
+ * @global Boilerplate_Model  The model.
  * @return string  The (X)HTML.
  */
 function Boilerplate_admin()
