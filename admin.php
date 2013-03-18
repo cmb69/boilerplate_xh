@@ -21,84 +21,14 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 
 
 /**
- * Creates a new boilerplate file.
- * Redirects to the edit view on success;
- * shows the main administration on failure.
+ * Returns a text with special characters converted to HTML entities.
  *
- * @param string $name
+ * @param  string $text
  * @return string  The (X)HTML.
  */
-function Boilerplate_new($name)
+function Boilerplate_hsc($text)
 {
-    if (!Boilerplate_validName($name)) {
-	return Boilerplate_admin();
-    }
-    $fn = Boilerplate_filename($name);
-    if (!file_exists($fn)) {
-	if (($fh = fopen($fn, 'x')) !== false) {
-	    fclose($fh);
-	    $qs = '?boilerplate&admin=plugin_main&action=edit&boilerplate_name='
-		. $name;
-	    header('Location: ' . BOILERPLATE_URL . $qs, true, 303);
-	    exit;
-	} else {
-	    e('cntwriteto', 'file', $fn);
-	    return Boilerplate_admin();
-	}
-    } else {
-	e('alreadyexists', 'file', $fn);
-	return Boilerplate_admin();
-    }
-}
-
-
-/**
- * Saves a boilerplate text.
- * Redirects to the main administration on success;
- * returns the edit view on failure.
- *
- * @param  string $name
- * @return string  The (X)HTML.
- */
-function Boilerplate_save($name)
-{
-    $fn = Boilerplate_filename($name);
-    $content = stsl($_POST['boilerplate_text']);
-    $ok = ($fh = fopen($fn, 'w')) !== false
-	&& fwrite($fh, $content) !== false;
-    if ($fh) {
-	fclose($fh);
-    }
-    if ($ok) {
-	$qs = '?boilerplate&admin=plugin_main&action=plugin_tx';
-	header('Location: ' . BOILERPLATE_URL . $qs, true, 303);
-	exit;
-    } else {
-	e('cntsave', 'file', $fn);
-        return Boilerplate_edit($name, $content);
-    }
-}
-
-
-/**
- * Deletes the boilerplate $name.
- * Redirects to the main administration view on success;
- * shows the main administration on failure.
- *
- * @param string $name
- * @return string  The (X)HTML.
- */
-function Boilerplate_delete($name)
-{
-    $fn = Boilerplate_filename($name);
-    if (unlink($fn)) {
-	$qs = '?boilerplate&admin=plugin_main&action=plugin_tx';
-	header('Location: ' . BOILERPLATE_URL . $qs, true, 303);
-	exit;
-    } else {
-	e('cntdelete', 'file', $fn);
-	return Boilerplate_admin();
-    }
+    return htmlspecialchars($text, ENT_COMPAT, 'UTF-8');
 }
 
 
@@ -132,11 +62,15 @@ function Boilerplate_render($_template, $_bag)
 /**
  * Returns the plugin information view.
  *
+ * @global array  The paths of system files and folders.
+ * @global array  The localization of the core.
+ * @global array  The localization of the plugins.
+ * @global object  The model.
  * @return string  The (X)HTML.
  */
 function Boilerplate_info() // RELEASE-TODO
 {
-    global $pth, $tx, $plugin_tx;
+    global $pth, $tx, $plugin_tx, $_Boilerplate;
 
     $ptx = $plugin_tx['boilerplate'];
     $labels = array(
@@ -163,7 +97,7 @@ function Boilerplate_info() // RELEASE-TODO
     foreach (array('config/', 'css', 'languages/') as $folder) {
 	$folders[] = $pth['folder']['plugins'] . 'boilerplate/' . $folder;
     }
-    $folders[] = Boilerplate_dataFolder();
+    $folders[] = $_Boilerplate->getDataFolder();
     foreach ($folders as $folder) {
 	$checks[sprintf($ptx['syscheck_writable'], $folder)] =
             is_writable($folder) ? 'ok' : 'warn';
@@ -176,24 +110,64 @@ function Boilerplate_info() // RELEASE-TODO
 
 
 /**
+ * Creates a new boilerplate file.
+ * Redirects to the edit view on success;
+ * shows the main administration on failure.
+ *
+ * @global string  Error message to emit in the (X)HTML.
+ * @global array   The localization of the plugins.
+ * @global object  The model.
+ * @param  string $name
+ * @return string  The (X)HTML.
+ */
+function Boilerplate_new($name)
+{
+    global $e, $plugin_tx, $_Boilerplate;
+
+    $ptx = $plugin_tx['boilerplate'];
+    if (!$_Boilerplate->isValidName($name)) {
+	$e .= '<li><b>' . $ptx['error_invalid_name'] . '</b>' . tag('br')
+	    . $name . '</li>' . PHP_EOL;
+	return Boilerplate_admin();
+    }
+    $fn = $_Boilerplate->filename($name);
+    if (!file_exists($fn)) {
+	if ($_Boilerplate->write($name, '') !== false) {
+	    $qs = '?boilerplate&admin=plugin_main&action=edit&boilerplate_name='
+		. $name;
+	    header('Location: ' . BOILERPLATE_URL . $qs, true, 303);
+	    exit;
+	} else {
+	    e('cntwriteto', 'file', $fn);
+	    return Boilerplate_admin();
+	}
+    } else {
+	e('alreadyexists', 'file', $fn);
+	return Boilerplate_admin();
+    }
+}
+
+
+/**
  * Returns the boilerplate edit view.
  *
- * @global string  The site name.
+ * @global string  The script name.
  * @global array  The paths of system files and folders.
  * @global array  The configuration of the core.
  * @global array  The localization of the core.
+ * @global object  The model.
  * @param string $name
  * @param string $content
  * @return string  The (X)HTML.
  */
 function Boilerplate_edit($name, $content = null)
 {
-    global $sn, $pth, $cf, $tx;
+    global $sn, $pth, $cf, $tx, $_Boilerplate;
 
-    $fn = Boilerplate_filename($name);
     if (!isset($content)) {
-	if (($content = file_get_contents($fn)) === false) {
-	    e('cntopen', 'file', $fn);
+	$content = $_Boilerplate->read($name);
+	if ($content === false) {
+	    e('cntopen', 'file', $_Boilerplate->filename($name));
 	    return false;
 	}
     }
@@ -216,17 +190,68 @@ function Boilerplate_edit($name, $content = null)
 
 
 /**
+ * Saves a boilerplate text.
+ * Redirects to the main administration on success;
+ * returns the edit view on failure.
+ *
+ * @global object  The model.
+ * @param  string $name
+ * @return string  The (X)HTML.
+ */
+function Boilerplate_save($name)
+{
+    global $_Boilerplate;
+
+    $content = stsl($_POST['boilerplate_text']);
+    $ok = $_Boilerplate->write($name, $content);
+    if ($ok) {
+	$qs = '?boilerplate&admin=plugin_main&action=plugin_tx';
+	header('Location: ' . BOILERPLATE_URL . $qs, true, 303);
+	exit;
+    } else {
+	e('cntsave', 'file', $_Boilerplate->filename($name));
+        return Boilerplate_edit($name, $content);
+    }
+}
+
+
+/**
+ * Deletes the boilerplate $name.
+ * Redirects to the main administration view on success;
+ * shows the main administration on failure.
+ *
+ * @global object  The model.
+ * @param string $name
+ * @return string  The (X)HTML.
+ */
+function Boilerplate_delete($name)
+{
+    global $_Boilerplate;
+
+    if ($_Boilerplate->delete($name)) {
+	$qs = '?boilerplate&admin=plugin_main&action=plugin_tx';
+	header('Location: ' . BOILERPLATE_URL . $qs, true, 303);
+	exit;
+    } else {
+	e('cntdelete', 'file', $_Boilerplate->filename($name));
+	return Boilerplate_admin();
+    }
+}
+
+
+/**
  * Returns the main administration view.
  *
- * @global array  The paths of system files and folders.
  * @global string  The script name.
+ * @global array  The paths of system files and folders.
  * @global array  The localization of the core.
  * @global array  The localization of the plugins.
+ * @global object  The model.
  * @return string  The (X)HTML.
  */
 function Boilerplate_admin()
 {
-    global $pth, $sn, $tx, $plugin_tx;
+    global $sn, $pth, $tx, $plugin_tx, $_Boilerplate;
 
     $ptx = $plugin_tx['boilerplate'];
     $labels = array(
@@ -241,8 +266,7 @@ function Boilerplate_admin()
     $url = $sn.'?&amp;boilerplate';
     $baseURL = $sn.'?&amp;boilerplate&amp;admin=plugin_main&amp;action=';
     $boilerplates = array();
-    foreach (glob(Boilerplate_filename('*')) as $file) {
-	$name = basename($file, '.htm');
+    foreach ($_Boilerplate->names() as $name) {
 	$boilerplates[$name] = array(
 	    'editURL' => $baseURL . 'edit&amp;boilerplate_name=' . $name,
 	    'deleteURL' => $baseURL . 'delete&amp;boilerplate_name=' . $name
@@ -276,7 +300,8 @@ if (isset($boilerplate) && $boilerplate == 'true') {
 	case 'delete':
 	    $o .= Boilerplate_delete(stsl($_POST['boilerplate_name']));
 	    break;
-	default: $o .= Boilerplate_admin();
+	default:
+	    $o .= Boilerplate_admin();
 	}
 	break;
     default:

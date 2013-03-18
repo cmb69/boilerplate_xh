@@ -36,92 +36,19 @@ define('BOILERPLATE_URL', 'http'
    . preg_replace('/index.php$/', '', $_SERVER['SCRIPT_NAME']));
 
 
-/*
- * For backward compatibility CMSimple_XH < 1.5
+/**
+ * The data folder.
  */
-if (!function_exists('evaluate_scripting')) {
-    function evaluate_scripting($txt)
-    {
-	return $txt;
-    }
-}
+define('BOILERPLATE_DATA_FOLDER',
+       empty($plugin_cf['boilerplate']['folder_data'])
+       ? $pth['folder']['plugins'] . 'boilerplate/data/'
+       : $pth['folder']['base'] . $plugin_cf['boilerplate']['folder_data']);
 
 
 /**
- * Returns a text with special characters converted to HTML entities.
- *
- * @param  string $text
- * @return string  The (X)HTML.
+ * The model class.
  */
-function Boilerplate_hsc($text)
-{
-    return htmlspecialchars($text, ENT_COMPAT, 'UTF-8');
-}
-
-
-/**
- * Returns the data folder path. Creates it, if necessary.
- * Emits error messages on failure.
- *
- * @global array  The paths of system files and folders.
- * @global array  The configuration of the plugins.
- * @return string
- */
-function Boilerplate_dataFolder()
-{
-    global $pth, $plugin_cf;
-
-    $pcf = $plugin_cf['boilerplate'];
-    if ($pcf['folder_data'] == '') {
-	$fn = $pth['folder']['plugins'] . 'boilerplate/data/';
-    } else {
-	$fn = $pth['folder']['base'] . rtrim('/', $pcf['folder_data']) . '/';
-    }
-    if (file_exists($fn)) {
-	if (!is_dir($fn)) {
-	    e('cntopen', 'folder', $fn);
-	}
-    } else {
-	if (!mkdir($fn, 0777, true)) {
-	    e('cntwriteto', 'folder', $fn);
-	}
-    }
-    return $fn;
-}
-
-
-/**
- * Returns the path of a boilerplate file.
- *
- * @param  string $name  The name of the text block.
- * @return string
- */
-function Boilerplate_filename($name)
-{
-    return Boilerplate_dataFolder() . $name . '.htm';
-}
-
-/**
- * Returns whether the given $name is valid.
- * Emits an error message, if the name is invalid.
- *
- * @global string  Error messages to add to the (X)HTML.
- * @global array  The localization of the plugins.
- * @param  string $name
- * @return bool
- */
-function Boilerplate_validName($name)
-{
-    global $e, $plugin_tx;
-
-    $ptx = $plugin_tx['boilerplate'];
-    $valid = preg_match('/^[a-z0-9_\-]+$/su', $name);
-    if (!$valid) {
-	$e .= '<li><b>' . $ptx['error_invalid_name'] . '</b>' . tag('br')
-	    . $name . '</li>' . PHP_EOL;
-    }
-    return $valid;
-}
+require_once $pth['folder']['plugin_classes'] . 'model.php';
 
 
 /**
@@ -130,23 +57,32 @@ function Boilerplate_validName($name)
  *
  * @access public
  *
+ * @global string  Error messages to emit in the (X)HTML.
+ * @global array  The localization of the plugins.
+ * @global object  The model.
  * @param  string $name
  * @return string  The (X)HTML.
  */
 function Boilerplate($name)
 {
-    if (!Boilerplate_validName($name)) {
+    global $e, $plugin_tx, $_Boilerplate;
+
+    $ptx = $plugin_tx['boilerplate'];
+    if (!$_Boilerplate->isValidName($name)) {
+	$e .= '<li><b>' . $ptx['error_invalid_name'] . '</b>' . tag('br')
+	    . $name . '</li>' . PHP_EOL;
 	return false;
     }
-    $fn = Boilerplate_filename($name);
-    if (is_readable($fn)
-	&& ($content = file_get_contents($fn)) !== false)
-    {
-	return evaluate_scripting($content);
+    $content = $_Boilerplate->read($name);
+    if ($content !== false) {
+	return $_Boilerplate->evaluated($content);
     } else {
-	e('cntopen', 'file', $fn);
+	e('cntopen', 'file', $_Boilerplate->filename($name));
 	return false;
     }
 }
+
+
+$_Boilerplate = new Boilerplate_Model(BOILERPLATE_DATA_FOLDER);
 
 ?>
