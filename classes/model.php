@@ -144,21 +144,6 @@ class Boilerplate_Model
         assert($this->isValidName($name));
         return unlink($this->filename($name));
     }
-
-
-    /**
-     * Returns content with scripting evaluated.
-     *
-     * @param  string $content.
-     * @return string
-     */
-    function evaluated($content)
-    {
-        if (function_exists('evaluate_scripting')) {
-            $content = evaluate_scripting($content);
-        }
-        return $content;
-    }
 }
 
 ?>
