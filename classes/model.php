@@ -122,11 +122,14 @@ class Boilerplate_Model
     function write($name, $content)
     {
         assert($this->isValidName($name));
-        $fn = $this->filename($name);
+        $fn = tempnam($this->dataFolder, 'boilerplate');
         $ok = ($fp = fopen($fn, 'w')) !== false
             && fwrite($fp, $content) !== false;
         if ($fp) {
             fclose($fp);
+        }
+        if ($ok) {
+            $ok = rename($fn, $this->filename($name));
         }
         return $ok;
     }
