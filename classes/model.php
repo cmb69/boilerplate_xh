@@ -131,7 +131,16 @@ class Boilerplate_Model
             fclose($fp);
         }
         if ($ok) {
-            $ok = rename($fn, $this->filename($name));
+            $dst = $this->filename($name);
+            // rename() can't overwrite the destination file
+            // on Windows under PHP < 5.3.0
+            if (version_compare(PHP_VERSION, '5.3.0', '<')
+                && strtoupper(substr(PHP_OS, 0, 3)) == 'WIN'
+                && file_exists($dst))
+            {
+                unlink($dst);
+            }
+            $ok = rename($fn, $dst);
         }
         return $ok;
     }
