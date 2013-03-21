@@ -4,7 +4,7 @@ $plugin_tx['boilerplate']['menu_main']="Text Blocks";
 
 $plugin_tx['boilerplate']['label_create']="Create";
 $plugin_tx['boilerplate']['confirm_delete']="Do you want to delete this text block?";
-$plugin_tx['boilerplate']['error_invalid_name']="Invalid text block name (must only consist of a-z, A-Z, 0-9, _ and -):";
+$plugin_tx['boilerplate']['error_invalid_name']="Invalid text block name (must only consist of a-z, 0-9, _ and -):";
 
 $plugin_tx['boilerplate']['syscheck_title']="System check";
 $plugin_tx['boilerplate']['syscheck_phpversion']="PHP version &ge; %s";

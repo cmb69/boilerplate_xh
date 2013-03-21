@@ -81,7 +81,7 @@ class Boilerplate_Model
      */
     function isValidName($name)
     {
-        return preg_match('/^[a-z0-9_\-]+$/su', $name);
+        return !!preg_match('/^[a-z0-9_\-]+$/su', $name);
     }
 
 
