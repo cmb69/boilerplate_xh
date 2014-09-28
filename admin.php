@@ -31,7 +31,11 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
  */
 function Boilerplate_hsc($text)
 {
-    return htmlspecialchars($text, ENT_COMPAT, 'UTF-8');
+    if (function_exists('XH_hsc')) {
+        return XH_hsc($text);
+    } else {
+        return htmlspecialchars($text, ENT_COMPAT, 'UTF-8');
+    }
 }
 
 /**
@@ -283,9 +287,17 @@ function Boilerplate_admin()
 }
 
 /*
+ * Register the plugin menu items.
+ */
+XH_registerStandardPluginMenuItems(true);
+
+/*
  * Handle the plugin administration.
  */
-if (isset($boilerplate) && $boilerplate == 'true') {
+if (function_exists('XH_wantsPluginAdministration')
+    && XH_wantsPluginAdministration('boilerplate')
+    || isset($boilerplate) && $boilerplate == 'true'
+) {
     $o .= print_plugin_admin('on');
     switch ($admin) {
     case '':
