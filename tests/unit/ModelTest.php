@@ -14,7 +14,7 @@
  * @link      http://3-magi.net/?CMSimple_XH/Boilerplate_XH
  */
 
-require_once '../classes/model.php';
+require_once './classes/model.php';
 
 /**
  * Testing the model.
