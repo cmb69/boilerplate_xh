@@ -32,7 +32,7 @@
         <phpcodesniffer standard="PEAR" format="full">
             <fileset refid="php-sources"/>
             <fileset refid="unit-tests"/>
-            <!--<fileset refid="attack-tests"/>-->
+            <fileset refid="attack-tests"/>
         </phpcodesniffer>
     </target>
 
@@ -54,7 +54,7 @@
         </phpunit>
     </target>
 
-    <!--<target name="attack-tests">
+    <target name="attack-tests" description="runs all attack tests">
         <fail unless="env.CMSIMPLEDIR" message="CMSIMPLEDIR undefined!"/>
         <phpunit haltonerror="true" haltonfailure="true">
             <formatter type="plain" usefile="false"/>
@@ -62,7 +62,7 @@
                 <fileset refid="attack-tests"/>
             </batchtest>
         </phpunit>
-    </target>-->
+    </target>
 
     <target name="coverage" description="generates coverage report">
         <exec command="phpunit --configuration coverage.xml" logoutput="true"/>

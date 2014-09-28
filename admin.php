@@ -39,6 +39,40 @@ function Boilerplate_hsc($text)
 }
 
 /**
+ * Renders a CSRF token input if CSRF protection support is available.
+ *
+ * @return string (X)HTML.
+ *
+ * @global XH_CSRFProtection The CSRF protector.
+ */
+function Boilerplate_renderCsrfTokenInput()
+{
+    global $_XH_csrfProtection;
+
+    if (isset($_XH_csrfProtection)) {
+        return $_XH_csrfProtection->tokenInput();
+    } else {
+        return '';
+    }
+}
+
+/**
+ * Checks the CSRF token if CSRF protection support is available.
+ *
+ * @return void
+ *
+ * @global XH_CSRFProtection The CSRF protector.
+ */
+function Boilerplate_checkCsrfToken()
+{
+    global $_XH_csrfProtection;
+
+    if (isset($_XH_csrfProtection)) {
+        $_XH_csrfProtection->check();
+    }
+}
+
+/**
  * Renders a template.
  *
  * @param string $_template The name of the template.
@@ -132,6 +166,7 @@ function Boilerplate_new($name)
 {
     global $e, $plugin_tx, $_Boilerplate;
 
+    Boilerplate_checkCsrfToken();
     $ptx = $plugin_tx['boilerplate'];
     if (!$_Boilerplate->isValidName($name)) {
         $e .= '<li><b>' . $ptx['error_invalid_name'] . '</b>' . tag('br')
@@ -212,6 +247,7 @@ function Boilerplate_save($name)
 {
     global $_Boilerplate;
 
+    Boilerplate_checkCsrfToken();
     $content = stsl($_POST['boilerplate_text']);
     $ok = $_Boilerplate->write($name, $content);
     if ($ok) {
@@ -238,6 +274,7 @@ function Boilerplate_delete($name)
 {
     global $_Boilerplate;
 
+    Boilerplate_checkCsrfToken();
     if ($_Boilerplate->delete($name)) {
         $qs = '?boilerplate&admin=plugin_main&action=plugin_tx';
         header('Location: ' . BOILERPLATE_URL . $qs, true, 303);
