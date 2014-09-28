@@ -1,14 +1,15 @@
 Version 1rc2 - released 2013-03-20
-cmb     fixed bug, where the text blocks couldn't be saved on Windows under PHP < 5.3.0 (reported by svasti)
+* fixed bug, where the text blocks couldn't be saved on Windows under PHP <
+  5.3.0 (reported by svasti)
 
 Version 1rc1 - released 2013-03-18
-cmb     changed extensions of data files to .htm
-cmb     updated English manual and added German manual
-cmb     added German localization
-cmb     added Russian and Slovak localization (contributed by Old resp. Tata)
-cmb     improved admin interface
-cmb     refactored and cleaned up code
-cmb     implemented PRG pattern
+* changed extensions of data files to .htm
+* updated English manual and added German manual
+* added German localization
+* added Russian and Slovak localization (contributed by Old resp. Tata)
+* improved admin interface
+* refactored and cleaned up code
+* implemented PRG pattern
 
 Version 1beta1 - released 2012-05-10
-cmb	initial release
+* initial release
