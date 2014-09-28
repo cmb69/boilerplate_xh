@@ -1,22 +1,22 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-    "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
 <meta http-equiv="content-type" content="text/html;charset=utf-8">
-<title>Boilerplate_XH - Manual</title>
+<title>Boilerplate_XH &ndash; Manual</title>
 <link rel="stylesheet" type="text/css" href="./stylesheet.css">
 </head>
 
 <body>
 
 <h1>Boilerplate_XH - a CMSimple_XH Plugin</h1>
-<img src="../boilerplate.png" style="float:left; margin-right: 16px">
+<img src="../boilerplate.png" style="float:left; margin-right: 16px"
+     alt="Building bricks">
 <p style="text-align:justify">Boilerplate_XH facilitates to manage and (re)use
 text blocks consisting of (X)HTML on CMSimple pages. This way, you write some
 text once, and can reuse it on several pages. Actually boilerplate() is very
 similar to newsbox(). But while newsbox() is working with hidden CMSimple pages,
-boilerplate() stores it's content in separate files. So you can use this feature
+boilerplate() stores its content in separate files. So you can use this feature
 to keep your content.htm small by replacing the complete page content with a
 Boilerplate_XH text block.</p>
 
@@ -36,57 +36,66 @@ Boilerplate_XH text block.</p>
 <p><strong>Please do read this documentation <em>before</em> you encounter any
 problems!</strong></p>
 
-<h2><a name="notice">Important Notice</a></h2>
+<section id="notice">
+<h2>Important Notice</h2>
 <p><strong>Boilerplate_XH couldn't be tested so far in various environments. It
 is a so called release candidate. Use with caution!</strong></p>
 <div class="toplink"><a href="#">back to top</a></div>
+</section>
 
-<h2><a name="requirements">Requirements</a></h2>
+<section id="requirements">
+<h2>Requirements</h2>
 <p>Boilerplate_XH is a plugin for CMSimple_XH. It requires a UTF-8 encoded
 version.</p>
 <div class="toplink"><a href="#">back to top</a></div>
+</section>
 
-<h2><a name="installation">Installation</a></h2>
+<section id="installation">
+<h2>Installation</h2>
 <p>The installation is done as with many other CMSimple_XH plugins. See the <a
 href="http://www.cmsimple-xh.org/wiki/doku.php/installation">CMSimple_XH
 wiki</a> for further details.</p>
 <ol>
-<li><strong>Backup the data on your server.</strong></li>
+<li>Backup the data on your server.</li>
 <li>Unzip the distribution on your computer.</li>
 <li>Upload the whole directory boilerplate/ to your server into CMSimple_XH's
 plugins directory.</li>
 <li>Set write permissions to the subdirectories config/, css/, languages/ and
 the plugin's data folder.</li>
-<li><strong>Switch to "Plugins&rarr;Boilerplate" in the back-end to check if all
-requirements are fulfilled.</strong></li>
+<li>Switch to Plugins &rarr; Boilerplate in the back-end to check if all
+requirements are fulfilled.</li>
 </ol>
-<p>Note that the boilerplate data files may be accessed directly by calling
+<p>Note that the boilerplate data files may be accessed directly by requesting
 their URL. A .htaccess file to prohibit this is already contained in the default
 data folder. For other servers or for custom data folders you have to take care
-for yourself, that these data are protected from non authorized access.</p>
+for yourself that these data are protected from non authorized access.</p>
 <div class="toplink"><a href="#">back to top</a></div>
+</section>
 
-<h2><a name="settings">Settings</a></h2>
+<section id="settings">
+<h2>Settings</h2>
 <p>The plugin's configuration is done as with many other CMSimple_XH plugins in
-the website's back-end. Select "Boilerplate" from "Plugins".</p>
-<p>You can change the default settings of Boilerplate_XH in "Config". Hints for
-the options will be displayed when hovering over the help icon with your
+the website's back-end. Select Plugins &rarr; Boilerplate.</p>
+<p>You can change the default settings of Boilerplate_XH under "Config". Hints
+for the options will be displayed when hovering over the help icon with your
 mouse.</p>
-<p>Localization is done in "Language". You can translate the character strings
-to your own language, or customize them according to your needs.</p>
-<p>The look of the Boilerplate_XH can be customized in "Stylesheet".</p>
+<p>Localization is done under "Language". You can translate the character
+strings to your own language (if there is no appropriate language file
+available), or customize them according to your needs.</p>
+<p>The look of the Boilerplate_XH can be customized under "Stylesheet".</p>
 <div class="toplink"><a href="#">back to top</a></div>
+</section>
 
-<h2><a name="usage">Usage</a></h2>
-<p>You can manage your text blocks in admin mode; go to
-"Plugins"&rarr;"Boilerplate"&rarr;"Text Blocks". The usage should be pretty much
-self
-explaining, but some notes might be appropriate:</p>
+<section id="usage">
+<h2>Usage</h2>
+<p>You can manage your text blocks in admin mode; go to Plugins &rarr;
+Boilerplate &rarr; Text Blocks. The usage should be pretty much self explaining,
+but some notes might be appropriate:</p>
 <ul>
 <li>The text blocks' names can be choosen arbitrarily, but may contain only
 lowercase letters (a-z), digits (0-9), underscores and hyphens.</li>
 <li>The inputs at the right are containing the appropriate plugin call. Just
-click them once and copy the selection to the clipboard for later pasting in a
+click them once and copy the selection to the clipboard for later pasting on a
 CMSimple_XH page.</li>
 <li>From CMSimple_XH 1.5.2 on, the text blocks can be edited with the same
 editor that's used for editing CMSimple_XH pages. In older versions only a
@@ -98,23 +107,29 @@ can nest the text blocks or call any other plugin you like.</li>
 call:</p>
 <pre>{{{PLUGIN:boilerplate('NAME');}}}</pre>
 <p>Replace NAME with the name of an already defined text block. The easiest way
-is to copy&paste the plugin call from Boilerplate_XH's administration.</p>
+is to copy&amp;paste the plugin call from Boilerplate_XH's administration.</p>
 <p>Note that using boilerplate() in the template is possible, but for
 performance reasons using newsbox() instead is preferable.</p>
 <div class="toplink"><a href="#">back to top</a></div>
+</section>
 
-<!--<h2><a name="limitations">Limitations</a></h2>
+<!--<section id="limitations">
+<h2>Limitations</h2>
 <div class="toplink"><a href="#">back to top</a></div>
--->
-<h2><a name="license">License</a></h2>
+</section>-->
+
+<section id="license">
+<h2>License</h2>
 <p>Boilerplate_XH is licensed under <a
 href="http://www.gnu.org/licenses/gpl.html">GPLv3</a>.</p>
 <p>&copy; 2012-2014 Christoph M. Becker</p>
 <p>Russian tranlation &copy; 2012 Lubomyr Kydray<br>
 Slovak translation &copy; 2012 Dr. Martin Sereday</p>
 <div class="toplink"><a href="#">back to top</a></div>
+</section>
 
-<h2><a name="credits">Credits</a></h2>
+<section id="credits">
+<h2>Credits</h2>
 <p>Boilerplate_XH was inspired by r&uuml;hgallisaniener and Hoffmann5928.</p>
 <p>The plugin icon is designed by <a href="http://www.notmart.org/">Mart (Marco
 Martin)</a>. Many thanks for publishing this icon under GPL.</p>
@@ -129,6 +144,7 @@ Harteg</a>, the "father" of CMSimple, and all developers of <a
 href="http://www.cmsimple-xh.org/">CMSimple_XH</a> without whom this amazing CMS
 wouldn't exist.</p>
 <div class="toplink"><a href="#">back to top</a></div>
+</section>
 
 </div>
 
