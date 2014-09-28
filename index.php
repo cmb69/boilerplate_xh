@@ -35,8 +35,8 @@ define(
     defined('CMSIMPLE_URL')
     ? CMSIMPLE_URL
     : 'http'
-        . (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 's' : '')
-        . '://' . $_SERVER['HTTP_HOST'] . $sn
+    . (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 's' : '')
+    . '://' . $_SERVER['HTTP_HOST'] . $sn
 );
 
 /**
