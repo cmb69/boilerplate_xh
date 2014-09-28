@@ -1,0 +1,8 @@
+* bump copyright year
+* augment mkdir() with chmod()
+* add XH 1.6 APIs
+* check result of opendir()
+* replace !! with (bool)
+* fix BOILERPLATE_URL
+
+* add subfolders (sugg. by Old)

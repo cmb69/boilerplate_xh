@@ -1,35 +1,43 @@
 <?php
 
 /**
- * Model class of Boilerplate_XH.
+ * The models.
  *
+ * PHP versions 4 and 5
+ *
+ * @category  CMSimple_XH
  * @package   Boilerplate
- * @copyright Copyright (c) 2013 Christoph M. Becker <http://3-magi.net/>
+ * @author    Christoph M. Becker <cmbecker69@gmx.de>
+ * @copyright 2013 Christoph M. Becker <http://3-magi.net/>
  * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @version   $Id$
+ * @version   SVN: $Id$
  * @link      http://3-magi.net/?CMSimple_XH/Boilerplate_XH
  */
 
-
 /**
- * The model of Boilerplate_XH.
+ * The models.
  *
- * @package Boilerplate
+ * @category CMSimple_XH
+ * @package  Boilerplate
+ * @author   Christoph M. Becker <cmbecker69@gmx.de>
+ * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
+ * @link     http://3-magi.net/?CMSimple_XH/Boilerplate_XH
  */
 class Boilerplate_Model
 {
     /**
+     * @var string The data folder.
+     *
      * @access private
-     * @var string  The data folder.
      */
     var $dataFolder;
 
-
     /**
-     * Constructor.
+     * Initializes a new instance.
+     *
+     * @param string $dataFolder The data folder.
      *
      * @access public
-     * @param string $dataFolder  The data folder.
      */
     function Boilerplate_Model($dataFolder)
     {
@@ -39,24 +47,24 @@ class Boilerplate_Model
         $this->dataFolder = $dataFolder;
     }
 
-
     /**
      * Returns the data folder.
      *
-     * @access public
      * @return string
+     *
+     * @access public
      */
     function getDataFolder()
     {
         return $this->dataFolder;
     }
 
-
     /**
      * Returns all names available in the data folder.
      *
-     * @access public
      * @return array
+     *
+     * @access public
      */
     function names()
     {
@@ -71,26 +79,28 @@ class Boilerplate_Model
         return $names;
     }
 
-
     /**
      * Returns whether the name is valid.
      *
-     * @access public
-     * @param string $name  The name of the text block.
+     * @param string $name A boilerplate name.
+     *
      * @return bool
+     *
+     * @access public
      */
     function isValidName($name)
     {
         return !!preg_match('/^[a-z0-9_\-]+$/su', $name);
     }
 
-
     /**
      * Returns the file name of a text block.
      *
-     * @access public
-     * @param  string $name  The name of the text block.
+     * @param string $name A boilerplate name.
+     *
      * @return string
+     *
+     * @access public
      */
     function filename($name)
     {
@@ -98,13 +108,14 @@ class Boilerplate_Model
         return $this->dataFolder . $name . '.htm';
     }
 
-
     /**
      * Returns the content of a text block.
      *
+     * @param string $name A boilerplate name.
+     *
+     * @return string (X)HTML.
+     *
      * @access public
-     * @param  string $name  The name of the text block.
-     * @return string  The (X)HTML.
      */
     function read($name)
     {
@@ -112,14 +123,15 @@ class Boilerplate_Model
         return file_get_contents($this->filename($name));
     }
 
-
     /**
      * Saves new content for a text block. Returns whether that succeded.
      *
+     * @param string $name    A boilerplate name.
+     * @param string $content A content.
+     *
+     * @return bool
+     *
      * @access public
-     * @param  string $name  The name of the text block.
-     * @param  string $content  The new content.
-     * @return bool.
      */
     function write($name, $content)
     {
@@ -136,8 +148,8 @@ class Boilerplate_Model
             // on Windows under PHP < 5.3.0
             if (version_compare(PHP_VERSION, '5.3.0', '<')
                 && strtoupper(substr(PHP_OS, 0, 3)) == 'WIN'
-                && file_exists($dst))
-            {
+                && file_exists($dst)
+            ) {
                 unlink($dst);
             }
             $ok = rename($fn, $dst);
@@ -145,13 +157,14 @@ class Boilerplate_Model
         return $ok;
     }
 
-
     /**
      * Deletes a text block. Returns whether that succeded.
      *
+     * @param string $name A boilerplate name.
+     *
+     * @return bool
+     *
      * @access public
-     * @param  string $name  The name of the text block.
-     * @return bool.
      */
     function delete($name)
     {
