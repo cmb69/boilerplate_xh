@@ -25,7 +25,7 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 /**
  * The version number of the plugin.
  */
-define('BOILERPLATE_VERSION', '1rc2');
+define('BOILERPLATE_VERSION', '@BOILERPLATE_VERSION@');
 
 /**
  * The base URI.
