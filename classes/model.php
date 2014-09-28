@@ -70,13 +70,14 @@ class Boilerplate_Model
     function names()
     {
         $names = array();
-        $dh = opendir($this->dataFolder);
-        while (($fn = readdir($dh)) !== false) {
-            if ($fn[0] != '.' && pathinfo($fn, PATHINFO_EXTENSION) == 'htm') {
-                $names[] = basename($fn, '.htm');
+        if ($dh = opendir($this->dataFolder)) {
+            while (($fn = readdir($dh)) !== false) {
+                if ($fn[0] != '.' && pathinfo($fn, PATHINFO_EXTENSION) == 'htm') {
+                    $names[] = basename($fn, '.htm');
+                }
             }
+            natcasesort($names);
         }
-        natcasesort($names);
         return $names;
     }
 
@@ -91,7 +92,7 @@ class Boilerplate_Model
      */
     function isValidName($name)
     {
-        return !!preg_match('/^[a-z0-9_\-]+$/su', $name);
+        return (bool) preg_match('/^[a-z0-9_\-]+$/su', $name);
     }
 
     /**
