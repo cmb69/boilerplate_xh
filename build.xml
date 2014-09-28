@@ -11,9 +11,9 @@
         <include name="classes/*.php"/>
     </fileset>
 
-    <!--<fileset id="js-sources" dir=".">
+    <fileset id="js-sources" dir=".">
         <include name="*.js"/>
-    </fileset>-->
+    </fileset>
 
     <fileset id="unit-tests" dir="tests/unit">
         <include name="*Test.php"/>
