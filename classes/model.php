@@ -43,6 +43,7 @@ class Boilerplate_Model
     {
         if (!file_exists($dataFolder)) {
             mkdir($dataFolder, 0777, true);
+            chmod($dataFolder, 0777);
         }
         $this->dataFolder = $dataFolder;
     }
