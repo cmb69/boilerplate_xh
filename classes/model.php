@@ -76,9 +76,9 @@ class Boilerplate_Model
                     $names[] = basename($fn, '.htm');
                 }
             }
-            natcasesort($names);
         }
-        return $names;
+        natcasesort($names);
+        return array_values($names);
     }
 
     /**
