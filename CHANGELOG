@@ -1,3 +1,12 @@
+Version 1rc3 - released 2014-09-28
+* fixed language texts and manuals regarding allowed characters for text block
+  names (reported by Lariss)
+* updated .htaccess for Apache 2.4
+* added CSRF protection, if CSRF protection support is available
+* added version.nfo
+* revised source code, views and manuals
+* improved QA
+
 Version 1rc2 - released 2013-03-20
 * fixed bug, where the text blocks couldn't be saved on Windows under PHP <
   5.3.0 (reported by svasti)
