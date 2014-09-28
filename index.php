@@ -32,11 +32,11 @@ define('BOILERPLATE_VERSION', '@BOILERPLATE_VERSION@');
  */
 define(
     'BOILERPLATE_URL',
-    'http'
-    . (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 's' : '')
-    . '://' . $_SERVER['SERVER_NAME']
-    . ($_SERVER['SERVER_PORT'] < 1024 ? '' : ':' . $_SERVER['SERVER_PORT'])
-    . preg_replace('/index.php$/', '', $_SERVER['SCRIPT_NAME'])
+    defined('CMSIMPLE_URL')
+    ? CMSIMPLE_URL
+    : 'http'
+        . (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 's' : '')
+        . '://' . $_SERVER['HTTP_HOST'] . $sn
 );
 
 /**
