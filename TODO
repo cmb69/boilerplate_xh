@@ -1,9 +1,9 @@
-* add XH 1.6 APIs
 * check result of opendir()
 * replace !! with (bool)
 * fix BOILERPLATE_URL
 * update .htaccess for Apache 2.4
-* add views to sources
+* add XH 1.6 APIs
+* revise manuals
 
 * move boilerplates to content folder (keeping config option?)
 * add subfolders (sugg. by Old)
