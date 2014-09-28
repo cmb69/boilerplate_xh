@@ -116,8 +116,10 @@ function Boilerplate_info() // RELEASE-TODO
 
     $ptx = $plugin_tx['boilerplate'];
     $labels = array(
+        'info' => $ptx['label_info'],
         'syscheck' => $ptx['syscheck_title'],
-        'about' => $ptx['about']
+        'about' => $ptx['about'],
+        'logo' => $ptx['alt_logo']
     );
     $labels = array_map('Boilerplate_hsc', $labels);
     $phpVersion = '4.3.0';
@@ -216,7 +218,7 @@ function Boilerplate_edit($name, $content = null)
         }
     }
     $labels = array(
-        'heading' => "Boilerplate: $name",
+        'heading' => "Boilerplate \xE2\x80\x93 $name",
         'save' => ucfirst($tx['action']['save'])
     );
     $labels = array_map('Boilerplate_hsc', $labels);
@@ -302,7 +304,7 @@ function Boilerplate_admin()
 
     $ptx = $plugin_tx['boilerplate'];
     $labels = array(
-        'heading' => "Boilerplate: $ptx[menu_main]",
+        'heading' => "Boilerplate \xE2\x80\x93 $ptx[menu_main]",
         'edit' => ucfirst($tx['action']['edit']),
         'delete' => ucfirst($tx['action']['delete']),
         'create' => $ptx['label_create'],

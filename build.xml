@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- $Id$ -->
-
 <project name="Boilerplate" default="help">
-
-    <!-- Filesets -->
 
     <fileset id="php-sources" dir=".">
         <include name="*.php"/>
@@ -91,8 +87,6 @@
 
     <target name="doc" depends="php-doc,js-doc"
             description="generates the developer documentation"/>
-
-    <!-- Build -->
 
     <target name="build" description="builds a distributable ZIP archive">
         <fail unless="version" message="version is not defined!"/>
