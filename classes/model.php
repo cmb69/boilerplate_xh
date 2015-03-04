@@ -26,7 +26,9 @@
 class Boilerplate_Model
 {
     /**
-     * @var string The data folder.
+     * The data folder.
+     *
+     * @var string
      *
      * @access private
      */
@@ -36,6 +38,8 @@ class Boilerplate_Model
      * Initializes a new instance.
      *
      * @param string $dataFolder The data folder.
+     *
+     * @return void
      *
      * @access public
      */
