@@ -1,7 +1,7 @@
 <?php
 if (!isset($this)) {
-	header('HTTP/1.0 404 Not Found');
-	exit;
+    header('HTTP/1.0 404 Not Found');
+    exit;
 }
 ?>
 <!-- Boilerplate_XH: edit -->
