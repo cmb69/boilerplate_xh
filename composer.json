@@ -1,10 +1,9 @@
 {
     "require-dev": {
-        "phing/phing": "2.10.*",
-        "squizlabs/php_codesniffer": "2.3.*",
-        "bartlett/php-compatinfo": "3.7.*",
-        "phpunit/phpunit": "4.5.*",
-        "tcz/phpunit-mockfunction": "1.0.*",
-        "mikey179/vfsStream": "1.4.*"
+        "phing/phing": "2.16.*",
+        "squizlabs/php_codesniffer": "2.9.*",
+        "bartlett/php-compatinfo": "5.2.*",
+        "phpunit/phpunit": "5.7.*",
+        "mikey179/vfsstream": "1.6.*"
     }
 }

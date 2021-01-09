@@ -45,9 +45,7 @@ class Boilerplate_Model
     function __construct($dataFolder)
     {
         if (!file_exists($dataFolder)) {
-            // HACK to satisfy PHP_CI 3
-            $func = 'mkdir';
-            $func($dataFolder, 0777, true);
+            mkdir($dataFolder, 0777, true);
             chmod($dataFolder, 0777);
         }
         $this->dataFolder = $dataFolder;
