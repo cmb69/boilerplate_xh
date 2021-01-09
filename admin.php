@@ -65,7 +65,7 @@ function Boilerplate_checkCsrfToken()
  * Renders a template.
  *
  * @param string $_template The name of the template.
- * @param string $_bag      Variables available in the template.
+ * @param array  $_bag      Variables available in the template.
  *
  * @return string (X)HTML.
  *
