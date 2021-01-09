@@ -62,10 +62,7 @@ function boilerplate($name)
     }
     $content = $_Boilerplate->read($name);
     if ($content !== false) {
-        if (function_exists('evaluate_scripting')) {
-            $content = evaluate_scripting($content);
-        }
-        return $content;
+        return  evaluate_scripting($content);
     } else {
         e('cntopen', 'file', $_Boilerplate->filename($name));
         return false;

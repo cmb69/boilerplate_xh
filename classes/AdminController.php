@@ -125,9 +125,7 @@ class AdminController
         $url = "$sn?&amp;boilerplate";
         $editorHeight = $cf['editor']['height'];
         $content = XH_hsc($content);
-        $showSubmit = !function_exists('init_editor')
-            || $cf['editor']['external'] == '';
-        $bag = compact('labels', 'name', 'url', 'editorHeight', 'content', 'showSubmit');
+        $bag = compact('labels', 'name', 'url', 'editorHeight', 'content');
         $o = Boilerplate_render('edit', $bag);
         init_editor(array('plugintextarea'));
         return $o;
