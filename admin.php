@@ -155,7 +155,7 @@ function Boilerplate_new($name)
         if ($_Boilerplate->write($name, '') !== false) {
             $qs = '?boilerplate&admin=plugin_main&action=edit&boilerplate_name='
                 . $name;
-            header('Location: ' . BOILERPLATE_URL . $qs, true, 303);
+            header('Location: ' . CMSIMPLE_URL . $qs, true, 303);
             exit;
         } else {
             e('cntwriteto', 'file', $fn);
@@ -227,7 +227,7 @@ function Boilerplate_save($name)
     $ok = $_Boilerplate->write($name, $content);
     if ($ok) {
         $qs = '?boilerplate&admin=plugin_main&action=plugin_tx';
-        header('Location: ' . BOILERPLATE_URL . $qs, true, 303);
+        header('Location: ' . CMSIMPLE_URL . $qs, true, 303);
         exit;
     } else {
         e('cntsave', 'file', $_Boilerplate->filename($name));
@@ -252,7 +252,7 @@ function Boilerplate_delete($name)
     Boilerplate_checkCsrfToken();
     if ($_Boilerplate->delete($name)) {
         $qs = '?boilerplate&admin=plugin_main&action=plugin_tx';
-        header('Location: ' . BOILERPLATE_URL . $qs, true, 303);
+        header('Location: ' . CMSIMPLE_URL . $qs, true, 303);
         exit;
     } else {
         e('cntdelete', 'file', $_Boilerplate->filename($name));

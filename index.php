@@ -27,18 +27,6 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 define('BOILERPLATE_VERSION', '@BOILERPLATE_VERSION@');
 
 /**
- * The base URI.
- */
-define(
-    'BOILERPLATE_URL',
-    defined('CMSIMPLE_URL')
-    ? CMSIMPLE_URL
-    : 'http'
-    . (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 's' : '')
-    . '://' . $_SERVER['HTTP_HOST'] . $sn
-);
-
-/**
  * The data folder.
  */
 define(
