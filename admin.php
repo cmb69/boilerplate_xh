@@ -28,36 +28,6 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 }
 
 /**
- * Renders a CSRF token input if CSRF protection support is available.
- *
- * @return string (X)HTML.
- */
-function Boilerplate_renderCsrfTokenInput()
-{
-    global $_XH_csrfProtection;
-
-    if (isset($_XH_csrfProtection)) {
-        return $_XH_csrfProtection->tokenInput();
-    } else {
-        return '';
-    }
-}
-
-/**
- * Checks the CSRF token if CSRF protection support is available.
- *
- * @return void
- */
-function Boilerplate_checkCsrfToken()
-{
-    global $_XH_csrfProtection;
-
-    if (isset($_XH_csrfProtection)) {
-        $_XH_csrfProtection->check();
-    }
-}
-
-/**
  * Renders a template.
  *
  * @param string $_template The name of the template.
@@ -67,7 +37,7 @@ function Boilerplate_checkCsrfToken()
  */
 function Boilerplate_render($_template, $_bag)
 {
-    global $pth, $cf;
+    global $pth, $cf, $_XH_csrfProtection;
 
     $_template = "{$pth['folder']['plugins']}boilerplate/views/$_template.htm";
     unset($pth, $cf);

@@ -72,9 +72,9 @@ class AdminController
      */
     public function newTextBlock($name)
     {
-        global $e, $plugin_tx, $_Boilerplate;
+        global $e, $plugin_tx, $_Boilerplate, $_XH_csrfProtection;
 
-        Boilerplate_checkCsrfToken();
+        $_XH_csrfProtection->check();
         $ptx = $plugin_tx['boilerplate'];
         if (!$_Boilerplate->isValidName($name)) {
             $e .= '<li><b>' . $ptx['error_invalid_name'] . '</b><br>'
@@ -143,9 +143,9 @@ class AdminController
      */
     public function saveTextBlock($name)
     {
-        global $_Boilerplate;
+        global $_Boilerplate, $_XH_csrfProtection;
 
-        Boilerplate_checkCsrfToken();
+        $_XH_csrfProtection->check();
         $content = $_POST['boilerplate_text'];
         $ok = $_Boilerplate->write($name, $content);
         if ($ok) {
@@ -168,9 +168,9 @@ class AdminController
      */
     public function deleteTextBlock($name)
     {
-        global $_Boilerplate;
+        global $_Boilerplate, $_XH_csrfProtection;
 
-        Boilerplate_checkCsrfToken();
+        $_XH_csrfProtection->check();
         if ($_Boilerplate->delete($name)) {
             $qs = '?boilerplate&admin=plugin_main&action=plugin_tx';
             header('Location: ' . CMSIMPLE_URL . $qs, true, 303);
