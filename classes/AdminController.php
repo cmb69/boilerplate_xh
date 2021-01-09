@@ -27,11 +27,6 @@ class AdminController
      * Returns the plugin information view.
      *
      * @return string (X)HTML.
-     *
-     * @global array             The paths of system files and folders.
-     * @global array             The localization of the core.
-     * @global array             The localization of the plugins.
-     * @global Boilerplate\Model The model.
      */
     public function renderInfo()
     {
@@ -74,10 +69,6 @@ class AdminController
      * @param string $name A boilerplate name.
      *
      * @return string (X)HTML.
-     *
-     * @global string            Error message to emit in the (X)HTML.
-     * @global array             The localization of the plugins.
-     * @global Boilerplate\Model The model.
      */
     public function newTextBlock($name)
     {
@@ -114,12 +105,6 @@ class AdminController
      * @param string $content A boilerplate content.
      *
      * @return string (X)HTML.
-     *
-     * @global string            The script name.
-     * @global array             The paths of system files and folders.
-     * @global array             The configuration of the core.
-     * @global array             The localization of the core.
-     * @global Boilerplate\Model The model.
      */
     public function editTextBlock($name, $content = null)
     {
@@ -155,8 +140,6 @@ class AdminController
      * @param string $name A boilerplate.
      *
      * @return string (X)HTML.
-     *
-     * @global Boilerplate\Model The model.
      */
     public function saveTextBlock($name)
     {
@@ -182,8 +165,6 @@ class AdminController
      * @param string $name A boilerplate name.
      *
      * @return string (X)HTML.
-     *
-     * @global Boilerplate\Model The model.
      */
     public function deleteTextBlock($name)
     {
@@ -204,12 +185,6 @@ class AdminController
      * Returns the main administration view.
      *
      * @return string (X)HTML.
-     *
-     * @global string            The script name.
-     * @global array             The paths of system files and folders.
-     * @global array             The localization of the core.
-     * @global array             The localization of the plugins.
-     * @global Boilerplate\Model The model.
      */
     public function renderMainAdministration()
     {

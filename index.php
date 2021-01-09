@@ -49,10 +49,6 @@ define(
  * @param string $name A boilerplate name.
  *
  * @return string (X)HTML.
- *
- * @global string            Error messages to emit in the (X)HTML.
- * @global array             The localization of the plugins.
- * @global Boilerplate\Model The model.
  */
 function boilerplate($name)
 {

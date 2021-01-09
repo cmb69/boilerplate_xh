@@ -31,8 +31,6 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
  * Renders a CSRF token input if CSRF protection support is available.
  *
  * @return string (X)HTML.
- *
- * @global XH_CSRFProtection The CSRF protector.
  */
 function Boilerplate_renderCsrfTokenInput()
 {
@@ -49,8 +47,6 @@ function Boilerplate_renderCsrfTokenInput()
  * Checks the CSRF token if CSRF protection support is available.
  *
  * @return void
- *
- * @global XH_CSRFProtection The CSRF protector.
  */
 function Boilerplate_checkCsrfToken()
 {
@@ -68,9 +64,6 @@ function Boilerplate_checkCsrfToken()
  * @param array  $_bag      Variables available in the template.
  *
  * @return string (X)HTML.
- *
- * @global array The paths of system files and folders.
- * @global array The configuration of the core.
  */
 function Boilerplate_render($_template, $_bag)
 {
