@@ -17,7 +17,7 @@
 		<a href="<?php echo $boilerplate['editURL'];?>" title="<?php echo $labels['edit'];?>"><?php echo $name;?></a>
 	    </td>
 	    <td>
-		<input type="text" readonly="readonly" value="{{{PLUGIN:boilerplate('<?php echo $name;?>');}}}" onclick="this.select();"/>
+		<input type="text" readonly="readonly" value="{{{boilerplate('<?php echo $name;?>')}}}" onclick="this.select();"/>
 	    </td>
 	</tr>
 <?php endforeach;?>
