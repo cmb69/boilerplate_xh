@@ -22,22 +22,6 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 }
 
 /**
- * Returns a text with special characters converted to HTML entities.
- *
- * @param string $text A text.
- *
- * @return string (X)HTML.
- */
-function Boilerplate_hsc($text)
-{
-    if (function_exists('XH_hsc')) {
-        return XH_hsc($text);
-    } else {
-        return htmlspecialchars($text, ENT_COMPAT, 'UTF-8');
-    }
-}
-
-/**
  * Renders a CSRF token input if CSRF protection support is available.
  *
  * @return string (X)HTML.
@@ -120,7 +104,7 @@ function Boilerplate_info() // RELEASE-TODO
         'about' => $ptx['about'],
         'logo' => $ptx['alt_logo']
     );
-    $labels = array_map('Boilerplate_hsc', $labels);
+    $labels = array_map('XH_hsc', $labels);
     $phpVersion = '5.4.0';
     foreach (array('ok', 'warn', 'fail') as $state) {
         $images[$state] = $pth['folder']['plugins']
@@ -212,10 +196,10 @@ function Boilerplate_edit($name, $content = null)
         'heading' => "Boilerplate \xE2\x80\x93 $name",
         'save' => ucfirst($tx['action']['save'])
     );
-    $labels = array_map('Boilerplate_hsc', $labels);
+    $labels = array_map('XH_hsc', $labels);
     $url = "$sn?&amp;boilerplate";
     $editorHeight = $cf['editor']['height'];
-    $content = Boilerplate_hsc($content);
+    $content = XH_hsc($content);
     $showSubmit = !function_exists('init_editor')
         || $cf['editor']['external'] == '';
     $bag = compact('labels', 'name', 'url', 'editorHeight', 'content', 'showSubmit');
@@ -299,7 +283,7 @@ function Boilerplate_admin()
         'create' => $ptx['label_create'],
         'confirm' => addcslashes($ptx['confirm_delete'], "\r\n\\\'")
     );
-    $labels = array_map('Boilerplate_hsc', $labels);
+    $labels = array_map('XH_hsc', $labels);
     $deleteImage = $pth['folder']['plugins'] . 'boilerplate/images/delete.png';
     $url = $sn . '?&amp;boilerplate';
     $baseURL = $sn . '?&amp;boilerplate&amp;admin=plugin_main&amp;action=';
