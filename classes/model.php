@@ -42,7 +42,7 @@ class Boilerplate_Model
      *
      * @access public
      */
-    function Boilerplate_Model($dataFolder)
+    function __construct($dataFolder)
     {
         if (!file_exists($dataFolder)) {
             // HACK to satisfy PHP_CI 3

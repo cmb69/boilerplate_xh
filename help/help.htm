@@ -37,8 +37,7 @@ problems!</strong></p>
 
 <section id="requirements">
 <h2>Requirements</h2>
-<p>Boilerplate_XH is a plugin for CMSimple_XH. It requires a UTF-8 encoded
-version.</p>
+<p>Boilerplate_XH is a plugin for CMSimple_XH ≥ 1.7.0.</p>
 <div class="toplink"><a href="#">back to top</a></div>
 </section>
 
@@ -89,15 +88,14 @@ lowercase letters (a-z), digits (0-9), underscores and hyphens.</li>
 <li>The inputs at the right are containing the appropriate plugin call. Just
 click them once and copy the selection to the clipboard for later pasting on a
 CMSimple_XH page.</li>
-<li>From CMSimple_XH 1.5.2 on, the text blocks can be edited with the same
-editor that's used for editing CMSimple_XH pages. In older versions only a
-textarea is available.</li>
-<li>From CMSimple_XH 1.5 on, you can use plugin calls in the text blocks, so you
+<li>The text blocks can be edited with the same
+editor that's used for editing CMSimple_XH pages.</li>
+<li>You can use plugin calls in the text blocks, so you
 can nest the text blocks or call any other plugin you like.</li>
 </ul>
 <p>Inserting of a text block on a page is done with the following plugin
 call:</p>
-<pre>{{{PLUGIN:boilerplate('NAME');}}}</pre>
+<pre>{{{boilerplate('NAME')}}}</pre>
 <p>Replace NAME with the name of an already defined text block. The easiest way
 is to copy&amp;paste the plugin call from Boilerplate_XH's administration.</p>
 <p>Note that using boilerplate() in the template is possible, but for
