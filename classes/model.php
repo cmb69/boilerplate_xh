@@ -28,10 +28,8 @@ class Boilerplate_Model
      * The data folder.
      *
      * @var string
-     *
-     * @access private
      */
-    var $dataFolder;
+    private $dataFolder;
 
     /**
      * Initializes a new instance.
@@ -39,10 +37,8 @@ class Boilerplate_Model
      * @param string $dataFolder The data folder.
      *
      * @return void
-     *
-     * @access public
      */
-    function __construct($dataFolder)
+    public function __construct($dataFolder)
     {
         if (!file_exists($dataFolder)) {
             mkdir($dataFolder, 0777, true);
@@ -55,10 +51,8 @@ class Boilerplate_Model
      * Returns the data folder.
      *
      * @return string
-     *
-     * @access public
      */
-    function getDataFolder()
+    public function getDataFolder()
     {
         return $this->dataFolder;
     }
@@ -67,10 +61,8 @@ class Boilerplate_Model
      * Returns all names available in the data folder.
      *
      * @return array
-     *
-     * @access public
      */
-    function names()
+    public function names()
     {
         $names = array();
         if ($dh = opendir($this->dataFolder)) {
@@ -90,10 +82,8 @@ class Boilerplate_Model
      * @param string $name A boilerplate name.
      *
      * @return bool
-     *
-     * @access public
      */
-    function isValidName($name)
+    public function isValidName($name)
     {
         return (bool) preg_match('/^[a-z0-9_\-]+$/su', $name);
     }
@@ -104,10 +94,8 @@ class Boilerplate_Model
      * @param string $name A boilerplate name.
      *
      * @return string
-     *
-     * @access public
      */
-    function filename($name)
+    public function filename($name)
     {
         assert($this->isValidName($name));
         return $this->dataFolder . $name . '.htm';
@@ -119,10 +107,8 @@ class Boilerplate_Model
      * @param string $name A boilerplate name.
      *
      * @return string (X)HTML.
-     *
-     * @access public
      */
-    function read($name)
+    public function read($name)
     {
         assert($this->isValidName($name));
         return file_get_contents($this->filename($name));
@@ -135,10 +121,8 @@ class Boilerplate_Model
      * @param string $content A content.
      *
      * @return bool
-     *
-     * @access public
      */
-    function write($name, $content)
+    public function write($name, $content)
     {
         assert($this->isValidName($name));
         $fn = tempnam($this->dataFolder, 'boilerplate');
@@ -160,10 +144,8 @@ class Boilerplate_Model
      * @param string $name A boilerplate name.
      *
      * @return bool
-     *
-     * @access public
      */
-    function delete($name)
+    public function delete($name)
     {
         assert($this->isValidName($name));
         return unlink($this->filename($name));
