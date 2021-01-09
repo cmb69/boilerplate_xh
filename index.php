@@ -63,7 +63,7 @@ require_once $pth['folder']['plugin_classes'] . 'model.php';
  *
  * @global string            Error messages to emit in the (X)HTML.
  * @global array             The localization of the plugins.
- * @global Boilerplate_Model The model.
+ * @global Boilerplate\Model The model.
  */
 function boilerplate($name)
 {
@@ -87,6 +87,6 @@ function boilerplate($name)
     }
 }
 
-$_Boilerplate = new Boilerplate_Model(BOILERPLATE_DATA_FOLDER);
+$_Boilerplate = new Boilerplate\Model(BOILERPLATE_DATA_FOLDER);
 
 ?>

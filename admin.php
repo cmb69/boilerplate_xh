@@ -107,7 +107,7 @@ function Boilerplate_render($_template, $_bag)
  * @global array             The paths of system files and folders.
  * @global array             The localization of the core.
  * @global array             The localization of the plugins.
- * @global Boilerplate_Model The model.
+ * @global Boilerplate\Model The model.
  */
 function Boilerplate_info() // RELEASE-TODO
 {
@@ -153,7 +153,7 @@ function Boilerplate_info() // RELEASE-TODO
  *
  * @global string            Error message to emit in the (X)HTML.
  * @global array             The localization of the plugins.
- * @global Boilerplate_Model The model.
+ * @global Boilerplate\Model The model.
  */
 function Boilerplate_new($name)
 {
@@ -195,7 +195,7 @@ function Boilerplate_new($name)
  * @global array             The paths of system files and folders.
  * @global array             The configuration of the core.
  * @global array             The localization of the core.
- * @global Boilerplate_Model The model.
+ * @global Boilerplate\Model The model.
  */
 function Boilerplate_edit($name, $content = null)
 {
@@ -234,7 +234,7 @@ function Boilerplate_edit($name, $content = null)
  *
  * @return string (X)HTML.
  *
- * @global Boilerplate_Model The model.
+ * @global Boilerplate\Model The model.
  */
 function Boilerplate_save($name)
 {
@@ -261,7 +261,7 @@ function Boilerplate_save($name)
  *
  * @return string (X)HTML.
  *
- * @global Boilerplate_Model The model.
+ * @global Boilerplate\Model The model.
  */
 function Boilerplate_delete($name)
 {
@@ -287,7 +287,7 @@ function Boilerplate_delete($name)
  * @global array             The paths of system files and folders.
  * @global array             The localization of the core.
  * @global array             The localization of the plugins.
- * @global Boilerplate_Model The model.
+ * @global Boilerplate\Model The model.
  */
 function Boilerplate_admin()
 {

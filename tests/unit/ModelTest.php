@@ -13,9 +13,12 @@
  * @link      http://3-magi.net/?CMSimple_XH/Boilerplate_XH
  */
 
+namespace Boilerplate;
+
 require_once './vendor/autoload.php';
 require_once './classes/model.php';
 
+use PHPUnit_Framework_TestCase;
 use org\bovigo\vfs\vfsStreamWrapper;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStream;
@@ -48,7 +51,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     /**
      * The test subject.
      *
-     * @var Boilerplate_Model
+     * @var Model
      */
     protected $subject;
 
@@ -62,7 +65,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         vfsStreamWrapper::register();
         vfsStreamWrapper::setRoot(new vfsStreamDirectory('test'));
         $this->dataFolder = vfsStream::url('test/data/');
-        $this->subject = new Boilerplate_Model($this->dataFolder);
+        $this->subject = new Model($this->dataFolder);
         touch($this->dataFolder . 'block1.dat');
         touch($this->dataFolder . 'block10.htm');
         touch($this->dataFolder . 'block2.htm');

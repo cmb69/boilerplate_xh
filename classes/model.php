@@ -13,6 +13,8 @@
  * @link      http://3-magi.net/?CMSimple_XH/Boilerplate_XH
  */
 
+namespace Boilerplate;
+
 /**
  * The models.
  *
@@ -22,7 +24,7 @@
  * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link     http://3-magi.net/?CMSimple_XH/Boilerplate_XH
  */
-class Boilerplate_Model
+class Model
 {
     /**
      * The data folder.

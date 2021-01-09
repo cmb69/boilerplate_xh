@@ -18,6 +18,10 @@
  * @link      http://3-magi.net/?CMSimple_XH/Boilerplate_XH
  */
 
+namespace Boilerplate;
+
+use PHPUnit_Framework_TestCase;
+
 /**
  * A test case to actually check the CSRF protection.
  *
