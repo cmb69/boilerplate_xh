@@ -9,7 +9,6 @@ $plugin_tx['boilerplate']['error_invalid_name']="Ungültiger Textbaustein-Name (
 
 $plugin_tx['boilerplate']['syscheck_title']="Systemprüfung";
 $plugin_tx['boilerplate']['syscheck_phpversion']="PHP-Version &ge; %s";
-$plugin_tx['boilerplate']['syscheck_magic_quotes']="magic_quotes_runtime off";
 $plugin_tx['boilerplate']['syscheck_writable']="Ordner '%s' beschreibbar";
 
 $plugin_tx['boilerplate']['about']="Über Boilerplate_XH";

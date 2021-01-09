@@ -9,7 +9,6 @@ $plugin_tx['boilerplate']['error_invalid_name']="Invalid text block name (must o
 
 $plugin_tx['boilerplate']['syscheck_title']="System check";
 $plugin_tx['boilerplate']['syscheck_phpversion']="PHP version &ge; %s";
-$plugin_tx['boilerplate']['syscheck_magic_quotes']="magic_quotes_runtime off";
 $plugin_tx['boilerplate']['syscheck_writable']="Folder '%s' writable";
 
 $plugin_tx['boilerplate']['about']="About Boilerplate_XH";

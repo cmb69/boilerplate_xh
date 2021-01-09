@@ -121,7 +121,7 @@ function Boilerplate_info() // RELEASE-TODO
         'logo' => $ptx['alt_logo']
     );
     $labels = array_map('Boilerplate_hsc', $labels);
-    $phpVersion = '5.3.7';
+    $phpVersion = '5.4.0';
     foreach (array('ok', 'warn', 'fail') as $state) {
         $images[$state] = $pth['folder']['plugins']
             . "boilerplate/images/$state.png";
@@ -129,8 +129,6 @@ function Boilerplate_info() // RELEASE-TODO
     $checks = array();
     $checks[sprintf($ptx['syscheck_phpversion'], $phpVersion)]
         = version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'ok' : 'fail';
-    $checks[$ptx['syscheck_magic_quotes']]
-        = !get_magic_quotes_runtime() ? 'ok' : 'fail';
     foreach (array('config/', 'css', 'languages/') as $folder) {
         $folders[] = $pth['folder']['plugins'] . 'boilerplate/' . $folder;
     }
