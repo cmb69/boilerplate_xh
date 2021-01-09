@@ -1,3 +1,9 @@
+<?php
+if (!isset($this)) {
+	header('HTTP/1.0 404 Not Found');
+	exit;
+}
+?>
 <!-- Boilerplate_XH: edit -->
 <h1>Boilerplate – <?=$name?></h1>
     <form class="plugineditform" action="<?=$url?>" method="post">

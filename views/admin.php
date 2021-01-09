@@ -1,3 +1,9 @@
+<?php
+if (!isset($this)) {
+	header('HTTP/1.0 404 Not Found');
+	exit;
+}
+?>
 <!-- Boilerplate_XH: administration -->
 <h1>Boilerplate – <?=$this->text('menu_main')?></h1>
 <div id="boilerplate_admin">

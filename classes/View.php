@@ -35,7 +35,7 @@ class View
     {
         global $pth;
 
-        $this->template = "{$pth['folder']['plugins']}boilerplate/views/$template.htm";
+        $this->template = "{$pth['folder']['plugins']}boilerplate/views/$template.php";
     }
 
     /**
