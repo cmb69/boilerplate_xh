@@ -223,7 +223,7 @@ function Boilerplate_save($name)
     global $_Boilerplate;
 
     Boilerplate_checkCsrfToken();
-    $content = stsl($_POST['boilerplate_text']);
+    $content = $_POST['boilerplate_text'];
     $ok = $_Boilerplate->write($name, $content);
     if ($ok) {
         $qs = '?boilerplate&admin=plugin_main&action=plugin_tx';
@@ -315,16 +315,16 @@ if (XH_wantsPluginAdministration('boilerplate')) {
         case 'plugin_main':
             switch ($action) {
                 case 'new':
-                    $o .= Boilerplate_new(stsl($_POST['boilerplate_name']));
+                    $o .= Boilerplate_new($_POST['boilerplate_name']);
                     break;
                 case 'edit':
-                    $o .= Boilerplate_edit(stsl($_GET['boilerplate_name']));
+                    $o .= Boilerplate_edit($_GET['boilerplate_name']);
                     break;
                 case 'save':
-                    $o .= Boilerplate_save(stsl($_POST['boilerplate_name']));
+                    $o .= Boilerplate_save($_POST['boilerplate_name']);
                     break;
                 case 'delete':
-                    $o .= Boilerplate_delete(stsl($_POST['boilerplate_name']));
+                    $o .= Boilerplate_delete($_POST['boilerplate_name']);
                     break;
                 default:
                     $o .= Boilerplate_admin();
