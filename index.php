@@ -37,11 +37,6 @@ define(
 );
 
 /**
- * The model class.
- */
-require_once $pth['folder']['plugin_classes'] . 'model.php';
-
-/**
  * Returns a text block. On failure a error message is emitted and false is
  * returned.
  *
