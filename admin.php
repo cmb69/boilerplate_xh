@@ -71,15 +71,11 @@ function Boilerplate_render($_template, $_bag)
     global $pth, $cf;
 
     $_template = "{$pth['folder']['plugins']}boilerplate/views/$_template.htm";
-    $_xhtml = $cf['xhtml']['endtags'];
     unset($pth, $cf);
     extract($_bag);
     ob_start();
     include $_template;
     $o = ob_get_clean();
-    if (!$_xhtml) {
-        $o = str_replace('/>', '>', $o);
-    }
     return $o;
 }
 
@@ -146,7 +142,7 @@ function Boilerplate_new($name)
     Boilerplate_checkCsrfToken();
     $ptx = $plugin_tx['boilerplate'];
     if (!$_Boilerplate->isValidName($name)) {
-        $e .= '<li><b>' . $ptx['error_invalid_name'] . '</b>' . tag('br')
+        $e .= '<li><b>' . $ptx['error_invalid_name'] . '</b><br>'
             . $name . '</li>' . PHP_EOL;
         return Boilerplate_admin();
     }

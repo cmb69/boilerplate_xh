@@ -59,7 +59,7 @@ function boilerplate($name)
 
     $ptx = $plugin_tx['boilerplate'];
     if (!$_Boilerplate->isValidName($name)) {
-        $e .= '<li><b>' . $ptx['error_invalid_name'] . '</b>' . tag('br')
+        $e .= '<li><b>' . $ptx['error_invalid_name'] . '</b><br>'
             . $name . '</li>' . PHP_EOL;
         return false;
     }
