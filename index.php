@@ -88,5 +88,3 @@ function boilerplate($name)
 }
 
 $_Boilerplate = new Boilerplate\Model(BOILERPLATE_DATA_FOLDER);
-
-?>

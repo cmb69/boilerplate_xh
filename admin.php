@@ -218,9 +218,7 @@ function Boilerplate_edit($name, $content = null)
     $content = Boilerplate_hsc($content);
     $showSubmit = !function_exists('init_editor')
         || $cf['editor']['external'] == '';
-    $bag = compact(
-        'labels', 'name', 'url', 'editorHeight', 'content', 'showSubmit'
-    );
+    $bag = compact('labels', 'name', 'url', 'editorHeight', 'content', 'showSubmit');
     $o = Boilerplate_render('edit', $bag);
     init_editor(array('plugintextarea'));
     return $o;
@@ -330,30 +328,28 @@ if (function_exists('XH_wantsPluginAdministration')
 ) {
     $o .= print_plugin_admin('on');
     switch ($admin) {
-    case '':
-        $o .= Boilerplate_info();
-        break;
-    case 'plugin_main':
-        switch ($action) {
-        case 'new':
-            $o .= Boilerplate_new(stsl($_POST['boilerplate_name']));
+        case '':
+            $o .= Boilerplate_info();
             break;
-        case 'edit':
-            $o .= Boilerplate_edit(stsl($_GET['boilerplate_name']));
-            break;
-        case 'save':
-            $o .= Boilerplate_save(stsl($_POST['boilerplate_name']));
-            break;
-        case 'delete':
-            $o .= Boilerplate_delete(stsl($_POST['boilerplate_name']));
+        case 'plugin_main':
+            switch ($action) {
+                case 'new':
+                    $o .= Boilerplate_new(stsl($_POST['boilerplate_name']));
+                    break;
+                case 'edit':
+                    $o .= Boilerplate_edit(stsl($_GET['boilerplate_name']));
+                    break;
+                case 'save':
+                    $o .= Boilerplate_save(stsl($_POST['boilerplate_name']));
+                    break;
+                case 'delete':
+                    $o .= Boilerplate_delete(stsl($_POST['boilerplate_name']));
+                    break;
+                default:
+                    $o .= Boilerplate_admin();
+            }
             break;
         default:
-            $o .= Boilerplate_admin();
-        }
-        break;
-    default:
-        $o .= plugin_admin_common($action, $admin, $plugin);
+            $o .= plugin_admin_common($action, $admin, $plugin);
     }
 }
-
-?>

@@ -153,5 +153,3 @@ class Model
         return unlink($this->filename($name));
     }
 }
-
-?>

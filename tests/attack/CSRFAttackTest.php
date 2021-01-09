@@ -39,21 +39,21 @@ class CSRFAttackTest extends PHPUnit_Framework_TestCase
      *
      * @var string
      */
-    private $_url;
+    private $url;
 
     /**
      * The cURL handle.
      *
      * @var resource
      */
-    private $_curlHandle;
+    private $curlHandle;
 
     /**
      * The filename of the cookie file.
      *
      * @var string
      */
-    private $_cookieFile;
+    private $cookieFile;
 
     /**
      * Sets up the test fixture.
@@ -64,14 +64,14 @@ class CSRFAttackTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->_url = 'http://localhost' . getenv('CMSIMPLEDIR');
-        $this->_cookieFile = tempnam(sys_get_temp_dir(), 'CC');
+        $this->url = 'http://localhost' . getenv('CMSIMPLEDIR');
+        $this->cookieFile = tempnam(sys_get_temp_dir(), 'CC');
 
-        $this->_curlHandle = curl_init($this->_url . '?&login=true&keycut=test');
-        curl_setopt($this->_curlHandle, CURLOPT_COOKIEJAR, $this->_cookieFile);
-        curl_setopt($this->_curlHandle, CURLOPT_RETURNTRANSFER, true);
-        curl_exec($this->_curlHandle);
-        curl_close($this->_curlHandle);
+        $this->curlHandle = curl_init($this->url . '?&login=true&keycut=test');
+        curl_setopt($this->curlHandle, CURLOPT_COOKIEJAR, $this->cookieFile);
+        curl_setopt($this->curlHandle, CURLOPT_RETURNTRANSFER, true);
+        curl_exec($this->curlHandle);
+        curl_close($this->curlHandle);
     }
 
     /**
@@ -81,15 +81,15 @@ class CSRFAttackTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    private function _setCurlOptions($fields)
+    private function setCurlOptions($fields)
     {
         $options = array(
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => $fields,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_COOKIEFILE => $this->_cookieFile
+            CURLOPT_COOKIEFILE => $this->cookieFile
         );
-        curl_setopt_array($this->_curlHandle, $options);
+        curl_setopt_array($this->curlHandle, $options);
     }
 
     /**
@@ -104,12 +104,12 @@ class CSRFAttackTest extends PHPUnit_Framework_TestCase
      */
     public function testAttack($fields, $queryString = null)
     {
-        $url = $this->_url . (isset($queryString) ? '?' . $queryString : '');
-        $this->_curlHandle = curl_init($url);
-        $this->_setCurlOptions($fields);
-        curl_exec($this->_curlHandle);
-        $actual = curl_getinfo($this->_curlHandle, CURLINFO_HTTP_CODE);
-        curl_close($this->_curlHandle);
+        $url = $this->url . (isset($queryString) ? '?' . $queryString : '');
+        $this->curlHandle = curl_init($url);
+        $this->setCurlOptions($fields);
+        curl_exec($this->curlHandle);
+        $actual = curl_getinfo($this->curlHandle, CURLINFO_HTTP_CODE);
+        curl_close($this->curlHandle);
         $this->assertEquals(403, $actual);
     }
 
@@ -149,5 +149,3 @@ class CSRFAttackTest extends PHPUnit_Framework_TestCase
         ];
     }
 }
-
-?>
