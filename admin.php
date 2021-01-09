@@ -306,10 +306,7 @@ XH_registerStandardPluginMenuItems(true);
 /*
  * Handle the plugin administration.
  */
-if (function_exists('XH_wantsPluginAdministration')
-    && XH_wantsPluginAdministration('boilerplate')
-    || isset($boilerplate) && $boilerplate == 'true'
-) {
+if (XH_wantsPluginAdministration('boilerplate')) {
     $o .= print_plugin_admin('on');
     switch ($admin) {
         case '':
