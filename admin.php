@@ -27,27 +27,6 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
     exit;
 }
 
-/**
- * Renders a template.
- *
- * @param string $_template The name of the template.
- * @param array  $_bag      Variables available in the template.
- *
- * @return string (X)HTML.
- */
-function Boilerplate_render($_template, $_bag)
-{
-    global $pth, $cf, $_XH_csrfProtection;
-
-    $_template = "{$pth['folder']['plugins']}boilerplate/views/$_template.htm";
-    unset($pth, $cf);
-    extract($_bag);
-    ob_start();
-    include $_template;
-    $o = ob_get_clean();
-    return $o;
-}
-
 /*
  * Register the plugin menu items.
  */

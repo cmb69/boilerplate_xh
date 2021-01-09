@@ -4,6 +4,8 @@ $plugin_tx['boilerplate']['menu_main']="Text Blocks";
 
 $plugin_tx['boilerplate']['label_create']="Create";
 $plugin_tx['boilerplate']['label_info']="Info";
+$plugin_tx['boilerplate']['label_edit']="Edit";
+$plugin_tx['boilerplate']['label_delete']="Delete";
 $plugin_tx['boilerplate']['confirm_delete']="Do you want to delete this text block?";
 $plugin_tx['boilerplate']['error_invalid_name']="Invalid text block name (must only consist of a-z, 0-9, _ and -):";
 

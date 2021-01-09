@@ -33,13 +33,6 @@ class AdminController
         global $pth, $tx, $plugin_tx, $_Boilerplate;
 
         $ptx = $plugin_tx['boilerplate'];
-        $labels = array(
-            'info' => $ptx['label_info'],
-            'syscheck' => $ptx['syscheck_title'],
-            'about' => $ptx['about'],
-            'logo' => $ptx['alt_logo']
-        );
-        $labels = array_map('XH_hsc', $labels);
         $phpVersion = '5.4.0';
         foreach (array('ok', 'warn', 'fail') as $state) {
             $images[$state] = $pth['folder']['plugins']
@@ -58,8 +51,8 @@ class AdminController
         }
         $icon = $pth['folder']['plugins'] . 'boilerplate/boilerplate.png';
         $version = BOILERPLATE_VERSION;
-        $bag = compact('labels', 'images', 'checks', 'icon', 'version');
-        return Boilerplate_render('info', $bag);
+        $bag = compact('images', 'checks', 'icon', 'version');
+        return (new View('info'))->render($bag);
     }
 
     /**
@@ -108,7 +101,7 @@ class AdminController
      */
     public function editTextBlock($name, $content = null)
     {
-        global $sn, $pth, $cf, $tx, $_Boilerplate;
+        global $sn, $pth, $cf, $_Boilerplate;
 
         if (!isset($content)) {
             $content = $_Boilerplate->read($name);
@@ -117,16 +110,11 @@ class AdminController
                 return false;
             }
         }
-        $labels = array(
-            'heading' => "Boilerplate \xE2\x80\x93 $name",
-            'save' => ucfirst($tx['action']['save'])
-        );
-        $labels = array_map('XH_hsc', $labels);
         $url = "$sn?&amp;boilerplate";
         $editorHeight = $cf['editor']['height'];
         $content = XH_hsc($content);
-        $bag = compact('labels', 'name', 'url', 'editorHeight', 'content');
-        $o = Boilerplate_render('edit', $bag);
+        $bag = compact('name', 'url', 'editorHeight', 'content');
+        $o = (new View('edit'))->render($bag);
         init_editor(array('plugintextarea'));
         return $o;
     }
@@ -186,17 +174,9 @@ class AdminController
      */
     public function renderMainAdministration()
     {
-        global $sn, $pth, $tx, $plugin_tx, $_Boilerplate;
+        global $sn, $pth, $plugin_tx, $_Boilerplate;
 
-        $ptx = $plugin_tx['boilerplate'];
-        $labels = array(
-            'heading' => "Boilerplate \xE2\x80\x93 $ptx[menu_main]",
-            'edit' => ucfirst($tx['action']['edit']),
-            'delete' => ucfirst($tx['action']['delete']),
-            'create' => $ptx['label_create'],
-            'confirm' => addcslashes($ptx['confirm_delete'], "\r\n\\\'")
-        );
-        $labels = array_map('XH_hsc', $labels);
+        $confirmation = XH_hsc(addcslashes($plugin_tx['boilerplate']['confirm_delete'], "\r\n\\\'"));
         $deleteImage = $pth['folder']['plugins'] . 'boilerplate/images/delete.png';
         $url = $sn . '?&amp;boilerplate';
         $baseURL = $sn . '?&amp;boilerplate&amp;admin=plugin_main&amp;action=';
@@ -207,7 +187,7 @@ class AdminController
                 'deleteURL' => $baseURL . 'delete&amp;boilerplate_name=' . $name
             );
         }
-        $bag = compact('labels', 'deleteImage', 'url', 'boilerplates');
-        return Boilerplate_render('admin', $bag);
+        $bag = compact('confirmation', 'deleteImage', 'url', 'boilerplates');
+        return (new View('admin'))->render($bag);
     }
 }
