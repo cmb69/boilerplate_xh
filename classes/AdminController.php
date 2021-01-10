@@ -24,13 +24,22 @@ namespace Boilerplate;
 class AdminController
 {
     /**
+     * @var Model
+     */
+    private $model;
+
+    public function __construct(Model $model)
+    {
+        $this->model = $model;
+    }
+    /**
      * Returns the plugin information view.
      *
      * @return string (X)HTML.
      */
     public function renderInfo()
     {
-        global $pth, $tx, $plugin_tx, $_Boilerplate;
+        global $pth, $tx, $plugin_tx;
 
         $ptx = $plugin_tx['boilerplate'];
         $phpVersion = '5.4.0';
@@ -44,7 +53,7 @@ class AdminController
         foreach (array('config/', 'css', 'languages/') as $folder) {
             $folders[] = $pth['folder']['plugins'] . 'boilerplate/' . $folder;
         }
-        $folders[] = $_Boilerplate->getDataFolder();
+        $folders[] = $this->model->getDataFolder();
         foreach ($folders as $folder) {
             $checks[sprintf($ptx['syscheck_writable'], $folder)]
                 = is_writable($folder) ? 'ok' : 'warn';
@@ -65,18 +74,18 @@ class AdminController
      */
     public function newTextBlock($name)
     {
-        global $e, $plugin_tx, $_Boilerplate, $_XH_csrfProtection;
+        global $e, $plugin_tx, $_XH_csrfProtection;
 
         $_XH_csrfProtection->check();
         $ptx = $plugin_tx['boilerplate'];
-        if (!$_Boilerplate->isValidName($name)) {
+        if (!$this->model->isValidName($name)) {
             $e .= '<li><b>' . $ptx['error_invalid_name'] . '</b><br>'
                 . $name . '</li>' . PHP_EOL;
             return $this->renderMainAdministration();
         }
-        $fn = $_Boilerplate->filename($name);
+        $fn = $this->model->filename($name);
         if (!file_exists($fn)) {
-            if ($_Boilerplate->write($name, '') !== false) {
+            if ($this->model->write($name, '') !== false) {
                 $qs = '?boilerplate&admin=plugin_main&action=edit&boilerplate_name='
                     . $name;
                 header('Location: ' . CMSIMPLE_URL . $qs, true, 303);
@@ -101,12 +110,12 @@ class AdminController
      */
     public function editTextBlock($name, $content = null)
     {
-        global $sn, $pth, $cf, $_Boilerplate;
+        global $sn, $pth, $cf;
 
         if (!isset($content)) {
-            $content = $_Boilerplate->read($name);
+            $content = $this->model->read($name);
             if ($content === false) {
-                e('cntopen', 'file', $_Boilerplate->filename($name));
+                e('cntopen', 'file', $this->model->filename($name));
                 return false;
             }
         }
@@ -129,17 +138,17 @@ class AdminController
      */
     public function saveTextBlock($name)
     {
-        global $_Boilerplate, $_XH_csrfProtection;
+        global $_XH_csrfProtection;
 
         $_XH_csrfProtection->check();
         $content = $_POST['boilerplate_text'];
-        $ok = $_Boilerplate->write($name, $content);
+        $ok = $this->model->write($name, $content);
         if ($ok) {
             $qs = '?boilerplate&admin=plugin_main&action=plugin_tx';
             header('Location: ' . CMSIMPLE_URL . $qs, true, 303);
             exit;
         } else {
-            e('cntsave', 'file', $_Boilerplate->filename($name));
+            e('cntsave', 'file', $this->model->filename($name));
             return $this->editTextBlock($name, $content);
         }
     }
@@ -154,15 +163,15 @@ class AdminController
      */
     public function deleteTextBlock($name)
     {
-        global $_Boilerplate, $_XH_csrfProtection;
+        global $_XH_csrfProtection;
 
         $_XH_csrfProtection->check();
-        if ($_Boilerplate->delete($name)) {
+        if ($this->model->delete($name)) {
             $qs = '?boilerplate&admin=plugin_main&action=plugin_tx';
             header('Location: ' . CMSIMPLE_URL . $qs, true, 303);
             exit;
         } else {
-            e('cntdelete', 'file', $_Boilerplate->filename($name));
+            e('cntdelete', 'file', $this->model->filename($name));
             return $this->renderMainAdministration();
         }
     }
@@ -174,14 +183,14 @@ class AdminController
      */
     public function renderMainAdministration()
     {
-        global $sn, $pth, $plugin_tx, $_Boilerplate;
+        global $sn, $pth, $plugin_tx;
 
         $confirmation = XH_hsc(addcslashes($plugin_tx['boilerplate']['confirm_delete'], "\r\n\\\'"));
         $deleteImage = $pth['folder']['plugins'] . 'boilerplate/images/delete.png';
         $url = $sn . '?&amp;boilerplate';
         $baseURL = $sn . '?&amp;boilerplate&amp;admin=plugin_main&amp;action=';
         $boilerplates = array();
-        foreach ($_Boilerplate->names() as $name) {
+        foreach ($this->model->names() as $name) {
             $boilerplates[$name] = array(
                 'editURL' => $baseURL . 'edit&amp;boilerplate_name=' . $name,
                 'deleteURL' => $baseURL . 'delete&amp;boilerplate_name=' . $name

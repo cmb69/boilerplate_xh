@@ -52,21 +52,20 @@ define(
  */
 function boilerplate($name)
 {
-    global $e, $plugin_tx, $_Boilerplate;
+    global $e, $plugin_tx;
 
+    $model = new Boilerplate\Model(BOILERPLATE_DATA_FOLDER);
     $ptx = $plugin_tx['boilerplate'];
-    if (!$_Boilerplate->isValidName($name)) {
+    if (!$model->isValidName($name)) {
         $e .= '<li><b>' . $ptx['error_invalid_name'] . '</b><br>'
             . $name . '</li>' . PHP_EOL;
         return false;
     }
-    $content = $_Boilerplate->read($name);
+    $content = $model->read($name);
     if ($content !== false) {
         return  evaluate_scripting($content);
     } else {
-        e('cntopen', 'file', $_Boilerplate->filename($name));
+        e('cntopen', 'file', $model->filename($name));
         return false;
     }
 }
-
-$_Boilerplate = new Boilerplate\Model(BOILERPLATE_DATA_FOLDER);

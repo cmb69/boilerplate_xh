@@ -37,26 +37,27 @@ XH_registerStandardPluginMenuItems(true);
  */
 if (XH_wantsPluginAdministration('boilerplate')) {
     $o .= print_plugin_admin('on');
+    $temp = new Boilerplate\AdminController(new Boilerplate\Model(BOILERPLATE_DATA_FOLDER));
     switch ($admin) {
         case '':
-            $o .= (new Boilerplate\AdminController)->renderInfo();
+            $o .= $temp->renderInfo();
             break;
         case 'plugin_main':
             switch ($action) {
                 case 'new':
-                    $o .= (new Boilerplate\AdminController)->newTextBlock($_POST['boilerplate_name']);
+                    $o .= $temp->newTextBlock($_POST['boilerplate_name']);
                     break;
                 case 'edit':
-                    $o .= (new Boilerplate\AdminController)->editTextBlock($_GET['boilerplate_name']);
+                    $o .= $temp->editTextBlock($_GET['boilerplate_name']);
                     break;
                 case 'save':
-                    $o .= (new Boilerplate\AdminController)->saveTextBlock($_POST['boilerplate_name']);
+                    $o .= $temp->saveTextBlock($_POST['boilerplate_name']);
                     break;
                 case 'delete':
-                    $o .= (new Boilerplate\AdminController)->deleteTextBlock($_POST['boilerplate_name']);
+                    $o .= $temp->deleteTextBlock($_POST['boilerplate_name']);
                     break;
                 default:
-                    $o .= (new Boilerplate\AdminController)->renderMainAdministration();
+                    $o .= $temp->renderMainAdministration();
             }
             break;
         default:
