@@ -83,7 +83,6 @@
                 <exclude name="coverage.xml"/>
                 <exclude name="phpcompatinfo.json"/>
                 <exclude name="tests/**"/>
-                <exclude name="TODO"/>
             </fileset>
         </move>
         <delete dir="export"/>
