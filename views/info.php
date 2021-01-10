@@ -11,15 +11,15 @@ if (!isset($this)) {
 <?php foreach ($checks as $check => $state) :?>
     <li>
         <img src="<?=$images[$state]?>" alt="<?=$images[$state]?>"
-            style="margin: 0; height: 1em; padding-right: 1em"/>
+            style="margin: 0; height: 1em; padding-right: 1em">
         <span><?=$check?></span>
     </li>
-<?php endforeach;?>
+<?php endforeach?>
 </ul>
-<hr/>
+<hr>
 <h4><?=$this->text('about')?></h4>
 <img src="<?=$icon?>" style="float: left; width: 128px; height: 128px; margin-right: 16px"
-    alt="<?=$this->text('alt_logo')?>"/>
+    alt="<?=$this->text('alt_logo')?>">
 <p>Version: <?=$version?></p>
 <p>Copyright &copy; 2012-2021 <a href="http://3-magi.net/">Christoph M. Becker</a></p>
 <p style="text-align: justify">
