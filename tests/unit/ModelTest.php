@@ -21,9 +21,6 @@
 
 namespace Boilerplate;
 
-require_once './vendor/autoload.php';
-require_once './classes/Model.php';
-
 use PHPUnit_Framework_TestCase;
 use org\bovigo\vfs\vfsStreamWrapper;
 use org\bovigo\vfs\vfsStreamDirectory;
