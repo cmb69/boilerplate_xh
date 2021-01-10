@@ -21,15 +21,6 @@
 
 namespace Boilerplate;
 
-/**
- * The models.
- *
- * @category CMSimple_XH
- * @package  Boilerplate
- * @author   Christoph M. Becker <cmbecker69@gmx.de>
- * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @link     http://3-magi.net/?CMSimple_XH/Boilerplate_XH
- */
 class Model
 {
     /**

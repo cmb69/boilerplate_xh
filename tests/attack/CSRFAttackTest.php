@@ -24,16 +24,6 @@ namespace Boilerplate;
 
 use PHPUnit_Framework_TestCase;
 
-/**
- * A test case to actually check the CSRF protection.
- *
- * @category Testing
- * @package  Boilerplate
- * @author   The CMSimple_XH developers <devs@cmsimple-xh.org>
- * @author   Christoph M. Becker <cmbecker69@gmx.de>
- * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @link     http://3-magi.net/?CMSimple_XH/Boilerplate_XH
- */
 class CSRFAttackTest extends PHPUnit_Framework_TestCase
 {
     /**
