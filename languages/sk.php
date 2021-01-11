@@ -10,6 +10,5 @@ $plugin_tx['boilerplate']['error_invalid_name']="Nesprávny názov boilerplate (
 $plugin_tx['boilerplate']['syscheck_title']="Kontrola systému";
 $plugin_tx['boilerplate']['syscheck_phpversion']="PHP verzia &ge; %s";
 $plugin_tx['boilerplate']['syscheck_writable']="Adresár '%s' umožňuje zápis";
-$plugin_tx['boilerplate']['cf_folder_data']="Cesta k adresáru relatívna voči koreňovému adresáru CMSimple, kam sa uložia dáta pluginu. Napr. \"userfiles/boilerplate/\". Ak cestu neuvediete, dáta sa uložia do adresára  data/ pluginu.";
 
 ?>

@@ -33,16 +33,6 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 define('BOILERPLATE_VERSION', '@BOILERPLATE_VERSION@');
 
 /**
- * The data folder.
- */
-define(
-    'BOILERPLATE_DATA_FOLDER',
-    empty($plugin_cf['boilerplate']['folder_data'])
-    ? $pth['folder']['plugins'] . 'boilerplate/data/'
-    : $pth['folder']['base'] . $plugin_cf['boilerplate']['folder_data']
-);
-
-/**
  * Returns a text block. On failure a error message is emitted and false is
  * returned.
  *
@@ -52,9 +42,9 @@ define(
  */
 function boilerplate($name)
 {
-    global $e, $plugin_tx;
+    global $pth, $e, $plugin_tx;
 
-    $model = new Boilerplate\Model(BOILERPLATE_DATA_FOLDER);
+    $model = new Boilerplate\Model("{$pth['folder']['base']}content/boilerplate/");
     $ptx = $plugin_tx['boilerplate'];
     if (!$model->isValidName($name)) {
         $e .= '<li><b>' . $ptx['error_invalid_name'] . '</b><br>'

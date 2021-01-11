@@ -16,6 +16,4 @@ $plugin_tx['boilerplate']['syscheck_writable']="Ordner '%s' beschreibbar";
 $plugin_tx['boilerplate']['about']="Über Boilerplate_XH";
 $plugin_tx['boilerplate']['alt_logo']="Bauklötze";
 
-$plugin_tx['boilerplate']['cf_folder_data']="Pfad eines Ordners relativ zum CMSimple Installationsverzeichnis, wo die Plugindaten gespeichert werden sollen, z.B. \"userfiles/boilerplate/\". Leer lassen, um in den data/ Ordner im Pluginverzeichnis zu speichern.";
-
 ?>

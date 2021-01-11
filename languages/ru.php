@@ -17,6 +17,5 @@ $plugin_tx['boilerplate']['error_invalid_name']="Неправильное имя
 $plugin_tx['boilerplate']['syscheck_title']="Проверка системы";
 $plugin_tx['boilerplate']['syscheck_phpversion']="Версия PHP &ge; %s";
 $plugin_tx['boilerplate']['syscheck_writable']="Папка '%s' доступна для записи";
-$plugin_tx['boilerplate']['cf_folder_data']="Путь к папке, где хранятся файлы данных, относительно корневого каталога CMSimple. Например, \"userfiles/boilerplate/\". Оставьте поле пустым для хранения данных в папке по умолчанию (каталог <b>data/</b> в директории плагина).";
 
 ?>

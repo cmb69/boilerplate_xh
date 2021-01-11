@@ -50,7 +50,7 @@ class AdminController
         $checks = array();
         $checks[sprintf($ptx['syscheck_phpversion'], $phpVersion)]
             = version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'ok' : 'fail';
-        foreach (array('config/', 'css', 'languages/') as $folder) {
+        foreach (array('css', 'languages/') as $folder) {
             $folders[] = $pth['folder']['plugins'] . 'boilerplate/' . $folder;
         }
         $folders[] = $this->model->getDataFolder();
