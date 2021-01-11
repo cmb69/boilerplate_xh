@@ -63,7 +63,7 @@ class Model
      */
     public function names()
     {
-        $names = array();
+        $names = [];
         if ($dh = opendir($this->dataFolder)) {
             while (($fn = readdir($dh)) !== false) {
                 if ($fn[0] != '.' && pathinfo($fn, PATHINFO_EXTENSION) == 'htm') {

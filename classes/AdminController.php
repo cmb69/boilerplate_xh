@@ -43,14 +43,14 @@ class AdminController
 
         $ptx = $plugin_tx['boilerplate'];
         $phpVersion = '5.4.0';
-        foreach (array('ok', 'warn', 'fail') as $state) {
+        foreach (['ok', 'warn', 'fail'] as $state) {
             $images[$state] = $pth['folder']['plugins']
                 . "boilerplate/images/$state.png";
         }
-        $checks = array();
+        $checks = [];
         $checks[sprintf($ptx['syscheck_phpversion'], $phpVersion)]
             = version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'ok' : 'fail';
-        foreach (array('css', 'languages/') as $folder) {
+        foreach (['css', 'languages/'] as $folder) {
             $folders[] = $pth['folder']['plugins'] . 'boilerplate/' . $folder;
         }
         $folders[] = $this->model->getDataFolder();
@@ -124,7 +124,7 @@ class AdminController
         $content = XH_hsc($content);
         $bag = compact('name', 'url', 'editorHeight', 'content');
         $o = (new View('edit'))->render($bag);
-        init_editor(array('plugintextarea'));
+        init_editor(['plugintextarea']);
         return $o;
     }
 
@@ -189,12 +189,12 @@ class AdminController
         $deleteImage = $pth['folder']['plugins'] . 'boilerplate/images/delete.png';
         $url = $sn . '?&amp;boilerplate';
         $baseURL = $sn . '?&amp;boilerplate&amp;admin=plugin_main&amp;action=';
-        $boilerplates = array();
+        $boilerplates = [];
         foreach ($this->model->names() as $name) {
-            $boilerplates[$name] = array(
+            $boilerplates[$name] = [
                 'editURL' => $baseURL . 'edit&amp;boilerplate_name=' . $name,
                 'deleteURL' => $baseURL . 'delete&amp;boilerplate_name=' . $name
-            );
+            ];
         }
         $bag = compact('confirmation', 'deleteImage', 'url', 'boilerplates');
         return (new View('admin'))->render($bag);
