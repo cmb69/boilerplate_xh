@@ -19,18 +19,10 @@
  * along with Boilerplate_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*
- * Prevent direct access.
- */
-if (!defined('CMSIMPLE_XH_VERSION')) {
-    header('HTTP/1.0 403 Forbidden');
-    exit;
-}
-
 /**
  * The version number of the plugin.
  */
-define('BOILERPLATE_VERSION', '@BOILERPLATE_VERSION@');
+const BOILERPLATE_VERSION = '@BOILERPLATE_VERSION@';
 
 /**
  * Returns a text block. On failure a error message is emitted and false is
