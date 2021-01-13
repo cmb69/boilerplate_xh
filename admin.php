@@ -37,7 +37,10 @@ XH_registerStandardPluginMenuItems(true);
  */
 if (XH_wantsPluginAdministration('boilerplate')) {
     $o .= print_plugin_admin('on');
-    $temp = new Boilerplate\AdminController(new Boilerplate\Model("{$pth['folder']['base']}content/boilerplate/"));
+    $temp = new Boilerplate\AdminController(
+        new Boilerplate\Model("{$pth['folder']['base']}content/boilerplate/"),
+        new Boilerplate\View
+    );
     switch ($admin) {
         case '':
             $o .= $temp->renderInfo();

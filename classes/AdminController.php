@@ -28,10 +28,17 @@ class AdminController
      */
     private $model;
 
-    public function __construct(Model $model)
+    /**
+     * @var View
+     */
+    private $view;
+
+    public function __construct(Model $model, View $view)
     {
         $this->model = $model;
+        $this->view = $view;
     }
+
     /**
      * Returns the plugin information view.
      *
@@ -61,7 +68,7 @@ class AdminController
         $icon = $pth['folder']['plugins'] . 'boilerplate/boilerplate.png';
         $version = BOILERPLATE_VERSION;
         $bag = compact('images', 'checks', 'icon', 'version');
-        return (new View)->render('info', $bag);
+        return $this->view->render('info', $bag);
     }
 
     /**
@@ -123,7 +130,7 @@ class AdminController
         $editorHeight = $cf['editor']['height'];
         $content = XH_hsc($content);
         $bag = compact('name', 'url', 'editorHeight', 'content');
-        $o = (new View)->render('edit', $bag);
+        $o = $this->view->render('edit', $bag);
         init_editor(['plugintextarea']);
         return $o;
     }
@@ -197,6 +204,6 @@ class AdminController
             ];
         }
         $bag = compact('confirmation', 'deleteImage', 'url', 'boilerplates');
-        return (new View)->render('admin', $bag);
+        return $this->view->render('admin', $bag);
     }
 }
