@@ -29,25 +29,33 @@ class View
     private $template;
 
     /**
-     * @param string $template
+     * @var array
      */
-    public function __construct($template)
-    {
-        global $pth;
-
-        $this->template = "{$pth['folder']['plugins']}boilerplate/views/$template.php";
-    }
+    private $data;
 
     /**
      * Renders a template.
      *
-     * @param array  $_bag      Variables available in the template.
+     * @param string $template
+     * @param array  $data
      *
      * @return string (X)HTML.
      */
-    public function render($_bag)
+    public function render($template, $data)
     {
-        extract($_bag);
+        global $pth;
+
+        $this->template = "{$pth['folder']['plugins']}boilerplate/views/$template.php";
+        $this->data = $data;
+        return $this->doRender();
+    }
+
+    /**
+     * @return string
+     */
+    private function doRender()
+    {
+        extract($this->data);
         ob_start();
         include $this->template;
         return ob_get_clean();

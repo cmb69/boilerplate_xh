@@ -61,7 +61,7 @@ class AdminController
         $icon = $pth['folder']['plugins'] . 'boilerplate/boilerplate.png';
         $version = BOILERPLATE_VERSION;
         $bag = compact('images', 'checks', 'icon', 'version');
-        return (new View('info'))->render($bag);
+        return (new View)->render('info', $bag);
     }
 
     /**
@@ -123,7 +123,7 @@ class AdminController
         $editorHeight = $cf['editor']['height'];
         $content = XH_hsc($content);
         $bag = compact('name', 'url', 'editorHeight', 'content');
-        $o = (new View('edit'))->render($bag);
+        $o = (new View)->render('edit', $bag);
         init_editor(['plugintextarea']);
         return $o;
     }
@@ -197,6 +197,6 @@ class AdminController
             ];
         }
         $bag = compact('confirmation', 'deleteImage', 'url', 'boilerplates');
-        return (new View('admin'))->render($bag);
+        return (new View)->render('admin', $bag);
     }
 }
