@@ -39,7 +39,8 @@ if (XH_wantsPluginAdministration('boilerplate')) {
     $o .= print_plugin_admin('on');
     $temp = new Boilerplate\AdminController(
         new Boilerplate\Model("{$pth['folder']['base']}content/boilerplate/"),
-        new Boilerplate\View
+        $_XH_csrfProtection,
+        new Boilerplate\View($_XH_csrfProtection)
     );
     switch ($admin) {
         case '':

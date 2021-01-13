@@ -21,6 +21,8 @@
 
 namespace Boilerplate;
 
+use XH\CSRFProtection;
+
 class AdminController
 {
     /**
@@ -29,13 +31,19 @@ class AdminController
     private $model;
 
     /**
+     * @var CSRFProtection
+     */
+    private $csrfProtector;
+
+    /**
      * @var View
      */
     private $view;
 
-    public function __construct(Model $model, View $view)
+    public function __construct(Model $model, CSRFProtection $csrfProtector, View $view)
     {
         $this->model = $model;
+        $this->csrfProtector = $csrfProtector;
         $this->view = $view;
     }
 
@@ -81,9 +89,9 @@ class AdminController
      */
     public function newTextBlock($name)
     {
-        global $e, $plugin_tx, $_XH_csrfProtection;
+        global $e, $plugin_tx;
 
-        $_XH_csrfProtection->check();
+        $this->csrfProtector->check();
         $ptx = $plugin_tx['boilerplate'];
         if (!$this->model->isValidName($name)) {
             $e .= '<li><b>' . $ptx['error_invalid_name'] . '</b><br>'
@@ -145,9 +153,7 @@ class AdminController
      */
     public function saveTextBlock($name)
     {
-        global $_XH_csrfProtection;
-
-        $_XH_csrfProtection->check();
+        $this->csrfProtector->check();
         $content = $_POST['boilerplate_text'];
         $ok = $this->model->write($name, $content);
         if ($ok) {
@@ -170,9 +176,7 @@ class AdminController
      */
     public function deleteTextBlock($name)
     {
-        global $_XH_csrfProtection;
-
-        $_XH_csrfProtection->check();
+        $this->csrfProtector->check();
         if ($this->model->delete($name)) {
             $qs = '?boilerplate&admin=plugin_main&action=plugin_tx';
             header('Location: ' . CMSIMPLE_URL . $qs, true, 303);

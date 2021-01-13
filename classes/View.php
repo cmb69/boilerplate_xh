@@ -21,8 +21,15 @@
 
 namespace Boilerplate;
 
+use XH\CSRFProtection;
+
 class View
 {
+    /**
+     * @var CSRFProtection
+     */
+    private $csrfProtector;
+
     /**
      * @var string
      */
@@ -32,6 +39,11 @@ class View
      * @var array
      */
     private $data;
+
+    public function __construct(CSRFProtection $csrfProtector)
+    {
+        $this->csrfProtector = $csrfProtector;
+    }
 
     /**
      * Renders a template.
@@ -77,8 +89,6 @@ class View
      */
     protected function csrfToken()
     {
-        global $_XH_csrfProtection;
-
-        return $_XH_csrfProtection->tokenInput();
+        return $this->csrfProtector->tokenInput();
     }
 }
