@@ -196,7 +196,6 @@ class AdminController
     {
         global $sn, $pth, $plugin_tx;
 
-        $confirmation = XH_hsc(addcslashes($plugin_tx['boilerplate']['confirm_delete'], "\r\n\\\'"));
         $deleteImage = $pth['folder']['plugins'] . 'boilerplate/images/delete.png';
         $url = $sn . '?&amp;boilerplate';
         $baseURL = $sn . '?&amp;boilerplate&amp;admin=plugin_main&amp;action=';
@@ -207,7 +206,26 @@ class AdminController
                 'deleteURL' => $baseURL . 'delete&amp;boilerplate_name=' . $name
             ];
         }
-        $bag = compact('confirmation', 'deleteImage', 'url', 'boilerplates');
-        return $this->view->render('admin', $bag);
+        $bag = compact('deleteImage', 'url', 'boilerplates');
+        return $this->renderJsConfigOnce() . $this->view->render('admin', $bag);
+    }
+
+    /**
+     * @return string
+     */
+    private function renderJsConfigOnce()
+    {
+        global $plugin_tx;
+        static $done = false;
+
+        if ($done) {
+            return '';
+        }
+        $done = true;
+        $config = [
+            'delete_confirmation' => $plugin_tx['boilerplate']['confirm_delete'],
+        ];
+        $json = json_encode($config);
+        return "<script>boilerplate = $json;</script>\n";
     }
 }
