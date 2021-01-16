@@ -125,16 +125,8 @@ class Model
     {
         assert($this->isValidName($name));
         $fn = tempnam($this->dataFolder, 'boilerplate');
-        $ok = ($fp = fopen($fn, 'w')) !== false
-            && fwrite($fp, $content) !== false;
-        if ($fp) {
-            fclose($fp);
-        }
-        if ($ok) {
-            $dst = $this->filename($name);
-            $ok = rename($fn, $dst);
-        }
-        return $ok;
+        return file_put_contents($fn, $content) !== false
+            && rename($fn, $this->filename($name));
     }
 
     /**
