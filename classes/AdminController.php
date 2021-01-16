@@ -57,7 +57,7 @@ class AdminController
         global $pth, $tx, $plugin_tx;
 
         $ptx = $plugin_tx['boilerplate'];
-        $phpVersion = '5.4.0';
+        $phpVersion = '5.6.0';
         foreach (['ok', 'warn', 'fail'] as $state) {
             $images[$state] = $pth['folder']['plugins']
                 . "boilerplate/images/$state.png";
@@ -89,26 +89,22 @@ class AdminController
      */
     public function newTextBlock($name)
     {
-        global $e, $plugin_tx;
-
         $this->csrfProtector->check();
-        $ptx = $plugin_tx['boilerplate'];
         if (!$this->model->isValidName($name)) {
-            $e .= '<li><b>' . $ptx['error_invalid_name'] . '</b><br>'
-                . $name . '</li>' . PHP_EOL;
-            return $this->renderMainAdministration();
+            return $this->renderError('error_invalid_name', $name)
+                . $this->renderMainAdministration();
         }
         $fn = $this->model->filename($name);
         if (!file_exists($fn)) {
             if ($this->model->write($name, '') !== false) {
                 $this->relocate("?boilerplate&admin=plugin_main&action=edit&boilerplate_name=$name");
             } else {
-                e('cntwriteto', 'file', $fn);
-                return $this->renderMainAdministration();
+                return $this->renderError('error_cant_write', $name)
+                    . $this->renderMainAdministration();
             }
         } else {
-            e('alreadyexists', 'file', $fn);
-            return $this->renderMainAdministration();
+            return $this->renderError('error_already_exists', $name)
+                . $this->renderMainAdministration();
         }
     }
 
@@ -127,8 +123,8 @@ class AdminController
         if (!isset($content)) {
             $content = $this->model->read($name);
             if ($content === false) {
-                e('cntopen', 'file', $this->model->filename($name));
-                return false;
+                return $this->renderError('error_cant_read', $name)
+                    . $this->renderMainAdministration();
             }
         }
         $url = "$sn?&amp;boilerplate";
@@ -156,8 +152,8 @@ class AdminController
         if ($ok) {
             $this->relocate('?boilerplate&admin=plugin_main&action=plugin_tx');
         } else {
-            e('cntsave', 'file', $this->model->filename($name));
-            return $this->editTextBlock($name, $content);
+            return $this->renderError('error_cant_write', $name)
+                . $this->editTextBlock($name, $content);
         }
     }
 
@@ -175,8 +171,8 @@ class AdminController
         if ($this->model->delete($name)) {
             $this->relocate('?boilerplate&admin=plugin_main&action=plugin_tx');
         } else {
-            e('cntdelete', 'file', $this->model->filename($name));
-            return $this->renderMainAdministration();
+            return $this->renderError('error_cant_delete', $name)
+                . $this->renderMainAdministration();
         }
     }
 
@@ -187,6 +183,16 @@ class AdminController
     {
         header('Location: ' . CMSIMPLE_URL . $url, true, 303);
         exit;
+    }
+
+    /**
+     * @param string $msg
+     */
+    private function renderError($key, ...$args)
+    {
+        global $plugin_tx;
+
+        return XH_message('fail', $plugin_tx['boilerplate'][$key], ...$args);
     }
 
     /**
