@@ -202,9 +202,8 @@ class AdminController
      */
     public function renderMainAdministration()
     {
-        global $sn, $pth, $plugin_tx;
+        global $sn, $plugin_tx;
 
-        $deleteImage = $pth['folder']['plugins'] . 'boilerplate/images/delete.png';
         $url = $sn . '?&amp;boilerplate';
         $baseURL = $sn . '?&amp;boilerplate&amp;admin=plugin_main&amp;action=';
         $boilerplates = [];
@@ -214,7 +213,7 @@ class AdminController
                 'deleteURL' => $baseURL . 'delete&amp;boilerplate_name=' . $name
             ];
         }
-        $bag = compact('deleteImage', 'url', 'boilerplates');
+        $bag = compact('url', 'boilerplates');
         return $this->renderJsConfigOnce() . $this->view->render('admin', $bag);
     }
 

@@ -12,8 +12,7 @@ if (!isset($this)) {
         <tr>
             <td>
                 <form action="<?=$url?>" method="post" onsubmit="return confirm(boilerplate.delete_confirmation);">
-                    <input type="image" src="<?=$deleteImage?>" alt="<?=$this->text('label_delete')?>"
-                        title="<?=$this->text('label_delete')?>">
+                    <button><?=$this->text('label_delete')?></button>
                     <input type="hidden" name="admin" value="plugin_main">
                     <input type="hidden" name="action" value="delete">
                     <input type="hidden" name="boilerplate_name" value="<?=$name?>">
