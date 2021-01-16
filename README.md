@@ -104,9 +104,6 @@ Boilerplate\_XH was inspired by *rühgallisaniener* and *Hoffmann5928*.
 The plugin icon is designed by [Mart (Marco Martin)](http://www.notmart.org/).
 Many thanks for publishing this icon under GPL.
 
-This plugin uses free applications icons from [Aha-Soft](http://www.aha-soft.com/).
-Many thanks for making these icons freely available.
-
 Many thanks to the community at the [CMSimple\_XH-Forum](http://www.cmsimpleforum.com/)
 for tips, suggestions and testing.
 Special thanks to *ustalo* for reminding me of this almost forgotten plugin.

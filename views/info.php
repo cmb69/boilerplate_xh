@@ -7,15 +7,9 @@ if (!isset($this)) {
 <!-- Boilerplate_XH: info -->
 <h1>Boilerplate_XH &ndash; <?=$this->text('label_info')?></h1>
 <h4><?=$this->text('syscheck_title')?></h4>
-<ul style="list-style: none">
-<?php foreach ($checks as $check => $state) :?>
-    <li>
-        <img src="<?=$images[$state]?>" alt="<?=$images[$state]?>"
-            style="margin: 0; height: 1em; padding-right: 1em">
-        <span><?=$check?></span>
-    </li>
+<?php foreach ($checks as $check) :?>
+<div><?=$check?></div>
 <?php endforeach?>
-</ul>
 <hr>
 <h4><?=$this->text('about')?></h4>
 <img src="<?=$icon?>" style="float: left; width: 128px; height: 128px; margin-right: 16px"

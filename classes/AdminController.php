@@ -63,15 +63,21 @@ class AdminController
                 . "boilerplate/images/$state.png";
         }
         $checks = [];
-        $checks[sprintf($ptx['syscheck_phpversion'], $phpVersion)]
-            = version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'ok' : 'fail';
+        $checks[] = XH_message(
+            version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'success' : 'fail',
+            $ptx['syscheck_phpversion'],
+            $phpVersion
+        );
         foreach (['css', 'languages/'] as $folder) {
             $folders[] = $pth['folder']['plugins'] . 'boilerplate/' . $folder;
         }
         $folders[] = $this->model->getDataFolder();
         foreach ($folders as $folder) {
-            $checks[sprintf($ptx['syscheck_writable'], $folder)]
-                = is_writable($folder) ? 'ok' : 'warn';
+            $checks[] = XH_message(
+                is_writable($folder) ? 'success' : 'warning',
+                $ptx['syscheck_writable'],
+                $folder
+            );
         }
         $icon = $pth['folder']['plugins'] . 'boilerplate/boilerplate.png';
         $version = BOILERPLATE_VERSION;

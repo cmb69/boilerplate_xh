@@ -111,9 +111,6 @@ Boilerplate\_XH wurde durch *rühgallisaniener* und *Hoffmann5928* angeregt.
 Das Plugin-Icon wurde von [Mart (Marco Martin)](http://www.notmart.org/) gestaltet.
 Vielen Dank für die Veröffentlichung dieses Icons unter GPL.
 
-Dieses Plugin verwendet „free applications icons“ von [Aha-Soft](http://www.aha-soft.com/).
-Vielen Dank für die freie Nutzbarkeit dieser Icons.
-
 Vielen Dank an die Community im [CMSimple\_XH-Forum](http://www.cmsimpleforum.com/)
 für Hinweise, Anregungen und das Testen.
 Ein besonderes Dankeschön an *ustalo*, der mich an dieses beinahe vergessenes Plugin erinnerte.

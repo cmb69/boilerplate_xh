@@ -14,8 +14,8 @@ $plugin_tx['boilerplate']['error_cant_write']="Der Textbaustein „%s“ konnte 
 $plugin_tx['boilerplate']['error_cant_delete']="Der Textbaustein „%s“ konnte nicht gelöscht werden.";
 
 $plugin_tx['boilerplate']['syscheck_title']="Systemprüfung";
-$plugin_tx['boilerplate']['syscheck_phpversion']="PHP-Version &ge; %s";
-$plugin_tx['boilerplate']['syscheck_writable']="Ordner '%s' beschreibbar";
+$plugin_tx['boilerplate']['syscheck_phpversion']="PHP-Version ≥ %s";
+$plugin_tx['boilerplate']['syscheck_writable']="Ordner „%s“ beschreibbar";
 
 $plugin_tx['boilerplate']['about']="Über Boilerplate_XH";
 $plugin_tx['boilerplate']['alt_logo']="Bauklötze";
