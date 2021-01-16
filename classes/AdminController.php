@@ -68,6 +68,11 @@ class AdminController
             $ptx['syscheck_phpversion'],
             $phpVersion
         );
+        $checks[] = XH_message(
+            extension_loaded('json') ? 'success' : 'fail',
+            $ptx['syscheck_extension'],
+            'JSON'
+        );
         foreach (['css', 'languages/'] as $folder) {
             $folders[] = $pth['folder']['plugins'] . 'boilerplate/' . $folder;
         }

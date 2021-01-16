@@ -15,6 +15,7 @@ $plugin_tx['boilerplate']['menu_help']="Помощь";
 $plugin_tx['boilerplate']['label_create']="Создать";
 $plugin_tx['boilerplate']['syscheck_title']="Проверка системы";
 $plugin_tx['boilerplate']['syscheck_phpversion']="Версия PHP ≥ %s";
+$plugin_tx['boilerplate']['syscheck_extension']="Расширение '%s' загружено";
 $plugin_tx['boilerplate']['syscheck_writable']="Папка '%s' доступна для записи";
 
 ?>

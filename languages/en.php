@@ -15,6 +15,7 @@ $plugin_tx['boilerplate']['error_cant_delete']="The text block “%s” could no
 
 $plugin_tx['boilerplate']['syscheck_title']="System check";
 $plugin_tx['boilerplate']['syscheck_phpversion']="PHP version ≥ %s";
+$plugin_tx['boilerplate']['syscheck_extension']="Extension “%s“ loaded";
 $plugin_tx['boilerplate']['syscheck_writable']="Folder “%s“ writable";
 
 $plugin_tx['boilerplate']['about']="About Boilerplate_XH";
