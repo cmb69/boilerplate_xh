@@ -88,16 +88,13 @@ class Model
     }
 
     /**
-     * Returns the file name of a text block.
-     *
-     * @param string $name A boilerplate name.
-     *
+     * @param string $name
      * @return string
      */
-    public function filename($name)
+    public function exists($name)
     {
         assert($this->isValidName($name));
-        return $this->dataFolder . $name . '.htm';
+        return is_file($this->filename($name));
     }
 
     /**
@@ -140,5 +137,18 @@ class Model
     {
         assert($this->isValidName($name));
         return unlink($this->filename($name));
+    }
+
+    /**
+     * Returns the file name of a text block.
+     *
+     * @param string $name A boilerplate name.
+     *
+     * @return string
+     */
+    private function filename($name)
+    {
+        assert($this->isValidName($name));
+        return $this->dataFolder . $name . '.htm';
     }
 }

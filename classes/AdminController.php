@@ -105,8 +105,7 @@ class AdminController
             return $this->renderError('error_invalid_name', $name)
                 . $this->renderMainAdministration();
         }
-        $fn = $this->model->filename($name);
-        if (!file_exists($fn)) {
+        if (!$this->model->exists($name)) {
             if ($this->model->write($name, '') !== false) {
                 $this->relocate("?boilerplate&admin=plugin_main&action=edit&boilerplate_name=$name");
             } else {
