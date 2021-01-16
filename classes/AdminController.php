@@ -101,10 +101,7 @@ class AdminController
         $fn = $this->model->filename($name);
         if (!file_exists($fn)) {
             if ($this->model->write($name, '') !== false) {
-                $qs = '?boilerplate&admin=plugin_main&action=edit&boilerplate_name='
-                    . $name;
-                header('Location: ' . CMSIMPLE_URL . $qs, true, 303);
-                exit;
+                $this->relocate("?boilerplate&admin=plugin_main&action=edit&boilerplate_name=$name");
             } else {
                 e('cntwriteto', 'file', $fn);
                 return $this->renderMainAdministration();
@@ -157,9 +154,7 @@ class AdminController
         $content = $_POST['boilerplate_text'];
         $ok = $this->model->write($name, $content);
         if ($ok) {
-            $qs = '?boilerplate&admin=plugin_main&action=plugin_tx';
-            header('Location: ' . CMSIMPLE_URL . $qs, true, 303);
-            exit;
+            $this->relocate('?boilerplate&admin=plugin_main&action=plugin_tx');
         } else {
             e('cntsave', 'file', $this->model->filename($name));
             return $this->editTextBlock($name, $content);
@@ -178,13 +173,20 @@ class AdminController
     {
         $this->csrfProtector->check();
         if ($this->model->delete($name)) {
-            $qs = '?boilerplate&admin=plugin_main&action=plugin_tx';
-            header('Location: ' . CMSIMPLE_URL . $qs, true, 303);
-            exit;
+            $this->relocate('?boilerplate&admin=plugin_main&action=plugin_tx');
         } else {
             e('cntdelete', 'file', $this->model->filename($name));
             return $this->renderMainAdministration();
         }
+    }
+
+    /**
+     * @param string $url
+     */
+    private function relocate($url)
+    {
+        header('Location: ' . CMSIMPLE_URL . $url, true, 303);
+        exit;
     }
 
     /**
