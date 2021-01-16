@@ -25,8 +25,7 @@
 const BOILERPLATE_VERSION = '@BOILERPLATE_VERSION@';
 
 /**
- * Returns a text block. On failure a error message is emitted and false is
- * returned.
+ * Returns a text block or an error message
  *
  * @param string $name A boilerplate name.
  *
@@ -34,20 +33,17 @@ const BOILERPLATE_VERSION = '@BOILERPLATE_VERSION@';
  */
 function boilerplate($name)
 {
-    global $pth, $e, $plugin_tx;
+    global $pth, $plugin_tx;
 
     $model = new Boilerplate\Model("{$pth['folder']['base']}content/boilerplate/");
     $ptx = $plugin_tx['boilerplate'];
     if (!$model->isValidName($name)) {
-        $e .= '<li><b>' . $ptx['error_invalid_name'] . '</b><br>'
-            . $name . '</li>' . PHP_EOL;
-        return false;
+        return XH_message('fail', $ptx['error_invalid_name'], $name);
     }
     $content = $model->read($name);
     if ($content !== false) {
-        return  evaluate_scripting($content);
+        return evaluate_scripting($content);
     } else {
-        e('cntopen', 'file', $model->filename($name));
-        return false;
+        return XH_message('fail', $ptx['error_cant_read'], $name);
     }
 }
