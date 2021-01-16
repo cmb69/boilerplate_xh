@@ -99,7 +99,7 @@ Slovak translation © 2012 Dr. Martin Sereday
 
 ## Credits
 
-Boilerplate\_XH was inspired by rühgallisaniener and Hoffmann5928.
+Boilerplate\_XH was inspired by *rühgallisaniener* and *Hoffmann5928*.
 
 The plugin icon is designed by [Mart (Marco Martin)](http://www.notmart.org/).
 Many thanks for publishing this icon under GPL.
@@ -109,6 +109,7 @@ Many thanks for making these icons freely available.
 
 Many thanks to the community at the [CMSimple\_XH-Forum](http://www.cmsimpleforum.com/)
 for tips, suggestions and testing.
+Special thanks to *ustalo* for reminding me of this almost forgotten plugin.
 
 And last but not least many thanks to [Peter Harteg](http://www.harteg.dk/),
 the “father” of CMSimple, and all developers of [CMSimple\_XH](http://www.cmsimple-xh.org/)
