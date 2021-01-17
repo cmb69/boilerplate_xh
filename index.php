@@ -35,7 +35,7 @@ function boilerplate($name)
 {
     global $pth, $plugin_tx;
 
-    $model = new Boilerplate\Model("{$pth['folder']['base']}content/boilerplate/");
+    $model = new Boilerplate\TextBlocks("{$pth['folder']['base']}content/boilerplate/");
     $ptx = $plugin_tx['boilerplate'];
     if (!$model->isValidName($name)) {
         return XH_message('fail', $ptx['error_invalid_name'], $name);

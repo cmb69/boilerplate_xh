@@ -26,7 +26,7 @@ use XH\CSRFProtection;
 class AdminController
 {
     /**
-     * @var Model
+     * @var TextBlocks
      */
     private $model;
 
@@ -40,7 +40,7 @@ class AdminController
      */
     private $view;
 
-    public function __construct(Model $model, CSRFProtection $csrfProtector, View $view)
+    public function __construct(TextBlocks $model, CSRFProtection $csrfProtector, View $view)
     {
         $this->model = $model;
         $this->csrfProtector = $csrfProtector;

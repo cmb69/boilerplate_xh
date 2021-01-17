@@ -21,7 +21,7 @@
 
 namespace Boilerplate;
 
-class Model
+class TextBlocks
 {
     /**
      * The data folder.

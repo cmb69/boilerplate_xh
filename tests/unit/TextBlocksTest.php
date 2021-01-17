@@ -45,7 +45,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
     /**
      * The test subject.
      *
-     * @var Model
+     * @var TextBlocks
      */
     protected $subject;
 
@@ -59,7 +59,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
         vfsStreamWrapper::register();
         vfsStreamWrapper::setRoot(new vfsStreamDirectory('test'));
         $this->dataFolder = vfsStream::url('test/data/');
-        $this->subject = new Model($this->dataFolder);
+        $this->subject = new TextBlocks($this->dataFolder);
         touch($this->dataFolder . 'block1.dat');
         touch($this->dataFolder . 'block10.htm');
         touch($this->dataFolder . 'block2.htm');
