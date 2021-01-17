@@ -95,11 +95,6 @@
                 <include name="index.php"/>
                 <include name="version.nfo"/>
             </fileset>
-            <filterchain>
-                <replacetokens>
-                    <token key="BOILERPLATE_VERSION" value="${version}"/>
-                </replacetokens>
-            </filterchain>
         </move>
         <move todir="dist">
             <fileset dir="export">
