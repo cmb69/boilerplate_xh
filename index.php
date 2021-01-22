@@ -22,7 +22,7 @@
 /**
  * The version number of the plugin.
  */
-const BOILERPLATE_VERSION = '1.0';
+const BOILERPLATE_VERSION = '2.0';
 
 /**
  * Returns a text block or an error message
