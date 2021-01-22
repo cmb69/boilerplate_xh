@@ -9,15 +9,15 @@ während `newsbox()` mit versteckten CMSimple\_XH Seiten arbeitet, speichert
 Möglichkeit nutzen, um Ihr content.htm klein zu halten, in dem Sie den
 kompletten Seiteninhalt durch einen Boilerplate\_XH Textbaustein ersetzen.
 
-## Table of Contents
+## Inhaltsverzeichnis
 
-- [Voraussetzungen](#requirements)
+- [Voraussetzungen](#voraussetzungen)
 - [Download](#download)
 - [Installation](#installation)
-- [Einstellungen](#settings)
-- [Verwendung](#usage)
-- [Lizenz](#license)
-- [Danksagung](#credits)
+- [Einstellungen](#einstellungen)
+- [Verwendung](#verwendung)
+- [Lizenz](#lizenz)
+- [Danksagung](#danksagung)
 
 
 ## Voraussetzungen
