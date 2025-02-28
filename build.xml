@@ -23,6 +23,13 @@
         </exec>
     </target>
 
+    <target name="stan" description="run static analysis">
+        <exec executable="phpstan" passthru="true" checkreturn="true">
+            <arg value="--ansi"/>
+            <arg value="analyze"/>
+        </exec>
+    </target>
+
     <target name="unit-tests" description="runs all unit tests">
         <exec executable="phpunit" passthru="true" checkreturn="true">
             <arg value="--bootstrap"/>
@@ -91,6 +98,7 @@
                 <exclude name="composer.*"/>
                 <exclude name="coverage.xml"/>
                 <exclude name="help/template.htm"/>
+                <exclude name="phpstan.*"/>
                 <exclude name="README*.md"/>
                 <exclude name="tests/**"/>
             </fileset>

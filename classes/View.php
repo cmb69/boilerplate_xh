@@ -36,7 +36,7 @@ class View
     private $template;
 
     /**
-     * @var array
+     * @var array<string,mixed>
      */
     private $data;
 
@@ -49,7 +49,7 @@ class View
      * Renders a template.
      *
      * @param string $template
-     * @param array  $data
+     * @param array<string,mixed> $data
      *
      * @return string (X)HTML.
      */
@@ -70,12 +70,12 @@ class View
         extract($this->data);
         ob_start();
         include $this->template;
-        return ob_get_clean();
+        return (string) ob_get_clean();
     }
 
     /**
      * @param string $key
-     * @return string
+     * @return string|null
      */
     protected function text($key)
     {

@@ -19,6 +19,8 @@
  * along with Boilerplate_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use XH\CSRFProtection;
+
 /*
  * Prevent direct access.
  */
@@ -26,6 +28,14 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
     header('HTTP/1.0 403 Forbidden');
     exit;
 }
+
+/**
+ * @var string $action
+ * @var string $admin
+ * @var string $o
+ * @var array{folder:array<string,string>,file:array<string,string>} $pth
+ * @var XH\CSRFProtection $_XH_csrfProtection
+ */
 
 /*
  * Register the plugin menu items.
@@ -65,6 +75,6 @@ if (XH_wantsPluginAdministration('boilerplate')) {
             }
             break;
         default:
-            $o .= plugin_admin_common($action, $admin, $plugin);
+            $o .= plugin_admin_common();
     }
 }

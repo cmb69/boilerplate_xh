@@ -59,7 +59,7 @@ class TextBlocks
     /**
      * Returns all names available in the data folder.
      *
-     * @return array
+     * @return list<string>
      */
     public function names()
     {
@@ -89,7 +89,7 @@ class TextBlocks
 
     /**
      * @param string $name
-     * @return string
+     * @return bool
      */
     public function exists($name)
     {
@@ -102,7 +102,7 @@ class TextBlocks
      *
      * @param string $name A boilerplate name.
      *
-     * @return string (X)HTML.
+     * @return string|false
      */
     public function read($name)
     {

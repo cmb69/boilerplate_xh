@@ -95,7 +95,7 @@ class AdminController
      *
      * @param string $name A boilerplate name.
      *
-     * @return string (X)HTML.
+     * @return string|void
      */
     public function newTextBlock($name)
     {
@@ -151,7 +151,7 @@ class AdminController
      *
      * @param string $name A boilerplate.
      *
-     * @return string (X)HTML.
+     * @return string|void
      */
     public function saveTextBlock($name)
     {
@@ -172,7 +172,7 @@ class AdminController
      *
      * @param string $name A boilerplate name.
      *
-     * @return string (X)HTML.
+     * @return string|void
      */
     public function deleteTextBlock($name)
     {
@@ -187,6 +187,7 @@ class AdminController
 
     /**
      * @param string $url
+     * @return never
      */
     private function relocate($url)
     {
@@ -195,7 +196,9 @@ class AdminController
     }
 
     /**
-     * @param string $msg
+     * @param string $key
+     * @param scalar $args
+     * @return string
      */
     private function renderError($key, ...$args)
     {
