@@ -2,10 +2,6 @@
 
 <project name="Boilerplate" default="help">
 
-    <fileset id="js-sources" dir=".">
-        <include name="*.js"/>
-    </fileset>
-
     <fileset id="attack-tests" dir="tests/attack">
         <include name="*Test.php"/>
     </fileset>
