@@ -26,7 +26,7 @@ use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
 
-class ModelTest extends TestCase
+class TextBlocksTest extends TestCase
 {
     /**
      * The test content.
@@ -146,6 +146,6 @@ class ModelTest extends TestCase
         $filename = $this->dataFolder . 'foo.htm';
         touch($filename);
         $this->subject->delete('foo');
-        $this->assertFileNotExists($filename);
+        $this->assertFileDoesNotExist($filename);
     }
 }
