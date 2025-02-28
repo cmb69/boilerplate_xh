@@ -84,9 +84,8 @@ class AdminController
                 $folder
             );
         }
-        $icon = $pth['folder']['plugins'] . 'boilerplate/boilerplate.png';
         $version = BOILERPLATE_VERSION;
-        $bag = compact('images', 'checks', 'icon', 'version');
+        $bag = compact('images', 'checks', 'version');
         return $this->view->render('info', $bag);
     }
 
