@@ -25,19 +25,13 @@ use XH\CSRFProtection;
 
 class AdminController
 {
-    /**
-     * @var TextBlocks
-     */
+    /** @var TextBlocks */
     private $model;
 
-    /**
-     * @var CSRFProtection
-     */
+    /** @var CSRFProtection */
     private $csrfProtector;
 
-    /**
-     * @var View
-     */
+    /** @var View */
     private $view;
 
     public function __construct(TextBlocks $model, CSRFProtection $csrfProtector, View $view)
@@ -47,17 +41,12 @@ class AdminController
         $this->view = $view;
     }
 
-    /**
-     * Returns the plugin information view.
-     *
-     * @return string (X)HTML.
-     */
-    public function renderInfo()
+    public function renderInfo(): string
     {
         global $pth, $tx, $plugin_tx;
 
         $ptx = $plugin_tx['boilerplate'];
-        $phpVersion = '7.0.0';
+        $phpVersion = '7.1.0';
         foreach (['ok', 'warn', 'fail'] as $state) {
             $images[$state] = $pth['folder']['plugins']
                 . "boilerplate/images/$state.png";
@@ -89,15 +78,8 @@ class AdminController
         return $this->view->render('info', $bag);
     }
 
-    /**
-     * Creates a new boilerplate file. Redirects to the edit view on success;
-     * shows the main administration on failure.
-     *
-     * @param string $name A boilerplate name.
-     *
-     * @return string|void
-     */
-    public function newTextBlock($name)
+    /** @return string|void */
+    public function newTextBlock(string $name)
     {
         $this->csrfProtector->check();
         if (!$this->model->isValidName($name)) {
@@ -117,15 +99,7 @@ class AdminController
         }
     }
 
-    /**
-     * Returns the boilerplate edit view.
-     *
-     * @param string $name    A boilerplate name.
-     * @param string $content A boilerplate content.
-     *
-     * @return string (X)HTML.
-     */
-    public function editTextBlock($name, $content = null)
+    public function editTextBlock(string $name, ?string $content = null): string
     {
         global $sn, $pth, $cf;
 
@@ -145,15 +119,8 @@ class AdminController
         return $o;
     }
 
-    /**
-     * Saves a boilerplate text. Redirects to the main administration on success;
-     * returns the edit view on failure.
-     *
-     * @param string $name A boilerplate.
-     *
-     * @return string|void
-     */
-    public function saveTextBlock($name)
+    /** @return string|void */
+    public function saveTextBlock(string $name)
     {
         $this->csrfProtector->check();
         $content = $_POST['boilerplate_text'];
@@ -166,15 +133,8 @@ class AdminController
         }
     }
 
-    /**
-     * Deletes the boilerplate $name. Redirects to the main administration view on
-     * success; shows the main administration on failure.
-     *
-     * @param string $name A boilerplate name.
-     *
-     * @return string|void
-     */
-    public function deleteTextBlock($name)
+    /** @return string|void */
+    public function deleteTextBlock(string $name)
     {
         $this->csrfProtector->check();
         if ($this->model->delete($name)) {
@@ -185,34 +145,22 @@ class AdminController
         }
     }
 
-    /**
-     * @param string $url
-     * @return never
-     */
-    private function relocate($url)
+    /** @return never */
+    private function relocate(string $url)
     {
         header('Location: ' . CMSIMPLE_URL . $url, true, 303);
         exit;
     }
 
-    /**
-     * @param string $key
-     * @param scalar $args
-     * @return string
-     */
-    private function renderError($key, ...$args)
+    /** @param scalar $args */
+    private function renderError(string $key, ...$args): string
     {
         global $plugin_tx;
 
         return XH_message('fail', $plugin_tx['boilerplate'][$key], ...$args);
     }
 
-    /**
-     * Returns the main administration view.
-     *
-     * @return string (X)HTML.
-     */
-    public function renderMainAdministration()
+    public function renderMainAdministration(): string
     {
         global $sn, $plugin_tx;
 
@@ -229,10 +177,7 @@ class AdminController
         return $this->renderJsConfigOnce() . $this->view->render('admin', $bag);
     }
 
-    /**
-     * @return string
-     */
-    private function renderJsConfigOnce()
+    private function renderJsConfigOnce(): string
     {
         global $plugin_tx;
         static $done = false;

@@ -28,32 +28,14 @@ use PHPUnit\Framework\TestCase;
 
 class TextBlocksTest extends TestCase
 {
-    /**
-     * The test content.
-     *
-     * @var string
-     */
     const CONTENT = '<p>foo bar</p>';
 
-    /**
-     * The path of the data folder.
-     *
-     * @var string
-     */
+    /** @var string */
     protected $dataFolder;
 
-    /**
-     * The test subject.
-     *
-     * @var TextBlocks
-     */
+    /** @var TextBlocks */
     protected $subject;
 
-    /**
-     * Sets up the test fixture.
-     *
-     * @return void
-     */
     public function setUp(): void
     {
         vfsStreamWrapper::register();
@@ -65,57 +47,28 @@ class TextBlocksTest extends TestCase
         touch($this->dataFolder . 'block2.htm');
     }
 
-    /**
-     * Tests that the data folder is created.
-     *
-     * @return void
-     */
-    public function testDataFolderIsCreated()
+    public function testDataFolderIsCreated(): void
     {
         $this->assertFileExists($this->dataFolder);
     }
 
-    /**
-     * Tests that the correct data folder is returned.
-     *
-     * @return void
-     */
-    public function testReturnsCorrectDataFolder()
+    public function testReturnsCorrectDataFolder(): void
     {
         $this->assertEquals($this->dataFolder, $this->subject->getDataFolder());
     }
 
-    /**
-     * Tests that it finds the boilerplates.
-     *
-     * @return void
-     */
-    public function testFindsBoilerplates()
+    public function testFindsBoilerplates(): void
     {
         $this->assertEquals(['block2', 'block10'], $this->subject->names());
     }
 
-    /**
-     * Tests valid names.
-     *
-     * @param string $name    A boilerplate name.
-     * @param bool   $isValid Whether the name is valid.
-     *
-     * @return void
-     *
-     * @dataProvider validNamesData
-     */
-    public function testValidNames($name, $isValid)
+    /** @dataProvider validNamesData */
+    public function testValidNames(string $name, bool $isValid): void
     {
         $this->assertEquals($isValid, $this->subject->isValidName($name));
     }
 
-    /**
-     * Returns the data for testValidNames().
-     *
-     * @return array
-     */
-    public function validNamesData()
+    public function validNamesData(): array
     {
         return [
             ['block-1', true],
@@ -125,23 +78,13 @@ class TextBlocksTest extends TestCase
         ];
     }
 
-    /**
-     * Tests that a stored boilerplate is read.
-     *
-     * @return void
-     */
-    public function testReadsStoredBoilerplate()
+    public function testReadsStoredBoilerplate(): void
     {
         file_put_contents($this->dataFolder . 'test.htm', self::CONTENT);
         $this->assertEquals(self::CONTENT, $this->subject->read('test'));
     }
 
-    /**
-     * Tests that a boilerplate is deleted.
-     *
-     * @return void
-     */
-    public function testDeletesBoilerplate()
+    public function testDeletesBoilerplate(): void
     {
         $filename = $this->dataFolder . 'foo.htm';
         touch($filename);

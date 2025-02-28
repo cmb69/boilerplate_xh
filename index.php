@@ -19,19 +19,9 @@
  * along with Boilerplate_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * The version number of the plugin.
- */
 const BOILERPLATE_VERSION = '2.0';
 
-/**
- * Returns a text block or an error message
- *
- * @param string $name A boilerplate name.
- *
- * @return string (X)HTML.
- */
-function boilerplate($name)
+function boilerplate(string $name): string
 {
     global $pth, $plugin_tx;
 

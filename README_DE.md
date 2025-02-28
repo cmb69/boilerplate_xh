@@ -23,7 +23,7 @@ kompletten Seiteninhalt durch einen Boilerplate\_XH Textbaustein ersetzen.
 ## Voraussetzungen
 
 Boilerplate\_XH ist ein Plugin für CMSimple\_XH ≥ 1.7.0.
-Es benötigt PHP ≥ 7.0.0 und die JSON Extension.
+Es benötigt PHP ≥ 7.1.0 und die JSON Extension.
 
 ## Download
 

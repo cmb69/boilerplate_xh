@@ -23,21 +23,10 @@ namespace Boilerplate;
 
 class TextBlocks
 {
-    /**
-     * The data folder.
-     *
-     * @var string
-     */
+    /** @var string */
     private $dataFolder;
 
-    /**
-     * Initializes a new instance.
-     *
-     * @param string $dataFolder The data folder.
-     *
-     * @return void
-     */
-    public function __construct($dataFolder)
+    public function __construct(string $dataFolder)
     {
         if (!file_exists($dataFolder)) {
             mkdir($dataFolder, 0777, true);
@@ -46,22 +35,13 @@ class TextBlocks
         $this->dataFolder = $dataFolder;
     }
 
-    /**
-     * Returns the data folder.
-     *
-     * @return string
-     */
-    public function getDataFolder()
+    public function getDataFolder(): string
     {
         return $this->dataFolder;
     }
 
-    /**
-     * Returns all names available in the data folder.
-     *
-     * @return list<string>
-     */
-    public function names()
+    /** @return list<string> */
+    public function names(): array
     {
         $names = [];
         if ($dh = opendir($this->dataFolder)) {
@@ -75,50 +55,25 @@ class TextBlocks
         return array_values($names);
     }
 
-    /**
-     * Returns whether the name is valid.
-     *
-     * @param string $name A boilerplate name.
-     *
-     * @return bool
-     */
-    public function isValidName($name)
+    public function isValidName(string $name): bool
     {
         return (bool) preg_match('/^[a-z0-9_\-]+$/su', $name);
     }
 
-    /**
-     * @param string $name
-     * @return bool
-     */
-    public function exists($name)
+    public function exists(string $name): bool
     {
         assert($this->isValidName($name));
         return is_file($this->filename($name));
     }
 
-    /**
-     * Returns the content of a text block.
-     *
-     * @param string $name A boilerplate name.
-     *
-     * @return string|false
-     */
-    public function read($name)
+    /** @return string|false */
+    public function read(string $name)
     {
         assert($this->isValidName($name));
         return file_get_contents($this->filename($name));
     }
 
-    /**
-     * Saves new content for a text block. Returns whether that succeded.
-     *
-     * @param string $name    A boilerplate name.
-     * @param string $content A content.
-     *
-     * @return bool
-     */
-    public function write($name, $content)
+    public function write(string $name, string $content): bool
     {
         assert($this->isValidName($name));
         $fn = tempnam($this->dataFolder, 'boilerplate');
@@ -126,27 +81,13 @@ class TextBlocks
             && rename($fn, $this->filename($name));
     }
 
-    /**
-     * Deletes a text block. Returns whether that succeded.
-     *
-     * @param string $name A boilerplate name.
-     *
-     * @return bool
-     */
-    public function delete($name)
+    public function delete(string $name): bool
     {
         assert($this->isValidName($name));
         return unlink($this->filename($name));
     }
 
-    /**
-     * Returns the file name of a text block.
-     *
-     * @param string $name A boilerplate name.
-     *
-     * @return string
-     */
-    private function filename($name)
+    private function filename(string $name): string
     {
         assert($this->isValidName($name));
         return $this->dataFolder . $name . '.htm';

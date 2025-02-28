@@ -37,14 +37,8 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
  * @var XH\CSRFProtection $_XH_csrfProtection
  */
 
-/*
- * Register the plugin menu items.
- */
 XH_registerStandardPluginMenuItems(true);
 
-/*
- * Handle the plugin administration.
- */
 if (XH_wantsPluginAdministration('boilerplate')) {
     $o .= print_plugin_admin('on');
     $temp = new Boilerplate\AdminController(

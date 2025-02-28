@@ -25,19 +25,13 @@ use XH\CSRFProtection;
 
 class View
 {
-    /**
-     * @var CSRFProtection
-     */
+    /** @var CSRFProtection */
     private $csrfProtector;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $template;
 
-    /**
-     * @var array<string,mixed>
-     */
+    /** @var array<string,mixed> */
     private $data;
 
     public function __construct(CSRFProtection $csrfProtector)
@@ -45,15 +39,8 @@ class View
         $this->csrfProtector = $csrfProtector;
     }
 
-    /**
-     * Renders a template.
-     *
-     * @param string $template
-     * @param array<string,mixed> $data
-     *
-     * @return string (X)HTML.
-     */
-    public function render($template, $data)
+    /** @param array<string,mixed> $data */
+    public function render(string $template, array $data): string
     {
         global $pth;
 
@@ -62,10 +49,7 @@ class View
         return $this->doRender();
     }
 
-    /**
-     * @return string
-     */
-    private function doRender()
+    private function doRender(): string
     {
         extract($this->data);
         ob_start();
@@ -73,21 +57,14 @@ class View
         return (string) ob_get_clean();
     }
 
-    /**
-     * @param string $key
-     * @return string|null
-     */
-    protected function text($key)
+    protected function text(string $key): ?string
     {
         global $plugin_tx;
 
         return isset($plugin_tx['boilerplate'][$key]) ? XH_hsc($plugin_tx['boilerplate'][$key]) : null;
     }
 
-    /**
-     * @return string
-     */
-    protected function csrfToken()
+    protected function csrfToken(): string
     {
         return $this->csrfProtector->tokenInput();
     }
