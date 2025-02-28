@@ -21,7 +21,7 @@ Boilerplate\_XH text block.
 ## Requirements
 
 Boilerplate\_XH is a plugin for CMSimple\_XH ≥ 1.7.0.
-It requires PHP ≥ 5.6.0 with the JSON extension.
+It requires PHP ≥ 7.0.0 with the JSON extension.
 
 ## Download
 

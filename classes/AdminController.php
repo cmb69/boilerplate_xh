@@ -57,7 +57,7 @@ class AdminController
         global $pth, $tx, $plugin_tx;
 
         $ptx = $plugin_tx['boilerplate'];
-        $phpVersion = '5.6.0';
+        $phpVersion = '7.0.0';
         foreach (['ok', 'warn', 'fail'] as $state) {
             $images[$state] = $pth['folder']['plugins']
                 . "boilerplate/images/$state.png";
