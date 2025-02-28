@@ -21,12 +21,12 @@
 
 namespace Boilerplate;
 
-use PHPUnit_Framework_TestCase;
 use org\bovigo\vfs\vfsStreamWrapper;
 use org\bovigo\vfs\vfsStreamDirectory;
 use org\bovigo\vfs\vfsStream;
+use PHPUnit\Framework\TestCase;
 
-class ModelTest extends PHPUnit_Framework_TestCase
+class ModelTest extends TestCase
 {
     /**
      * The test content.
@@ -54,7 +54,7 @@ class ModelTest extends PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         vfsStreamWrapper::register();
         vfsStreamWrapper::setRoot(new vfsStreamDirectory('test'));
