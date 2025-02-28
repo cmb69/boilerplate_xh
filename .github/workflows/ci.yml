@@ -1,0 +1,32 @@
+name: checks
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  checks:
+    strategy:
+      matrix:
+        version: ['7.4', '8.0', '8.1', '8.2', '8.3', '8.4']
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{matrix.version}}
+          tools: composer,phive
+      - name: Install CMSimple_XH
+        run: |
+          curl -fsSL -o CMSimple_XH-1.8.zip https://github.com/cmsimple-xh/cmsimple-xh/releases/download/1.8.0/CMSimple_XH-1.8.zip
+          unzip -q CMSimple_XH-1.8.zip
+      - name: Checkout Boilerplate_XH
+        uses: actions/checkout@v4
+        with:
+          path: cmsimplexh/plugins/boilerplate
+      - name: phive install
+        run: cd cmsimplexh/plugins/boilerplate && phive --no-progress install --trust-gpg-keys A978220305CD5C32,D5F0CB76E2DD74F8
+      - name: composer install
+        run: cd cmsimplexh/plugins/boilerplate && composer install
+      - name: phing sniff
+        run: cd cmsimplexh/plugins/boilerplate && PATH=tools:vendor/bin:$PATH phing sniff
+#      - name: phing stan
+#        run: cd cmsimplexh/plugins/boilerplate && PATH=tools:vendor/bin:$PATH phing stan
+      - name: phing unit-tests
+        run: cd cmsimplexh/plugins/boilerplate && PATH=tools:vendor/bin:$PATH phing unit-tests
