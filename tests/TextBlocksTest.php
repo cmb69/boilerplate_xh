@@ -96,6 +96,13 @@ class TextBlocksTest extends TestCase
         $this->assertEquals(self::CONTENT, file_get_contents($this->dataFolder . "new.htm"));
     }
 
+    public function testOverwritesBoilerplate(): void
+    {
+        $this->subject->write("new", self::CONTENT);
+        $this->subject->write("new", "");
+        $this->assertEquals("", file_get_contents($this->dataFolder . "new.htm"));
+    }
+
     public function testDeletesBoilerplate(): void
     {
         $filename = $this->dataFolder . 'foo.htm';
