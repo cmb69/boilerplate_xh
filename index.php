@@ -19,7 +19,7 @@
  * along with Boilerplate_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-const BOILERPLATE_VERSION = '2.0';
+const BOILERPLATE_VERSION = '2.1-dev';
 
 function boilerplate(string $name): string
 {
