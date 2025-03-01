@@ -4,6 +4,10 @@ if (!isset($this)) {
     header('HTTP/1.0 404 Not Found');
     exit;
 }
+/**
+ * @var string $url
+ * @var list<array{editURL:string,deleteURL:string}> $boilerplates
+ */
 ?>
 <!-- Boilerplate_XH: administration -->
 <h1>Boilerplate – <?=$this->text('menu_main')?></h1>

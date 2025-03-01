@@ -3,6 +3,12 @@ if (!isset($this)) {
     header('HTTP/1.0 404 Not Found');
     exit;
 }
+/**
+ * @var string $name
+ * @var string $url
+ * @var string $editorHeight
+ * @var string $content
+ */
 ?>
 <!-- Boilerplate_XH: edit -->
 <h1>Boilerplate – <?=$name?></h1>

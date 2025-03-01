@@ -3,6 +3,10 @@ if (!isset($this)) {
     header('HTTP/1.0 404 Not Found');
     exit;
 }
+/**
+ * @var string $version
+ * @var list<string> $checks
+ */
 ?>
 <!-- Boilerplate_XH: info -->
 <h1>Boilerplate <?=$version?></h1>
