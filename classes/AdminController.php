@@ -25,6 +25,12 @@ use XH\CSRFProtection;
 
 class AdminController
 {
+    /** @var string */
+    private $scriptName;
+
+    /** @var string */
+    private $editorHeight;
+
     /** @var TextBlocks */
     private $model;
 
@@ -34,8 +40,15 @@ class AdminController
     /** @var View */
     private $view;
 
-    public function __construct(TextBlocks $model, CSRFProtection $csrfProtector, View $view)
-    {
+    public function __construct(
+        string $scriptName,
+        string $editorHeight,
+        TextBlocks $model,
+        CSRFProtection $csrfProtector,
+        View $view
+    ) {
+        $this->scriptName = $scriptName;
+        $this->editorHeight = $editorHeight;
         $this->model = $model;
         $this->csrfProtector = $csrfProtector;
         $this->view = $view;
@@ -49,39 +62,40 @@ class AdminController
             return $this->view->error('error_invalid_name', $name)
                 . $this->renderMainAdministration();
         }
-        if (!$this->model->exists($name)) {
-            if ($this->model->write($name, '') !== false) {
-                $this->relocate("?boilerplate&admin=plugin_main&action=edit&boilerplate_name=$name");
-            } else {
-                return $this->view->error('error_cant_write', $name)
-                    . $this->renderMainAdministration();
-            }
-        } else {
+        if ($this->model->exists($name)) {
             return $this->view->error('error_already_exists', $name)
                 . $this->renderMainAdministration();
         }
+        if ($this->model->write($name, '') === false) {
+            return $this->view->error('error_cant_write', $name)
+                . $this->renderMainAdministration();
+        }
+        $this->relocate("?boilerplate&admin=plugin_main&action=edit&boilerplate_name=$name");
     }
 
     public function editTextBlock(string $name, ?string $content = null): string
     {
-        global $sn, $cf;
-
         if (!isset($content)) {
-            $content = $this->model->read($name);
-            if ($content === false) {
+            if (($content = $this->model->read($name)) === false) {
                 return $this->view->error('error_cant_read', $name)
                     . $this->renderMainAdministration();
             }
         }
         $o = $this->view->render('edit', [
             "name" => $name,
-            "url" => "$sn?&amp;boilerplate",
-            "editorHeight" => $cf['editor']['height'],
+            "url" => "{$this->scriptName}?&amp;boilerplate",
+            "editorHeight" => $this->editorHeight,
             "content" => XH_hsc($content),
             "csrf_token_input" => $this->csrfProtector->tokenInput(),
         ]);
-        init_editor(['plugintextarea']);
+        $this->initEditor();
         return $o;
+    }
+
+    /** @return void */
+    protected function initEditor()
+    {
+        init_editor(['plugintextarea']);
     }
 
     /** @return string|void */
@@ -89,29 +103,26 @@ class AdminController
     {
         $this->csrfProtector->check();
         $content = $_POST['boilerplate_text'];
-        $ok = $this->model->write($name, $content);
-        if ($ok) {
-            $this->relocate('?boilerplate&admin=plugin_main&action=plugin_tx');
-        } else {
+        if (!$this->model->write($name, $content)) {
             return $this->view->error('error_cant_write', $name)
                 . $this->editTextBlock($name, $content);
         }
+        $this->relocate('?boilerplate&admin=plugin_main&action=plugin_tx');
     }
 
     /** @return string|void */
     public function deleteTextBlock(string $name)
     {
         $this->csrfProtector->check();
-        if ($this->model->delete($name)) {
-            $this->relocate('?boilerplate&admin=plugin_main&action=plugin_tx');
-        } else {
+        if (!$this->model->delete($name)) {
             return $this->view->error('error_cant_delete', $name)
                 . $this->renderMainAdministration();
         }
+        $this->relocate('?boilerplate&admin=plugin_main&action=plugin_tx');
     }
 
     /** @return never */
-    private function relocate(string $url)
+    protected function relocate(string $url)
     {
         header('Location: ' . CMSIMPLE_URL . $url, true, 303);
         exit;
@@ -119,9 +130,7 @@ class AdminController
 
     public function renderMainAdministration(): string
     {
-        global $sn;
-
-        $baseURL = $sn . '?&amp;boilerplate&amp;admin=plugin_main&amp;action=';
+        $baseURL = $this->scriptName . '?&amp;boilerplate&amp;admin=plugin_main&amp;action=';
         $boilerplates = [];
         foreach ($this->model->names() as $name) {
             $boilerplates[$name] = [
@@ -130,7 +139,7 @@ class AdminController
             ];
         }
         return $this->renderJsConfigOnce() . $this->view->render('admin', [
-            "url" => $sn . '?&amp;boilerplate',
+            "url" => $this->scriptName . '?&amp;boilerplate',
             "boilerplates" => $boilerplates,
             "csrf_token_input" => $this->csrfProtector->tokenInput(),
         ]);
@@ -138,7 +147,6 @@ class AdminController
 
     private function renderJsConfigOnce(): string
     {
-        global $plugin_tx;
         static $done = false;
 
         if ($done) {
@@ -146,7 +154,7 @@ class AdminController
         }
         $done = true;
         $config = [
-            'delete_confirmation' => $plugin_tx['boilerplate']['confirm_delete'],
+            'delete_confirmation' => $this->view->text("confirm_delete"),
         ];
         $json = json_encode($config);
         return "<script>boilerplate = $json;</script>\n";

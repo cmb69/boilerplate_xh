@@ -28,9 +28,11 @@ class DicTest extends TestCase
 {
     public function setUp(): void
     {
-        global $pth, $plugin_tx, $_XH_csrfProtection;
+        global $sn, $pth, $cf, $plugin_tx, $_XH_csrfProtection;
 
+        $sn = "/";
         $pth = ["folder" => ["base" => "./", "plugins" => "./plugins/"]];
+        $cf = ["editor" => ["height" => "600"]];
         $plugin_tx = ["boilerplate" => []];
         $_XH_csrfProtection = $this->createStub(CSRFProtection::class);
     }

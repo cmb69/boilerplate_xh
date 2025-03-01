@@ -49,9 +49,11 @@ class Dic
 
     public static function makeAdminController(): AdminController
     {
-        global $pth, $plugin_tx, $_XH_csrfProtection;
+        global $sn, $pth, $cf, $plugin_tx, $_XH_csrfProtection;
 
         return new AdminController(
+            $sn,
+            $cf["editor"]["height"],
             new TextBlocks("{$pth['folder']['base']}content/boilerplate/"),
             $_XH_csrfProtection,
             new View(
