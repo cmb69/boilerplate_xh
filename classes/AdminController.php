@@ -43,7 +43,7 @@ class AdminController
 
     public function renderInfo(): string
     {
-        global $pth, $tx, $plugin_tx;
+        global $pth, $plugin_tx;
 
         $ptx = $plugin_tx['boilerplate'];
         $phpVersion = '7.1.0';
@@ -73,9 +73,11 @@ class AdminController
                 $folder
             );
         }
-        $version = BOILERPLATE_VERSION;
-        $bag = compact('images', 'checks', 'version');
-        return $this->view->render('info', $bag);
+        return $this->view->render('info', [
+            "images" => $images,
+            "checks" => $checks,
+            "version" => BOILERPLATE_VERSION,
+        ]);
     }
 
     /** @return string|void */
@@ -101,7 +103,7 @@ class AdminController
 
     public function editTextBlock(string $name, ?string $content = null): string
     {
-        global $sn, $pth, $cf;
+        global $sn, $cf;
 
         if (!isset($content)) {
             $content = $this->model->read($name);
@@ -110,11 +112,12 @@ class AdminController
                     . $this->renderMainAdministration();
             }
         }
-        $url = "$sn?&amp;boilerplate";
-        $editorHeight = $cf['editor']['height'];
-        $content = XH_hsc($content);
-        $bag = compact('name', 'url', 'editorHeight', 'content');
-        $o = $this->view->render('edit', $bag);
+        $o = $this->view->render('edit', [
+            "name" => $name,
+            "url" => "$sn?&amp;boilerplate",
+            "editorHeight" => $cf['editor']['height'],
+            "content" => XH_hsc($content),
+        ]);
         init_editor(['plugintextarea']);
         return $o;
     }
@@ -154,9 +157,8 @@ class AdminController
 
     public function renderMainAdministration(): string
     {
-        global $sn, $plugin_tx;
+        global $sn;
 
-        $url = $sn . '?&amp;boilerplate';
         $baseURL = $sn . '?&amp;boilerplate&amp;admin=plugin_main&amp;action=';
         $boilerplates = [];
         foreach ($this->model->names() as $name) {
@@ -165,8 +167,10 @@ class AdminController
                 'deleteURL' => $baseURL . 'delete&amp;boilerplate_name=' . $name
             ];
         }
-        $bag = compact('url', 'boilerplates');
-        return $this->renderJsConfigOnce() . $this->view->render('admin', $bag);
+        return $this->renderJsConfigOnce() . $this->view->render('admin', [
+            "url" => $sn . '?&amp;boilerplate',
+            "boilerplates" => $boilerplates,
+        ]);
     }
 
     private function renderJsConfigOnce(): string
