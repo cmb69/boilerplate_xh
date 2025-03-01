@@ -21,6 +21,7 @@
 
 use Boilerplate\BoilerplateController;
 use Boilerplate\TextBlocks;
+use Boilerplate\View;
 
 const BOILERPLATE_VERSION = '2.1-dev';
 
@@ -28,7 +29,9 @@ function boilerplate(string $name): string
 {
     global $pth, $plugin_tx;
 
-    $textBlocks = new TextBlocks("{$pth['folder']['base']}content/boilerplate/");
-    $controller = new BoilerplateController($plugin_tx["boilerplate"], $textBlocks);
+    $controller = new BoilerplateController(
+        new TextBlocks("{$pth['folder']['base']}content/boilerplate/"),
+        new View("{$pth['folder']['base']}content/boilerplate/views/", $plugin_tx["boilerplate"])
+    );
     return $controller($name);
 }

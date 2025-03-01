@@ -23,29 +23,28 @@ namespace Boilerplate;
 
 class BoilerplateController
 {
-    /** @var array<string,string> */
-    private $lang;
-
     /** @var TextBlocks */
     private $textBlocks;
 
-    /** @param array<string,string> $lang */
-    public function __construct(array $lang, TextBlocks $textBlocks)
+    /** @var View */
+    private $view;
+
+    public function __construct(TextBlocks $textBlocks, View $view)
     {
-        $this->lang = $lang;
         $this->textBlocks = $textBlocks;
+        $this->view = $view;
     }
 
     public function __invoke(string $name): string
     {
         if (!$this->textBlocks->isValidName($name)) {
-            return XH_message('fail', $this->lang['error_invalid_name'], $name);
+            return $this->view->error("error_invalid_name", $name);
         }
         $content = $this->textBlocks->read($name);
         if ($content !== false) {
             return evaluate_scripting($content);
         } else {
-            return XH_message('fail', $this->lang['error_cant_read'], $name);
+            return $this->view->error("error_cant_read", $name);
         }
     }
 }
