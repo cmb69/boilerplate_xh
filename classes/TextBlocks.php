@@ -28,15 +28,15 @@ class TextBlocks
 
     public function __construct(string $dataFolder)
     {
-        if (!file_exists($dataFolder)) {
-            mkdir($dataFolder, 0777, true);
-            chmod($dataFolder, 0777);
-        }
         $this->dataFolder = $dataFolder;
     }
 
     public function getDataFolder(): string
     {
+        if (!is_dir($this->dataFolder)) {
+            mkdir($this->dataFolder, 0777, true);
+            chmod($this->dataFolder, 0777);
+        }
         return $this->dataFolder;
     }
 
@@ -44,7 +44,7 @@ class TextBlocks
     public function names(): array
     {
         $names = [];
-        if ($dh = opendir($this->dataFolder)) {
+        if ($dh = opendir($this->getDataFolder())) {
             while (($fn = readdir($dh)) !== false) {
                 if ($fn[0] != '.' && pathinfo($fn, PATHINFO_EXTENSION) == 'htm') {
                     $names[] = basename($fn, '.htm');
@@ -76,7 +76,7 @@ class TextBlocks
     public function write(string $name, string $content): bool
     {
         assert($this->isValidName($name));
-        $fn = tempnam($this->dataFolder, 'boilerplate');
+        $fn = tempnam($this->getDataFolder(), 'boilerplate');
         return file_put_contents($fn, $content) !== false
             && rename($fn, $this->filename($name));
     }
@@ -90,6 +90,6 @@ class TextBlocks
     private function filename(string $name): string
     {
         assert($this->isValidName($name));
-        return $this->dataFolder . $name . '.htm';
+        return $this->getDataFolder() . $name . '.htm';
     }
 }

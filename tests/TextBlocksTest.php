@@ -40,8 +40,9 @@ class TextBlocksTest extends TestCase
     {
         vfsStreamWrapper::register();
         vfsStreamWrapper::setRoot(new vfsStreamDirectory('test'));
-        $this->dataFolder = vfsStream::url('test/data/');
-        $this->subject = new TextBlocks($this->dataFolder);
+        $dataFolder = vfsStream::url('test/data/');
+        $this->subject = new TextBlocks($dataFolder);
+        $this->dataFolder = $this->subject->getDataFolder();
         touch($this->dataFolder . 'block1.dat');
         touch($this->dataFolder . 'block10.htm');
         touch($this->dataFolder . 'block2.htm');
