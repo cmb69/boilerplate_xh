@@ -54,39 +54,43 @@ class AdminControllerTest extends TestCase
 
     public function testNewTextBlockInvalidName(): void
     {
+        $_POST = ["boilerplate_name" => "not valid"];
         $this->csrfProtection->expects($this->once())->method("check");
         $this->textBlocks->method("isValidName")->willReturn(false);
         $this->assertStringContainsString(
             "The text block name “not valid” is invalid.",
-            $this->sut->newTextBlock("not valid")
+            ($this->sut)("new")
         );
     }
 
     public function testNewTextBlockExists(): void
     {
+        $_POST = ["boilerplate_name" => "foo"];
         $this->csrfProtection->expects($this->once())->method("check");
         $this->textBlocks->method("isValidName")->willReturn(true);
         $this->textBlocks->method("exists")->willReturn(true);
         $this->assertStringContainsString(
             "The text block “foo“ exists already.",
-            $this->sut->newTextBlock("foo")
+            ($this->sut)("new")
         );
     }
 
     public function testNewTextBlockWriteFailure(): void
     {
+        $_POST = ["boilerplate_name" => "foo"];
         $this->csrfProtection->expects($this->once())->method("check");
         $this->textBlocks->method("isValidName")->willReturn(true);
         $this->textBlocks->method("exists")->willReturn(false);
         $this->textBlocks->method("write")->willReturn(false);
         $this->assertStringContainsString(
             "The text block “foo” could not be saved.",
-            $this->sut->newTextBlock("foo")
+            ($this->sut)("new")
         );
     }
 
     public function testNewTextBlockSuccess(): void
     {
+        $_POST = ["boilerplate_name" => "foo"];
         $this->csrfProtection->expects($this->once())->method("check");
         $this->textBlocks->method("isValidName")->willReturn(true);
         $this->textBlocks->method("exists")->willReturn(false);
@@ -94,69 +98,74 @@ class AdminControllerTest extends TestCase
         $this->sut->expects($this->once())->method("relocate")->with(
             "?boilerplate&admin=plugin_main&action=edit&boilerplate_name=foo"
         );
-        $this->sut->newTextBlock("foo");
+        ($this->sut)("new");
     }
 
     public function testEditTextBlockReadFailure(): void
     {
+        $_GET = ["boilerplate_name" => "foo"];
         $this->textBlocks->method("read")->willReturn(false);
-        $this->assertStringContainsString("The text block “foo” could not be read.", $this->sut->editTextBlock("foo"));
+        $this->assertStringContainsString("The text block “foo” could not be read.", ($this->sut)("edit"));
     }
 
     public function testEditTextBlockSuccess(): void
     {
+        $_GET = ["boilerplate_name" => "foo"];
+        $this->textBlocks->method("read")->willReturn("<p>some content</p>");
         $this->csrfProtection->method("tokenInput")->willReturn(
             "<input type=\"hidden\" name=\"xh_csrf_token\" value=\"9b923b4ec202f67066fe734993b6a9a4\">"
         );
         $this->sut->expects($this->once())->method("initEditor");
-        Approvals::verifyHtml($this->sut->editTextBlock("foo", "<p>some content</p>"));
+        Approvals::verifyHtml(($this->sut)("edit"));
     }
 
     public function testSaveTextBlockWriteFailure(): void
     {
-        $_POST = ["boilerplate_text" => "<p>some text</p>"];
+        $_POST = ["boilerplate_name" => "foo", "boilerplate_text" => "<p>some text</p>"];
         $this->csrfProtection->expects($this->once())->method("check");
         $this->textBlocks->method("write")->willReturn(false);
         $this->assertStringContainsString(
             "The text block “foo” could not be saved.",
-            $this->sut->saveTextBlock("foo")
+            ($this->sut)("save")
         );
     }
 
     public function testSaveTextBlockSuccess(): void
     {
-        $_POST = ["boilerplate_text" => "<p>some text</p>"];
+        $_POST = ["boilerplate_name" => "foo", "boilerplate_text" => "<p>some text</p>"];
         $this->csrfProtection->expects($this->once())->method("check");
         $this->textBlocks->method("write")->willReturn(true);
         $this->sut->expects($this->once())->method("relocate")->with(
             "?boilerplate&admin=plugin_main&action=plugin_tx"
         );
-        $this->sut->saveTextBlock("foo");
+        ($this->sut)("save");
     }
 
     public function testDeleteTextBlockFailure(): void
     {
+        $_POST = ["boilerplate_name" => "foo"];
         $this->csrfProtection->expects($this->once())->method("check");
         $this->textBlocks->method("delete")->willReturn(false);
         $this->assertStringContainsString(
             "The text block “foo” could not be deleted.",
-            $this->sut->deleteTextBlock("foo")
+            ($this->sut)("delete")
         );
     }
 
     public function testDeleteTextBlockSuccess(): void
     {
+        $_POST = ["boilerplate_name" => "foo"];
         $this->csrfProtection->expects($this->once())->method("check");
         $this->textBlocks->method("delete")->willReturn(true);
         $this->sut->expects($this->once())->method("relocate")->with(
             "?boilerplate&admin=plugin_main&action=plugin_tx"
         );
-        $this->sut->deleteTextBlock("foo");
+        ($this->sut)("delete");
     }
 
     public function testRenderMainAdministration(): void
     {
         $this->textBlocks->method("names")->willReturn(["foo", "bar"]);
-        Approvals::verifyHtml($this->sut->renderMainAdministration());
+        Approvals::verifyHtml(($this->sut)(""));
     }
 }

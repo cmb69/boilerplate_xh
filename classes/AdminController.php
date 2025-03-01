@@ -54,8 +54,25 @@ class AdminController
         $this->view = $view;
     }
 
-    /** @return string|void */
-    public function newTextBlock(string $name)
+    /** @return string|never */
+    public function __invoke(string $action)
+    {
+        switch ($action) {
+            case 'new':
+                return $this->newTextBlock($_POST['boilerplate_name']);
+            case 'edit':
+                return $this->editTextBlock($_GET['boilerplate_name']);
+            case 'save':
+                return $this->saveTextBlock($_POST['boilerplate_name']);
+            case 'delete':
+                return $this->deleteTextBlock($_POST['boilerplate_name']);
+            default:
+                return $this->renderMainAdministration();
+        }
+    }
+
+    /** @return string|never */
+    private function newTextBlock(string $name)
     {
         $this->csrfProtector->check();
         if (!$this->model->isValidName($name)) {
@@ -73,7 +90,7 @@ class AdminController
         $this->relocate("?boilerplate&admin=plugin_main&action=edit&boilerplate_name=$name");
     }
 
-    public function editTextBlock(string $name, ?string $content = null): string
+    private function editTextBlock(string $name, ?string $content = null): string
     {
         if (!isset($content)) {
             if (($content = $this->model->read($name)) === false) {
@@ -98,8 +115,8 @@ class AdminController
         init_editor(['plugintextarea']);
     }
 
-    /** @return string|void */
-    public function saveTextBlock(string $name)
+    /** @return string|never */
+    private function saveTextBlock(string $name)
     {
         $this->csrfProtector->check();
         $content = $_POST['boilerplate_text'];
@@ -110,8 +127,8 @@ class AdminController
         $this->relocate('?boilerplate&admin=plugin_main&action=plugin_tx');
     }
 
-    /** @return string|void */
-    public function deleteTextBlock(string $name)
+    /** @return string|never */
+    private function deleteTextBlock(string $name)
     {
         $this->csrfProtector->check();
         if (!$this->model->delete($name)) {
@@ -128,7 +145,7 @@ class AdminController
         exit;
     }
 
-    public function renderMainAdministration(): string
+    private function renderMainAdministration(): string
     {
         $baseURL = $this->scriptName . '?&amp;boilerplate&amp;admin=plugin_main&amp;action=';
         $boilerplates = [];

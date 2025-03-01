@@ -44,22 +44,7 @@ if (XH_wantsPluginAdministration('boilerplate')) {
             $o .= Dic::makeInfoController()->renderInfo();
             break;
         case 'plugin_main':
-            switch ($action) {
-                case 'new':
-                    $o .= Dic::makeAdminController()->newTextBlock($_POST['boilerplate_name']);
-                    break;
-                case 'edit':
-                    $o .= Dic::makeAdminController()->editTextBlock($_GET['boilerplate_name']);
-                    break;
-                case 'save':
-                    $o .= Dic::makeAdminController()->saveTextBlock($_POST['boilerplate_name']);
-                    break;
-                case 'delete':
-                    $o .= Dic::makeAdminController()->deleteTextBlock($_POST['boilerplate_name']);
-                    break;
-                default:
-                    $o .= Dic::makeAdminController()->renderMainAdministration();
-            }
+            $o .= Dic::makeAdminController()($action);
             break;
         default:
             $o .= plugin_admin_common();
