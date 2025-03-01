@@ -40,11 +40,14 @@ class BoilerplateController
         if (!$this->textBlocks->isValidName($name)) {
             return $this->view->error("error_invalid_name", $name);
         }
-        $content = $this->textBlocks->read($name);
-        if ($content !== false) {
-            return evaluate_scripting($content);
-        } else {
+        if (($content = $this->textBlocks->read($name)) === false) {
             return $this->view->error("error_cant_read", $name);
         }
+        return $this->evaluateScripting($content);
+    }
+
+    protected function evaluateScripting(string $content): string
+    {
+        return evaluate_scripting($content);
     }
 }

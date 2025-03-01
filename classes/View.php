@@ -32,7 +32,7 @@ class View
     private $lang;
 
     /** @param array<string,string> $lang */
-    public function __construct(string $folder, array $lang,)
+    public function __construct(string $folder, array $lang)
     {
         $this->folder = $folder;
         $this->lang = $lang;
