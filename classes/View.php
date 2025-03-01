@@ -34,12 +34,6 @@ class View
     /** @var CSRFProtection */
     private $csrfProtector;
 
-    /** @var string */
-    private $template;
-
-    /** @var array<string,mixed> */
-    private $data;
-
     /** @param array<string,string> $lang */
     public function __construct(string $folder, array $lang, CSRFProtection $csrfProtector)
     {
@@ -48,19 +42,12 @@ class View
         $this->csrfProtector = $csrfProtector;
     }
 
-    /** @param array<string,mixed> $data */
-    public function render(string $template, array $data): string
+    /** @param array<string,mixed> $_data */
+    public function render(string $_template, array $_data): string
     {
-        $this->template = "{$this->folder}$template.php";
-        $this->data = $data;
-        return $this->doRender();
-    }
-
-    private function doRender(): string
-    {
-        extract($this->data);
+        extract($_data);
         ob_start();
-        include $this->template;
+        include "{$this->folder}$_template.php";
         return (string) ob_get_clean();
     }
 
