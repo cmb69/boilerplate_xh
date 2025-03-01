@@ -28,7 +28,7 @@ jobs:
           key: tools-${{hashFiles('cmsimplexh/plugins/boilerplate/.phive')}}
       - if: ${{steps.cache-tools.outputs.cache-hit != 'true'}}
         name: phive install
-        run: cd cmsimplexh/plugins/boilerplate && phive --no-progress install --trust-gpg-keys 51C67305FFC2E5C0,A978220305CD5C32,D5F0CB76E2DD74F8
+        run: cd cmsimplexh/plugins/boilerplate && phive --no-progress install --copy --trust-gpg-keys 51C67305FFC2E5C0,A978220305CD5C32,D5F0CB76E2DD74F8
       - name: composer install
         run: cd cmsimplexh/plugins/boilerplate && composer install
       - name: phing sniff
