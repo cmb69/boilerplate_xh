@@ -19,21 +19,16 @@
  * along with Boilerplate_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use Boilerplate\BoilerplateController;
+use Boilerplate\TextBlocks;
+
 const BOILERPLATE_VERSION = '2.1-dev';
 
 function boilerplate(string $name): string
 {
     global $pth, $plugin_tx;
 
-    $model = new Boilerplate\TextBlocks("{$pth['folder']['base']}content/boilerplate/");
-    $ptx = $plugin_tx['boilerplate'];
-    if (!$model->isValidName($name)) {
-        return XH_message('fail', $ptx['error_invalid_name'], $name);
-    }
-    $content = $model->read($name);
-    if ($content !== false) {
-        return evaluate_scripting($content);
-    } else {
-        return XH_message('fail', $ptx['error_cant_read'], $name);
-    }
+    $textBlocks = new TextBlocks("{$pth['folder']['base']}content/boilerplate/");
+    $controller = new BoilerplateController($plugin_tx["boilerplate"], $textBlocks);
+    return $controller($name);
 }
