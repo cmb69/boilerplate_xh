@@ -19,7 +19,7 @@
  * along with Boilerplate_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use XH\CSRFProtection;
+use Boilerplate\Dic;
 
 /*
  * Prevent direct access.
@@ -35,21 +35,13 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
  * @var string $o
  * @var array<string,array<string,string>> $plugin_tx
  * @var array{folder:array<string,string>,file:array<string,string>} $pth
- * @var XH\CSRFProtection $_XH_csrfProtection
  */
 
 XH_registerStandardPluginMenuItems(true);
 
 if (XH_wantsPluginAdministration('boilerplate')) {
     $o .= print_plugin_admin('on');
-    $temp = new Boilerplate\AdminController(
-        new Boilerplate\TextBlocks("{$pth['folder']['base']}content/boilerplate/"),
-        $_XH_csrfProtection,
-        new Boilerplate\View(
-            "{$pth['folder']['plugins']}boilerplate/views/",
-            $plugin_tx["boilerplate"]
-        )
-    );
+    $temp = Dic::makeAdminController();
     switch ($admin) {
         case '':
             $o .= $temp->renderInfo();

@@ -19,19 +19,11 @@
  * along with Boilerplate_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-use Boilerplate\BoilerplateController;
-use Boilerplate\TextBlocks;
-use Boilerplate\View;
+use Boilerplate\Dic;
 
 const BOILERPLATE_VERSION = '2.1-dev';
 
 function boilerplate(string $name): string
 {
-    global $pth, $plugin_tx;
-
-    $controller = new BoilerplateController(
-        new TextBlocks("{$pth['folder']['base']}content/boilerplate/"),
-        new View("{$pth['folder']['base']}content/boilerplate/views/", $plugin_tx["boilerplate"])
-    );
-    return $controller($name);
+    return Dic::makeBoilerplateController()($name);
 }
