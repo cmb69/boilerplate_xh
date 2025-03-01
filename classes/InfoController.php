@@ -42,10 +42,6 @@ class InfoController
     public function renderInfo(): string
     {
         $phpVersion = '7.1.0';
-        foreach (['ok', 'warn', 'fail'] as $state) {
-            $images[$state] = $this->pluginFolder
-                . "images/$state.png";
-        }
         $checks = [];
         $checks[] = $this->view->message(
             version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'success' : 'fail',
@@ -64,7 +60,6 @@ class InfoController
             );
         }
         return $this->view->render('info', [
-            "images" => $images,
             "checks" => $checks,
             "version" => BOILERPLATE_VERSION,
         ]);
