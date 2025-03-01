@@ -67,6 +67,12 @@ class View
         return isset($this->lang[$key]) ? XH_hsc($this->lang[$key]) : null;
     }
 
+    /** @param scalar $args */
+    public function error(string $key, ...$args): string
+    {
+        return XH_message('fail', $this->lang[$key], ...$args);
+    }
+
     protected function csrfToken(): string
     {
         return $this->csrfProtector->tokenInput();

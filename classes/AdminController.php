@@ -83,18 +83,18 @@ class AdminController
     {
         $this->csrfProtector->check();
         if (!$this->model->isValidName($name)) {
-            return $this->renderError('error_invalid_name', $name)
+            return $this->view->error('error_invalid_name', $name)
                 . $this->renderMainAdministration();
         }
         if (!$this->model->exists($name)) {
             if ($this->model->write($name, '') !== false) {
                 $this->relocate("?boilerplate&admin=plugin_main&action=edit&boilerplate_name=$name");
             } else {
-                return $this->renderError('error_cant_write', $name)
+                return $this->view->error('error_cant_write', $name)
                     . $this->renderMainAdministration();
             }
         } else {
-            return $this->renderError('error_already_exists', $name)
+            return $this->view->error('error_already_exists', $name)
                 . $this->renderMainAdministration();
         }
     }
@@ -106,7 +106,7 @@ class AdminController
         if (!isset($content)) {
             $content = $this->model->read($name);
             if ($content === false) {
-                return $this->renderError('error_cant_read', $name)
+                return $this->view->error('error_cant_read', $name)
                     . $this->renderMainAdministration();
             }
         }
@@ -128,7 +128,7 @@ class AdminController
         if ($ok) {
             $this->relocate('?boilerplate&admin=plugin_main&action=plugin_tx');
         } else {
-            return $this->renderError('error_cant_write', $name)
+            return $this->view->error('error_cant_write', $name)
                 . $this->editTextBlock($name, $content);
         }
     }
@@ -140,7 +140,7 @@ class AdminController
         if ($this->model->delete($name)) {
             $this->relocate('?boilerplate&admin=plugin_main&action=plugin_tx');
         } else {
-            return $this->renderError('error_cant_delete', $name)
+            return $this->view->error('error_cant_delete', $name)
                 . $this->renderMainAdministration();
         }
     }
@@ -150,14 +150,6 @@ class AdminController
     {
         header('Location: ' . CMSIMPLE_URL . $url, true, 303);
         exit;
-    }
-
-    /** @param scalar $args */
-    private function renderError(string $key, ...$args): string
-    {
-        global $plugin_tx;
-
-        return XH_message('fail', $plugin_tx['boilerplate'][$key], ...$args);
     }
 
     public function renderMainAdministration(): string
