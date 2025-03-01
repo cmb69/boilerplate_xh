@@ -52,11 +52,6 @@ class InfoController
             'syscheck_phpversion',
             $phpVersion
         );
-        $checks[] = $this->view->message(
-            extension_loaded('json') ? 'success' : 'fail',
-            'syscheck_extension',
-            'JSON'
-        );
         foreach (['css', 'languages/'] as $folder) {
             $folders[] = $this->pluginFolder . $folder;
         }

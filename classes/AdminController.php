@@ -138,25 +138,10 @@ class AdminController
                 'deleteURL' => $baseURL . 'delete&amp;boilerplate_name=' . $name
             ];
         }
-        return $this->renderJsConfigOnce() . $this->view->render('admin', [
+        return $this->view->render('admin', [
             "url" => $this->scriptName . '?&amp;boilerplate',
             "boilerplates" => $boilerplates,
             "csrf_token_input" => $this->csrfProtector->tokenInput(),
         ]);
-    }
-
-    private function renderJsConfigOnce(): string
-    {
-        static $done = false;
-
-        if ($done) {
-            return '';
-        }
-        $done = true;
-        $config = [
-            'delete_confirmation' => $this->view->text("confirm_delete"),
-        ];
-        $json = json_encode($config);
-        return "<script>boilerplate = $json;</script>\n";
     }
 }
