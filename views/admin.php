@@ -8,6 +8,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
  * @var View $this
  * @var string $url
  * @var list<array{editURL:string,deleteURL:string}> $boilerplates
+ * @var string $csrf_token_input
  */
 ?>
 <!-- Boilerplate_XH: administration -->
@@ -22,7 +23,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
                     <input type="hidden" name="admin" value="plugin_main">
                     <input type="hidden" name="action" value="delete">
                     <input type="hidden" name="boilerplate_name" value="<?=$name?>">
-                    <?=$this->csrfToken()?>
+                    <?=$csrf_token_input?>
                 </form>
             </td>
             <td>
@@ -39,7 +40,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
         <input type="text" name="boilerplate_name">
         <input type="hidden" name="admin" value="plugin_main">
         <input type="hidden" name="action" value="new">
-        <?=$this->csrfToken()?>
+        <?=$csrf_token_input?>
         <input type="submit" class="submit" value="<?=$this->text('label_create')?>">
     </form>
 </div>

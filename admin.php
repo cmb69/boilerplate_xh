@@ -47,8 +47,7 @@ if (XH_wantsPluginAdministration('boilerplate')) {
         $_XH_csrfProtection,
         new Boilerplate\View(
             "{$pth['folder']['plugins']}boilerplate/views/",
-            $plugin_tx["boilerplate"],
-            $_XH_csrfProtection
+            $plugin_tx["boilerplate"]
         )
     );
     switch ($admin) {

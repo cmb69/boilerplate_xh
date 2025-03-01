@@ -10,6 +10,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
  * @var string $url
  * @var string $editorHeight
  * @var string $content
+ * @var string $csrf_token_input
  */
 ?>
 <!-- Boilerplate_XH: edit -->
@@ -21,5 +22,5 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
     <input type="hidden" name="admin" value="plugin_main">
     <input type="hidden" name="action" value="save">
     <input type="hidden" name="boilerplate_name" value="<?=$name?>">
-    <?=$this->csrfToken()?>
+    <?=$csrf_token_input?>
 </form>

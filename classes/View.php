@@ -31,15 +31,11 @@ class View
     /** @var array<string,string> */
     private $lang;
 
-    /** @var CSRFProtection */
-    private $csrfProtector;
-
     /** @param array<string,string> $lang */
-    public function __construct(string $folder, array $lang, CSRFProtection $csrfProtector)
+    public function __construct(string $folder, array $lang,)
     {
         $this->folder = $folder;
         $this->lang = $lang;
-        $this->csrfProtector = $csrfProtector;
     }
 
     /** @param array<string,mixed> $_data */
@@ -60,10 +56,5 @@ class View
     public function error(string $key, ...$args): string
     {
         return XH_message('fail', $this->lang[$key], ...$args);
-    }
-
-    public function csrfToken(): string
-    {
-        return $this->csrfProtector->tokenInput();
     }
 }

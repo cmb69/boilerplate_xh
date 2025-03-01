@@ -117,6 +117,7 @@ class AdminController
             "url" => "$sn?&amp;boilerplate",
             "editorHeight" => $cf['editor']['height'],
             "content" => XH_hsc($content),
+            "csrf_token_input" => $this->csrfProtector->tokenInput(),
         ]);
         init_editor(['plugintextarea']);
         return $o;
@@ -170,6 +171,7 @@ class AdminController
         return $this->renderJsConfigOnce() . $this->view->render('admin', [
             "url" => $sn . '?&amp;boilerplate',
             "boilerplates" => $boilerplates,
+            "csrf_token_input" => $this->csrfProtector->tokenInput(),
         ]);
     }
 
