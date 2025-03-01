@@ -23,47 +23,48 @@ namespace Boilerplate;
 
 class InfoController
 {
+    /** @var string */
+    private $pluginFolder;
+
     /** @var TextBlocks */
     private $model;
 
     /** @var View */
     private $view;
 
-    public function __construct(TextBlocks $model, View $view)
+    public function __construct(string $pluginFolder, TextBlocks $model, View $view)
     {
+        $this->pluginFolder = $pluginFolder;
         $this->model = $model;
         $this->view = $view;
     }
 
     public function renderInfo(): string
     {
-        global $pth, $plugin_tx;
-
-        $ptx = $plugin_tx['boilerplate'];
         $phpVersion = '7.1.0';
         foreach (['ok', 'warn', 'fail'] as $state) {
-            $images[$state] = $pth['folder']['plugins']
-                . "boilerplate/images/$state.png";
+            $images[$state] = $this->pluginFolder
+                . "images/$state.png";
         }
         $checks = [];
-        $checks[] = XH_message(
+        $checks[] = $this->view->message(
             version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'success' : 'fail',
-            $ptx['syscheck_phpversion'],
+            'syscheck_phpversion',
             $phpVersion
         );
-        $checks[] = XH_message(
+        $checks[] = $this->view->message(
             extension_loaded('json') ? 'success' : 'fail',
-            $ptx['syscheck_extension'],
+            'syscheck_extension',
             'JSON'
         );
         foreach (['css', 'languages/'] as $folder) {
-            $folders[] = $pth['folder']['plugins'] . 'boilerplate/' . $folder;
+            $folders[] = $this->pluginFolder . $folder;
         }
         $folders[] = $this->model->getDataFolder();
         foreach ($folders as $folder) {
-            $checks[] = XH_message(
+            $checks[] = $this->view->message(
                 is_writable($folder) ? 'success' : 'warning',
-                $ptx['syscheck_writable'],
+                'syscheck_writable',
                 $folder
             );
         }

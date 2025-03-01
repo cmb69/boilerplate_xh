@@ -38,6 +38,7 @@ class Dic
         global $pth, $plugin_tx;
 
         return new InfoController(
+            $pth['folder']['plugins'] . 'boilerplate/',
             new TextBlocks("{$pth['folder']['base']}content/boilerplate/"),
             new View(
                 "{$pth['folder']['plugins']}boilerplate/views/",

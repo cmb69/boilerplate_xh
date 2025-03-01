@@ -53,6 +53,12 @@ class View
     }
 
     /** @param scalar $args */
+    public function message(string $kind, string $key, ...$args): string
+    {
+        return XH_message($kind, $this->lang[$key], ...$args);
+    }
+
+    /** @param scalar $args */
     public function error(string $key, ...$args): string
     {
         return XH_message('fail', $this->lang[$key], ...$args);
