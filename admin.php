@@ -33,6 +33,7 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
  * @var string $action
  * @var string $admin
  * @var string $o
+ * @var array<string,array<string,string>> $plugin_tx
  * @var array{folder:array<string,string>,file:array<string,string>} $pth
  * @var XH\CSRFProtection $_XH_csrfProtection
  */
@@ -44,7 +45,7 @@ if (XH_wantsPluginAdministration('boilerplate')) {
     $temp = new Boilerplate\AdminController(
         new Boilerplate\TextBlocks("{$pth['folder']['base']}content/boilerplate/"),
         $_XH_csrfProtection,
-        new Boilerplate\View($_XH_csrfProtection)
+        new Boilerplate\View($plugin_tx["boilerplate"], $_XH_csrfProtection)
     );
     switch ($admin) {
         case '':

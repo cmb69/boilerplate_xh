@@ -25,6 +25,9 @@ use XH\CSRFProtection;
 
 class View
 {
+    /** @var array<string,string> */
+    private $lang;
+
     /** @var CSRFProtection */
     private $csrfProtector;
 
@@ -34,8 +37,10 @@ class View
     /** @var array<string,mixed> */
     private $data;
 
-    public function __construct(CSRFProtection $csrfProtector)
+    /** @param array<string,string> $lang */
+    public function __construct(array $lang, CSRFProtection $csrfProtector)
     {
+        $this->lang = $lang;
         $this->csrfProtector = $csrfProtector;
     }
 
@@ -59,9 +64,7 @@ class View
 
     protected function text(string $key): ?string
     {
-        global $plugin_tx;
-
-        return isset($plugin_tx['boilerplate'][$key]) ? XH_hsc($plugin_tx['boilerplate'][$key]) : null;
+        return isset($this->lang[$key]) ? XH_hsc($this->lang[$key]) : null;
     }
 
     protected function csrfToken(): string
