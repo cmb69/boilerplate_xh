@@ -40,6 +40,11 @@ class DicTest extends TestCase
         $this->assertInstanceOf(BoilerplateController::class, Dic::makeBoilerplateController());
     }
 
+    public function testMakeInfoController(): void
+    {
+        $this->assertInstanceOf(InfoController::class, Dic::makeInfoController());
+    }
+
     public function testMakeAdminController(): void
     {
         $this->assertInstanceOf(AdminController::class, Dic::makeAdminController());

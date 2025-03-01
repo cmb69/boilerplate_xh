@@ -33,6 +33,19 @@ class Dic
         );
     }
 
+    public static function makeInfoController(): InfoController
+    {
+        global $pth, $plugin_tx;
+
+        return new InfoController(
+            new TextBlocks("{$pth['folder']['base']}content/boilerplate/"),
+            new View(
+                "{$pth['folder']['plugins']}boilerplate/views/",
+                $plugin_tx["boilerplate"]
+            )
+        );
+    }
+
     public static function makeAdminController(): AdminController
     {
         global $pth, $plugin_tx, $_XH_csrfProtection;

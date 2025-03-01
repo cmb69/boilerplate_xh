@@ -33,35 +33,32 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
  * @var string $action
  * @var string $admin
  * @var string $o
- * @var array<string,array<string,string>> $plugin_tx
- * @var array{folder:array<string,string>,file:array<string,string>} $pth
  */
 
 XH_registerStandardPluginMenuItems(true);
 
 if (XH_wantsPluginAdministration('boilerplate')) {
     $o .= print_plugin_admin('on');
-    $temp = Dic::makeAdminController();
     switch ($admin) {
         case '':
-            $o .= $temp->renderInfo();
+            $o .= Dic::makeInfoController()->renderInfo();
             break;
         case 'plugin_main':
             switch ($action) {
                 case 'new':
-                    $o .= $temp->newTextBlock($_POST['boilerplate_name']);
+                    $o .= Dic::makeAdminController()->newTextBlock($_POST['boilerplate_name']);
                     break;
                 case 'edit':
-                    $o .= $temp->editTextBlock($_GET['boilerplate_name']);
+                    $o .= Dic::makeAdminController()->editTextBlock($_GET['boilerplate_name']);
                     break;
                 case 'save':
-                    $o .= $temp->saveTextBlock($_POST['boilerplate_name']);
+                    $o .= Dic::makeAdminController()->saveTextBlock($_POST['boilerplate_name']);
                     break;
                 case 'delete':
-                    $o .= $temp->deleteTextBlock($_POST['boilerplate_name']);
+                    $o .= Dic::makeAdminController()->deleteTextBlock($_POST['boilerplate_name']);
                     break;
                 default:
-                    $o .= $temp->renderMainAdministration();
+                    $o .= Dic::makeAdminController()->renderMainAdministration();
             }
             break;
         default:
