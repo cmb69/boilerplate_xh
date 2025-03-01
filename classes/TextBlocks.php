@@ -70,15 +70,33 @@ class TextBlocks
     public function read(string $name)
     {
         assert($this->isValidName($name));
-        return file_get_contents($this->filename($name));
+        if (!($stream = fopen($this->filename($name), "rb"))) {
+            return false;
+        }
+        if (!flock($stream, LOCK_SH)) {
+            fclose($stream);
+            return false;
+        }
+        $contents = stream_get_contents($stream);
+        flock($stream, LOCK_UN);
+        fclose($stream);
+        return $contents;
     }
 
     public function write(string $name, string $content): bool
     {
         assert($this->isValidName($name));
-        $fn = tempnam($this->getDataFolder(), 'boilerplate');
-        return file_put_contents($fn, $content) !== false
-            && rename($fn, $this->filename($name));
+        if (!($stream = fopen($this->filename($name), "cb"))) {
+            return false;
+        }
+        if (!flock($stream, LOCK_EX)) {
+            fclose($stream);
+            return false;
+        }
+        $res = (bool) fwrite($stream, $content);
+        flock($stream, LOCK_UN);
+        fclose($stream);
+        return $res;
     }
 
     public function delete(string $name): bool

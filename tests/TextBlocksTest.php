@@ -79,10 +79,21 @@ class TextBlocksTest extends TestCase
         ];
     }
 
+    public function testBoilerplateExists(): void
+    {
+        $this->assertTrue($this->subject->exists("block2"));
+    }
+
     public function testReadsStoredBoilerplate(): void
     {
         file_put_contents($this->dataFolder . 'test.htm', self::CONTENT);
         $this->assertEquals(self::CONTENT, $this->subject->read('test'));
+    }
+
+    public function testWritesBoilerplate(): void
+    {
+        $this->subject->write("new", self::CONTENT);
+        $this->assertEquals(self::CONTENT, file_get_contents($this->dataFolder . "new.htm"));
     }
 
     public function testDeletesBoilerplate(): void
