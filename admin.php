@@ -45,7 +45,11 @@ if (XH_wantsPluginAdministration('boilerplate')) {
     $temp = new Boilerplate\AdminController(
         new Boilerplate\TextBlocks("{$pth['folder']['base']}content/boilerplate/"),
         $_XH_csrfProtection,
-        new Boilerplate\View($plugin_tx["boilerplate"], $_XH_csrfProtection)
+        new Boilerplate\View(
+            "{$pth['folder']['plugins']}boilerplate/views/",
+            $plugin_tx["boilerplate"],
+            $_XH_csrfProtection
+        )
     );
     switch ($admin) {
         case '':

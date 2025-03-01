@@ -25,6 +25,9 @@ use XH\CSRFProtection;
 
 class View
 {
+    /** @var string */
+    private $folder;
+
     /** @var array<string,string> */
     private $lang;
 
@@ -38,8 +41,9 @@ class View
     private $data;
 
     /** @param array<string,string> $lang */
-    public function __construct(array $lang, CSRFProtection $csrfProtector)
+    public function __construct(string $folder, array $lang, CSRFProtection $csrfProtector)
     {
+        $this->folder = $folder;
         $this->lang = $lang;
         $this->csrfProtector = $csrfProtector;
     }
@@ -47,9 +51,7 @@ class View
     /** @param array<string,mixed> $data */
     public function render(string $template, array $data): string
     {
-        global $pth;
-
-        $this->template = "{$pth['folder']['plugins']}boilerplate/views/$template.php";
+        $this->template = "{$this->folder}$template.php";
         $this->data = $data;
         return $this->doRender();
     }
