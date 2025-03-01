@@ -87,18 +87,15 @@
         <delete file="export.zip"/>
         <move todir="dist">
             <fileset dir="export">
-                <include name="index.php"/>
-                <include name="version.nfo"/>
-            </fileset>
-        </move>
-        <move todir="dist">
-            <fileset dir="export">
+                <exclude name=".github/**"/>
+                <exclude name=".phive/**"/>
                 <exclude name="build.xml"/>
                 <exclude name="composer.*"/>
                 <exclude name="coverage.xml"/>
                 <exclude name="help/template.htm"/>
                 <exclude name="phpstan.*"/>
                 <exclude name="README*.md"/>
+                <exclude name="teplad.xml"/>
                 <exclude name="tests/**"/>
             </fileset>
         </move>
