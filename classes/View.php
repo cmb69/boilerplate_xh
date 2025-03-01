@@ -62,7 +62,7 @@ class View
         return (string) ob_get_clean();
     }
 
-    protected function text(string $key): ?string
+    public function text(string $key): ?string
     {
         return isset($this->lang[$key]) ? XH_hsc($this->lang[$key]) : null;
     }
@@ -73,7 +73,7 @@ class View
         return XH_message('fail', $this->lang[$key], ...$args);
     }
 
-    protected function csrfToken(): string
+    public function csrfToken(): string
     {
         return $this->csrfProtector->tokenInput();
     }

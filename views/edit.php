@@ -1,9 +1,11 @@
 <?php
-if (!isset($this)) {
-    header('HTTP/1.0 404 Not Found');
-    exit;
-}
+
+use Boilerplate\View;
+
+if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
+
 /**
+ * @var View $this
  * @var string $name
  * @var string $url
  * @var string $editorHeight
