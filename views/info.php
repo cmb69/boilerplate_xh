@@ -10,9 +10,9 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
  * @var list<string> $checks
  */
 ?>
-<!-- Boilerplate_XH: info -->
+<!-- Boilerplate info -->
 <h1>Boilerplate <?=$version?></h1>
 <h4><?=$this->text('syscheck_title')?></h4>
-<?php foreach ($checks as $check) :?>
+<?foreach ($checks as $check):?>
 <div><?=$check?></div>
-<?php endforeach?>
+<?endforeach?>
