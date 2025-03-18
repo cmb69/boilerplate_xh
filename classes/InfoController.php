@@ -22,6 +22,7 @@
 namespace Boilerplate;
 
 use Plib\Response;
+use Plib\SystemChecker;
 use Plib\View;
 
 class InfoController
@@ -32,13 +33,17 @@ class InfoController
     /** @var TextBlocks */
     private $model;
 
+    /** @var SystemChecker */
+    private $systemChecker;
+
     /** @var View */
     private $view;
 
-    public function __construct(string $pluginFolder, TextBlocks $model, View $view)
+    public function __construct(string $pluginFolder, TextBlocks $model, SystemChecker $systemChecker, View $view)
     {
         $this->pluginFolder = $pluginFolder;
         $this->model = $model;
+        $this->systemChecker = $systemChecker;
         $this->view = $view;
     }
 
@@ -47,7 +52,7 @@ class InfoController
         $phpVersion = '7.1.0';
         $checks = [];
         $checks[] = $this->view->message(
-            version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'success' : 'fail',
+            $this->systemChecker->checkVersion(PHP_VERSION, $phpVersion) ? 'success' : 'fail',
             'syscheck_phpversion',
             $phpVersion
         );
@@ -57,7 +62,7 @@ class InfoController
         $folders[] = $this->model->getDataFolder();
         foreach ($folders as $folder) {
             $checks[] = $this->view->message(
-                is_writable($folder) ? 'success' : 'warning',
+                $this->systemChecker->checkWritability($folder) ? 'success' : 'warning',
                 'syscheck_writable',
                 $folder
             );

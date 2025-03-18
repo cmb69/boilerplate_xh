@@ -21,6 +21,7 @@
 
 namespace Boilerplate;
 
+use Plib\SystemChecker;
 use Plib\View;
 
 class Dic
@@ -42,6 +43,7 @@ class Dic
         return new InfoController(
             $pth['folder']['plugins'] . 'boilerplate/',
             new TextBlocks("{$pth['folder']['base']}content/boilerplate/"),
+            new SystemChecker(),
             new View(
                 "{$pth['folder']['plugins']}boilerplate/views/",
                 $plugin_tx["boilerplate"]
