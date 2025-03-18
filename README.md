@@ -15,6 +15,7 @@ Boilerplate\_XH text block.
 - [Installation](#installation)
 - [Settings](#settings)
 - [Usage](#usage)
+- [Troubleshooting](#troubleshooting)
 - [License](#license)
 - [Credits](#credits)
 
@@ -76,6 +77,12 @@ Replace `%NAME%` with the name of an already defined text block. The easiest way
 is to copy & paste the plugin call from the administration of Boilerplate\_XH.
 Note that using `boilerplate()` in the template is possible, but for
 performance reasons using `newsbox()` instead is preferable.
+
+## Troubleshooting
+
+Report bugs and ask for support either on
+[Github](https://github.com/cmb69/boilerplate_xh/issues)
+or in the [CMSimple_XH Forum](https://cmsimpleforum.com/).
 
 ## License
 

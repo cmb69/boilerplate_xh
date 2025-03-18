@@ -16,6 +16,7 @@ kompletten Seiteninhalt durch einen Boilerplate\_XH Textbaustein ersetzen.
 - [Installation](#installation)
 - [Einstellungen](#einstellungen)
 - [Verwendung](#verwendung)
+- [Problembehebung](#problembehebung)
 - [Lizenz](#lizenz)
 - [Danksagung](#danksagung)
 
@@ -83,6 +84,12 @@ Boilerplate\_XH per Copy&Paste zu übernehmen.
 Beachten Sie, dass die Verwendung von `boilerplate()` im Template möglich ist,
 aber aus Performancegründen ist hier die Verwendung von `newsbox()`
 vorzuziehen.
+
+## Problembehebung
+
+Melden Sie Programmfehler und stellen Sie Supportanfragen entweder auf
+[Github](https://github.com/cmb69/boilerplate_xh/issues)
+oder im [CMSimple_XH Forum](https://cmsimpleforum.com/).
 
 ## Lizenz
 
