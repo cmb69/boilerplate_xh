@@ -28,42 +28,45 @@ class Dic
 {
     public static function makeBoilerplateController(): BoilerplateController
     {
-        global $pth, $plugin_tx;
-
-        return new BoilerplateController(
-            new TextBlocks("{$pth['folder']['base']}content/boilerplate/"),
-            new View("{$pth['folder']['base']}content/boilerplate/views/", $plugin_tx["boilerplate"])
-        );
+        return new BoilerplateController(self::textBlocks(), self::view());
     }
 
     public static function makeInfoController(): InfoController
     {
-        global $pth, $plugin_tx;
+        global $pth;
 
         return new InfoController(
             $pth['folder']['plugins'] . 'boilerplate/',
-            new TextBlocks("{$pth['folder']['base']}content/boilerplate/"),
+            self::textBlocks(),
             new SystemChecker(),
-            new View(
-                "{$pth['folder']['plugins']}boilerplate/views/",
-                $plugin_tx["boilerplate"]
-            )
+            self::view()
         );
     }
 
     public static function makeAdminController(): AdminController
     {
-        global $sn, $pth, $cf, $plugin_tx, $_XH_csrfProtection;
+        global $sn, $cf, $_XH_csrfProtection;
 
         return new AdminController(
             $sn,
             $cf["editor"]["height"],
-            new TextBlocks("{$pth['folder']['base']}content/boilerplate/"),
+            self::textBlocks(),
             $_XH_csrfProtection,
-            new View(
-                "{$pth['folder']['plugins']}boilerplate/views/",
-                $plugin_tx["boilerplate"]
-            )
+            self::view()
         );
+    }
+
+    private static function textBlocks(): TextBlocks
+    {
+        global $pth;
+
+        return new TextBlocks($pth["folder"]["base"] . "content/boilerplate/");
+    }
+
+    private static function view(): View
+    {
+        global $pth, $plugin_tx;
+
+        return new View($pth["folder"]["plugins"] . "boilerplate/views/", $plugin_tx["boilerplate"]);
     }
 }
