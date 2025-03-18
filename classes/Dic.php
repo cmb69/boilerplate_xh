@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2013-2025 Christoph M. Becker
+ * Copyright (c) Christoph M. Becker
  *
  * This file is part of Boilerplate_XH.
  *

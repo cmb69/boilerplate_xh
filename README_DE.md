@@ -110,10 +110,10 @@ bestimmten Zweck*. Details finden Sie in der GNU General Public License.
 Sie sollten ein Exemplar der GNU General Public License zusammen mit
 Boilerplate\_XH erhalten haben. Falls nicht, siehe http://www.gnu.org/licenses/.
 
-© 2012-2021 Christoph M. Becker
+Copyright © Christoph M. Becker
 
-Russische Übersetzung © 2012 Lubomyr Kydray  
-Slovakische Übersetzung © 2012 Dr. Martin Sereday
+Russische Übersetzung © Lubomyr Kydray<br>
+Slovakische Übersetzung © Dr. Martin Sereday
 
 ## Credits
 

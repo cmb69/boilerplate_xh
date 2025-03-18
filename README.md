@@ -103,10 +103,10 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Boilerplate\_XH.  If not, see http://www.gnu.org/licenses/.
 
-© 2012-2021 Christoph M. Becker
+Copyright © Christoph M. Becker
 
-Russian tranlation © 2012 Lubomyr Kydray  
-Slovak translation © 2012 Dr. Martin Sereday
+Russian tranlation © Lubomyr Kydray<br>
+Slovak translation © Dr. Martin Sereday
 
 ## Credits
 
