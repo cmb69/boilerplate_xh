@@ -34,6 +34,6 @@ class InfoControllerTest extends TestCase
     public function testRenderInfo(): void
     {
         $this->textBlocks->method("getDataFolder")->willReturn("./content/boilerplate/");
-        Approvals::verifyHtml($this->sut->renderInfo()->output());
+        Approvals::verifyHtml(($this->sut)()->output());
     }
 }

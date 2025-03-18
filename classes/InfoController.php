@@ -47,7 +47,7 @@ class InfoController
         $this->view = $view;
     }
 
-    public function renderInfo(): Response
+    public function __invoke(): Response
     {
         $phpVersion = '7.1.0';
         $checks = [];
