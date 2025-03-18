@@ -24,6 +24,7 @@ namespace Boilerplate;
 use ApprovalTests\Approvals;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
+use Plib\View;
 
 class InfoControllerTest extends TestCase
 {

@@ -21,6 +21,8 @@
 
 namespace Boilerplate;
 
+use Plib\View;
+
 class BoilerplateController
 {
     /** @var TextBlocks */
@@ -38,10 +40,10 @@ class BoilerplateController
     public function __invoke(string $name): string
     {
         if (!$this->textBlocks->isValidName($name)) {
-            return $this->view->error("error_invalid_name", $name);
+            return $this->view->message("fail", "error_invalid_name", $name);
         }
         if (($content = $this->textBlocks->read($name)) === false) {
-            return $this->view->error("error_cant_read", $name);
+            return $this->view->message("fail", "error_cant_read", $name);
         }
         return $this->evaluateScripting($content);
     }

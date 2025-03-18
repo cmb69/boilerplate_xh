@@ -25,6 +25,7 @@ use ApprovalTests\Approvals;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
+use Plib\View;
 
 class BoilerplateControllerTest extends TestCase
 {

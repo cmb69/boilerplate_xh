@@ -21,6 +21,7 @@
 
 namespace Boilerplate;
 
+use Plib\View;
 use XH\CSRFProtection;
 
 class AdminController
@@ -76,15 +77,15 @@ class AdminController
     {
         $this->csrfProtector->check();
         if (!$this->model->isValidName($name)) {
-            return $this->view->error('error_invalid_name', $name)
+            return $this->view->message("fail", 'error_invalid_name', $name)
                 . $this->renderMainAdministration();
         }
         if ($this->model->exists($name)) {
-            return $this->view->error('error_already_exists', $name)
+            return $this->view->message("fail", 'error_already_exists', $name)
                 . $this->renderMainAdministration();
         }
         if ($this->model->write($name, '') === false) {
-            return $this->view->error('error_cant_write', $name)
+            return $this->view->message("fail", 'error_cant_write', $name)
                 . $this->renderMainAdministration();
         }
         $this->relocate("?boilerplate&admin=plugin_main&action=edit&boilerplate_name=$name");
@@ -94,7 +95,7 @@ class AdminController
     {
         if (!isset($content)) {
             if (($content = $this->model->read($name)) === false) {
-                return $this->view->error('error_cant_read', $name)
+                return $this->view->message("fail", 'error_cant_read', $name)
                     . $this->renderMainAdministration();
             }
         }
@@ -121,7 +122,7 @@ class AdminController
         $this->csrfProtector->check();
         $content = $_POST['boilerplate_text'];
         if (!$this->model->write($name, $content)) {
-            return $this->view->error('error_cant_write', $name)
+            return $this->view->message("fail", 'error_cant_write', $name)
                 . $this->editTextBlock($name, $content);
         }
         $this->relocate('?boilerplate&admin=plugin_main&action=plugin_tx');
@@ -132,7 +133,7 @@ class AdminController
     {
         $this->csrfProtector->check();
         if (!$this->model->delete($name)) {
-            return $this->view->error('error_cant_delete', $name)
+            return $this->view->message("fail", 'error_cant_delete', $name)
                 . $this->renderMainAdministration();
         }
         $this->relocate('?boilerplate&admin=plugin_main&action=plugin_tx');

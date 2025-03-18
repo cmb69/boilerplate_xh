@@ -21,6 +21,8 @@
 
 namespace Boilerplate;
 
+use Plib\View;
+
 class Dic
 {
     public static function makeBoilerplateController(): BoilerplateController
