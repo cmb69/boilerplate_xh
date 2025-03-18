@@ -56,6 +56,18 @@ class InfoController
             'syscheck_phpversion',
             $phpVersion
         );
+        $xhVersion = "1.7.0";
+        $checks[] = $this->view->message(
+            $this->systemChecker->checkVersion(CMSIMPLE_XH_VERSION, "CMSimple_XH $xhVersion") ? 'success' : 'fail',
+            'syscheck_xhversion',
+            $xhVersion
+        );
+        $plibVersion = "1.2";
+        $checks[] = $this->view->message(
+            $this->systemChecker->checkPlugin("plib", $plibVersion) ? 'success' : 'fail',
+            'syscheck_plibversion',
+            $plibVersion
+        );
         foreach (['css', 'languages/'] as $folder) {
             $folders[] = $this->pluginFolder . $folder;
         }

@@ -14,6 +14,7 @@ $plugin_tx['boilerplate']['error_cant_delete']="Der Textbaustein „%s“ konnte
 
 $plugin_tx['boilerplate']['syscheck_title']="Systemprüfung";
 $plugin_tx['boilerplate']['syscheck_phpversion']="PHP-Version ≥ %s";
+$plugin_tx['boilerplate']['syscheck_xhversion']="CMSimple_XH-Version ≥ %s";
 $plugin_tx['boilerplate']['syscheck_extension']="Erweiterung „%s“ geladen";
 $plugin_tx['boilerplate']['syscheck_writable']="Ordner „%s“ beschreibbar";
 
