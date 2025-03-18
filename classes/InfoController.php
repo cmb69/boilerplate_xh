@@ -21,6 +21,7 @@
 
 namespace Boilerplate;
 
+use Plib\Response;
 use Plib\View;
 
 class InfoController
@@ -41,7 +42,7 @@ class InfoController
         $this->view = $view;
     }
 
-    public function renderInfo(): string
+    public function renderInfo(): Response
     {
         $phpVersion = '7.1.0';
         $checks = [];
@@ -61,9 +62,9 @@ class InfoController
                 $folder
             );
         }
-        return $this->view->render('info', [
+        return Response::create($this->view->render('info', [
             "checks" => $checks,
             "version" => BOILERPLATE_VERSION,
-        ]);
+        ]));
     }
 }

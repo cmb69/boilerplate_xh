@@ -21,6 +21,7 @@
 
 namespace Boilerplate;
 
+use Plib\Response;
 use Plib\View;
 
 class BoilerplateController
@@ -37,15 +38,15 @@ class BoilerplateController
         $this->view = $view;
     }
 
-    public function __invoke(string $name): string
+    public function __invoke(string $name): Response
     {
         if (!$this->textBlocks->isValidName($name)) {
-            return $this->view->message("fail", "error_invalid_name", $name);
+            return Response::create($this->view->message("fail", "error_invalid_name", $name));
         }
         if (($content = $this->textBlocks->read($name)) === false) {
-            return $this->view->message("fail", "error_cant_read", $name);
+            return Response::create($this->view->message("fail", "error_cant_read", $name));
         }
-        return $this->evaluateScripting($content);
+        return Response::create($this->evaluateScripting($content));
     }
 
     protected function evaluateScripting(string $content): string

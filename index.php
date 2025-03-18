@@ -25,5 +25,5 @@ const BOILERPLATE_VERSION = '2.1-dev';
 
 function boilerplate(string $name): string
 {
-    return Dic::makeBoilerplateController()($name);
+    return Dic::makeBoilerplateController()($name)();
 }

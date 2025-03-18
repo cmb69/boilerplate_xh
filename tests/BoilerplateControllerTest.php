@@ -32,14 +32,17 @@ class BoilerplateControllerTest extends TestCase
     public function testInvalidName(): void
     {
         $this->textBlocks->method("isValidName")->willReturn(false);
-        $this->assertStringContainsString("The text block name “not allowed” is invalid.", ($this->sut)("not allowed"));
+        $this->assertStringContainsString(
+            "The text block name “not allowed” is invalid.",
+            ($this->sut)("not allowed")->output()
+        );
     }
 
     public function testReadFailure(): void
     {
         $this->textBlocks->method("isValidName")->willReturn(true);
         $this->textBlocks->method("read")->willReturn(false);
-        $this->assertStringContainsString("The text block “bar” could not be read.", ($this->sut)("bar"));
+        $this->assertStringContainsString("The text block “bar” could not be read.", ($this->sut)("bar")->output());
     }
 
     public function testSuccess(): void
@@ -47,6 +50,6 @@ class BoilerplateControllerTest extends TestCase
         $this->textBlocks->method("isValidName")->willReturn(true);
         $this->textBlocks->method("read")->willReturn("<p>this &amp; that</p>");
         $this->sut->method("evaluateScripting")->willReturn("<p>this &amp; that</p>");
-        $this->assertSame("<p>this &amp; that</p>", ($this->sut)("foo"));
+        $this->assertSame("<p>this &amp; that</p>", ($this->sut)("foo")->output());
     }
 }

@@ -42,10 +42,10 @@ if (XH_wantsPluginAdministration('boilerplate')) {
     $o .= print_plugin_admin('on');
     switch ($admin) {
         case '':
-            $o .= Dic::makeInfoController()->renderInfo();
+            $o .= Dic::makeInfoController()->renderInfo()();
             break;
         case 'plugin_main':
-            $o .= Dic::makeAdminController()(Request::current(), $action);
+            $o .= Dic::makeAdminController()(Request::current(), $action)();
             break;
         default:
             $o .= plugin_admin_common();

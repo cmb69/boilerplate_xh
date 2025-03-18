@@ -22,6 +22,7 @@
 namespace Boilerplate;
 
 use Plib\Request;
+use Plib\Response;
 use Plib\View;
 use XH\CSRFProtection;
 
@@ -56,8 +57,7 @@ class AdminController
         $this->view = $view;
     }
 
-    /** @return string|never */
-    public function __invoke(Request $request, string $action)
+    public function __invoke(Request $request, string $action): Response
     {
         switch ($action) {
             case 'new':
@@ -69,40 +69,45 @@ class AdminController
             case 'delete':
                 return $this->deleteTextBlock($request->post("boilerplate_name") ?? "");
             default:
-                return $this->renderMainAdministration();
+                return Response::create($this->renderMainAdministration());
         }
     }
 
-    /** @return string|never */
-    private function newTextBlock(string $name)
+    private function newTextBlock(string $name): Response
     {
         $this->csrfProtector->check();
         if (!$this->model->isValidName($name)) {
-            return $this->view->message("fail", 'error_invalid_name', $name)
-                . $this->renderMainAdministration();
+            return Response::create($this->view->message("fail", 'error_invalid_name', $name)
+                . $this->renderMainAdministration());
         }
         if ($this->model->exists($name)) {
-            return $this->view->message("fail", 'error_already_exists', $name)
-                . $this->renderMainAdministration();
+            return Response::create($this->view->message("fail", 'error_already_exists', $name)
+                . $this->renderMainAdministration());
         }
         if ($this->model->write($name, '') === false) {
-            return $this->view->message("fail", 'error_cant_write', $name)
-                . $this->renderMainAdministration();
+            return Response::create($this->view->message("fail", 'error_cant_write', $name)
+                . $this->renderMainAdministration());
         }
-        $this->relocate("?boilerplate&admin=plugin_main&action=edit&boilerplate_name=$name");
+        return Response::redirect(CMSIMPLE_URL . "?boilerplate&admin=plugin_main&action=edit&boilerplate_name=$name");
     }
 
-    private function editTextBlock(string $name, ?string $content = null): string
+    private function editTextBlock(string $name, ?string $content = null): Response
     {
         if (!isset($content)) {
             if (($content = $this->model->read($name)) === false) {
-                return $this->view->message("fail", 'error_cant_read', $name)
-                    . $this->renderMainAdministration();
+                return Response::create($this->view->message("fail", 'error_cant_read', $name)
+                    . $this->renderMainAdministration());
             }
         }
+        $o = $this->renderEditor($name, $content);
+        return Response::create($o);
+    }
+
+    private function renderEditor(string $name, string $content): string
+    {
         $o = $this->view->render('edit', [
             "name" => $name,
-            "url" => "{$this->scriptName}?&amp;boilerplate",
+            "url" =>  "{$this->scriptName}?&amp;boilerplate",
             "editorHeight" => $this->editorHeight,
             "content" => XH_hsc($content),
             "csrf_token_input" => $this->csrfProtector->tokenInput(),
@@ -117,34 +122,25 @@ class AdminController
         init_editor(['plugintextarea']);
     }
 
-    /** @return string|never */
-    private function saveTextBlock(Request $request, string $name)
+    private function saveTextBlock(Request $request, string $name): Response
     {
         $this->csrfProtector->check();
         $content = $request->post("boilerplate_text") ?? "";
         if (!$this->model->write($name, $content)) {
-            return $this->view->message("fail", 'error_cant_write', $name)
-                . $this->editTextBlock($name, $content);
+            return Response::create($this->view->message("fail", 'error_cant_write', $name)
+                . $this->renderEditor($name, $content));
         }
-        $this->relocate('?boilerplate&admin=plugin_main&action=plugin_tx');
+        return Response::redirect(CMSIMPLE_URL . '?boilerplate&admin=plugin_main&action=plugin_tx');
     }
 
-    /** @return string|never */
-    private function deleteTextBlock(string $name)
+    private function deleteTextBlock(string $name): Response
     {
         $this->csrfProtector->check();
         if (!$this->model->delete($name)) {
-            return $this->view->message("fail", 'error_cant_delete', $name)
-                . $this->renderMainAdministration();
+            return Response::create($this->view->message("fail", 'error_cant_delete', $name)
+                . $this->renderMainAdministration());
         }
-        $this->relocate('?boilerplate&admin=plugin_main&action=plugin_tx');
-    }
-
-    /** @return never */
-    protected function relocate(string $url)
-    {
-        header('Location: ' . CMSIMPLE_URL . $url, true, 303);
-        exit;
+        return Response::redirect(CMSIMPLE_URL . '?boilerplate&admin=plugin_main&action=plugin_tx');
     }
 
     private function renderMainAdministration(): string
