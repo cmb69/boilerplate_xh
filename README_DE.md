@@ -23,8 +23,12 @@ kompletten Seiteninhalt durch einen Boilerplate\_XH Textbaustein ersetzen.
 
 ## Voraussetzungen
 
-Boilerplate\_XH ist ein Plugin für CMSimple\_XH ≥ 1.7.0.
-Es benötigt PHP ≥ 7.1.0.
+Boilerplate_XH ist ein Plugin für [CMSimple_XH](https://www.cmsimple-xh.org/de/).
+Es benötigt CMSimple_XH ≥ 1.7.0 und PHP ≥ 7.1.0.
+Boilerplate_XH benötigt weiterhin [Plib_XH](https://github.com/cmb69/plib_xh) ≥ 1.2;
+ist dieses noch nicht installiert (siehe `Einstellungen` → `Info`),
+laden Sie das [aktuelle Release](https://github.com/cmb69/plib_xh/releases/latest)
+herunter, und installieren Sie es.
 
 ## Download
 
