@@ -20,6 +20,7 @@
  */
 
 use Boilerplate\Dic;
+use Plib\Request;
 
 /*
  * Prevent direct access.
@@ -44,7 +45,7 @@ if (XH_wantsPluginAdministration('boilerplate')) {
             $o .= Dic::makeInfoController()->renderInfo();
             break;
         case 'plugin_main':
-            $o .= Dic::makeAdminController()($action);
+            $o .= Dic::makeAdminController()(Request::current(), $action);
             break;
         default:
             $o .= plugin_admin_common();

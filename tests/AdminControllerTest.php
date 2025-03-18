@@ -6,6 +6,7 @@ use ApprovalTests\Approvals;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;
+use Plib\FakeRequest;
 use Plib\View;
 use XH\CSRFProtection;
 
@@ -36,43 +37,39 @@ class AdminControllerTest extends TestCase
 
     public function testNewTextBlockInvalidName(): void
     {
-        $_POST = ["boilerplate_name" => "not valid"];
         $this->csrfProtection->expects($this->once())->method("check");
         $this->textBlocks->method("isValidName")->willReturn(false);
         $this->assertStringContainsString(
             "The text block name “not valid” is invalid.",
-            ($this->sut)("new")
+            ($this->sut)(new FakeRequest(["post" => ["boilerplate_name" => "not valid"]]), "new")
         );
     }
 
     public function testNewTextBlockExists(): void
     {
-        $_POST = ["boilerplate_name" => "foo"];
         $this->csrfProtection->expects($this->once())->method("check");
         $this->textBlocks->method("isValidName")->willReturn(true);
         $this->textBlocks->method("exists")->willReturn(true);
         $this->assertStringContainsString(
             "The text block “foo“ exists already.",
-            ($this->sut)("new")
+            ($this->sut)(new FakeRequest(["post" => ["boilerplate_name" => "foo"]]), "new")
         );
     }
 
     public function testNewTextBlockWriteFailure(): void
     {
-        $_POST = ["boilerplate_name" => "foo"];
         $this->csrfProtection->expects($this->once())->method("check");
         $this->textBlocks->method("isValidName")->willReturn(true);
         $this->textBlocks->method("exists")->willReturn(false);
         $this->textBlocks->method("write")->willReturn(false);
         $this->assertStringContainsString(
             "The text block “foo” could not be saved.",
-            ($this->sut)("new")
+            ($this->sut)(new FakeRequest(["post" => ["boilerplate_name" => "foo"]]), "new")
         );
     }
 
     public function testNewTextBlockSuccess(): void
     {
-        $_POST = ["boilerplate_name" => "foo"];
         $this->csrfProtection->expects($this->once())->method("check");
         $this->textBlocks->method("isValidName")->willReturn(true);
         $this->textBlocks->method("exists")->willReturn(false);
@@ -80,74 +77,72 @@ class AdminControllerTest extends TestCase
         $this->sut->expects($this->once())->method("relocate")->with(
             "?boilerplate&admin=plugin_main&action=edit&boilerplate_name=foo"
         );
-        ($this->sut)("new");
+        ($this->sut)(new FakeRequest(["post" => ["boilerplate_name" => "foo"]]), "new");
     }
 
     public function testEditTextBlockReadFailure(): void
     {
-        $_GET = ["boilerplate_name" => "foo"];
         $this->textBlocks->method("read")->willReturn(false);
-        $this->assertStringContainsString("The text block “foo” could not be read.", ($this->sut)("edit"));
+        $this->assertStringContainsString(
+            "The text block “foo” could not be read.",
+            ($this->sut)(new FakeRequest(["url" => "http://example.com/?&boilerplate_name=foo"]), "edit")
+        );
     }
 
     public function testEditTextBlockSuccess(): void
     {
-        $_GET = ["boilerplate_name" => "foo"];
         $this->textBlocks->method("read")->willReturn("<p>some content</p>");
         $this->csrfProtection->method("tokenInput")->willReturn(
             "<input type=\"hidden\" name=\"xh_csrf_token\" value=\"9b923b4ec202f67066fe734993b6a9a4\">"
         );
         $this->sut->expects($this->once())->method("initEditor");
-        Approvals::verifyHtml(($this->sut)("edit"));
+        Approvals::verifyHtml(($this->sut)(new FakeRequest(["url" => "http://example.com/?&boilerplate_name=foo"]), "edit"));
     }
 
     public function testSaveTextBlockWriteFailure(): void
     {
-        $_POST = ["boilerplate_name" => "foo", "boilerplate_text" => "<p>some text</p>"];
         $this->csrfProtection->expects($this->once())->method("check");
         $this->textBlocks->method("write")->willReturn(false);
+        $request = new FakeRequest(["post" => ["boilerplate_name" => "foo", "boilerplate_text" => "<p>some text</p>"]]);
         $this->assertStringContainsString(
             "The text block “foo” could not be saved.",
-            ($this->sut)("save")
+            ($this->sut)($request, "save")
         );
     }
 
     public function testSaveTextBlockSuccess(): void
     {
-        $_POST = ["boilerplate_name" => "foo", "boilerplate_text" => "<p>some text</p>"];
         $this->csrfProtection->expects($this->once())->method("check");
         $this->textBlocks->method("write")->willReturn(true);
         $this->sut->expects($this->once())->method("relocate")->with(
             "?boilerplate&admin=plugin_main&action=plugin_tx"
         );
-        ($this->sut)("save");
+        ($this->sut)(new FakeRequest(), "save");
     }
 
     public function testDeleteTextBlockFailure(): void
     {
-        $_POST = ["boilerplate_name" => "foo"];
         $this->csrfProtection->expects($this->once())->method("check");
         $this->textBlocks->method("delete")->willReturn(false);
         $this->assertStringContainsString(
             "The text block “foo” could not be deleted.",
-            ($this->sut)("delete")
+            ($this->sut)(new FakeRequest(["post" => ["boilerplate_name" => "foo"]]), "delete")
         );
     }
 
     public function testDeleteTextBlockSuccess(): void
     {
-        $_POST = ["boilerplate_name" => "foo"];
         $this->csrfProtection->expects($this->once())->method("check");
-        $this->textBlocks->method("delete")->willReturn(true);
+        $this->textBlocks->method("delete")->with("foo")->willReturn(true);
         $this->sut->expects($this->once())->method("relocate")->with(
             "?boilerplate&admin=plugin_main&action=plugin_tx"
         );
-        ($this->sut)("delete");
+        ($this->sut)(new FakeRequest(["post" => ["boilerplate_name" => "foo"]]), "delete");
     }
 
     public function testRenderMainAdministration(): void
     {
         $this->textBlocks->method("names")->willReturn(["foo", "bar"]);
-        Approvals::verifyHtml(($this->sut)(""));
+        Approvals::verifyHtml(($this->sut)(new FakeRequest(), ""));
     }
 }

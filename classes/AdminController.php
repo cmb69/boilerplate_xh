@@ -21,6 +21,7 @@
 
 namespace Boilerplate;
 
+use Plib\Request;
 use Plib\View;
 use XH\CSRFProtection;
 
@@ -56,17 +57,17 @@ class AdminController
     }
 
     /** @return string|never */
-    public function __invoke(string $action)
+    public function __invoke(Request $request, string $action)
     {
         switch ($action) {
             case 'new':
-                return $this->newTextBlock($_POST['boilerplate_name']);
+                return $this->newTextBlock($request->post("boilerplate_name") ?? "");
             case 'edit':
-                return $this->editTextBlock($_GET['boilerplate_name']);
+                return $this->editTextBlock($request->get("boilerplate_name") ?? "");
             case 'save':
-                return $this->saveTextBlock($_POST['boilerplate_name']);
+                return $this->saveTextBlock($request, $request->post("boilerplate_name") ?? "");
             case 'delete':
-                return $this->deleteTextBlock($_POST['boilerplate_name']);
+                return $this->deleteTextBlock($request->post("boilerplate_name") ?? "");
             default:
                 return $this->renderMainAdministration();
         }
@@ -117,10 +118,10 @@ class AdminController
     }
 
     /** @return string|never */
-    private function saveTextBlock(string $name)
+    private function saveTextBlock(Request $request, string $name)
     {
         $this->csrfProtector->check();
-        $content = $_POST['boilerplate_text'];
+        $content = $request->post("boilerplate_text") ?? "";
         if (!$this->model->write($name, $content)) {
             return $this->view->message("fail", 'error_cant_write', $name)
                 . $this->editTextBlock($name, $content);
