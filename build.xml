@@ -85,9 +85,9 @@
         <exclude name=".phive/**"/>
         <exclude name="build.xml"/>
         <exclude name="composer.*"/>
-        <exclude name="coverage.xml"/>
         <exclude name="help/template.htm"/>
         <exclude name="phpstan.*"/>
+        <exclude name="phpunit.xml"/>
         <exclude name="README*.md"/>
         <exclude name="teplad.xml"/>
         <exclude name="tests/**"/>
