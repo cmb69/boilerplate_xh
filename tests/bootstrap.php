@@ -12,7 +12,7 @@ require_once '../plib/classes/View.php';
 require_once '../plib/classes/FakeRequest.php';
 require_once '../plib/classes/FakeSystemChecker.php';
 
-require_once './classes/Model\TextBlocks.php';
+require_once './classes/model/TextBlocks.php';
 require_once './classes/AdminController.php';
 require_once './classes/BoilerplateController.php';
 require_once './classes/Dic.php';
