@@ -106,7 +106,7 @@ class AdminController
             "name" => $name,
             "url" => $request->url()->without("action")->relative(),
             "editorHeight" => $this->editorHeight,
-            "content" => XH_hsc($content),
+            "content" => $content,
             "csrf_token_input" => $this->csrfProtector->tokenInput(),
         ]);
         $this->initEditor();

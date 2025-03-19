@@ -17,7 +17,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
 <h1>Boilerplate – <?=$this->esc($name)?></h1>
 <form class="plugineditform" action="<?=$this->esc($url)?>" method="post">
   <textarea class="plugintextarea" name="boilerplate_text" style="height: <?=$this->esc($editorHeight)?>px">
-    <?=$this->raw($content)?>
+    <?=$this->esc($content)?>
   </textarea>
   <input type="hidden" name="admin" value="plugin_main">
   <input type="hidden" name="action" value="save">
