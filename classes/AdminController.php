@@ -21,6 +21,7 @@
 
 namespace Boilerplate;
 
+use Boilerplate\Model\TextBlocks;
 use Plib\Request;
 use Plib\Response;
 use Plib\Url;

@@ -12,11 +12,11 @@ require_once '../plib/classes/View.php';
 require_once '../plib/classes/FakeRequest.php';
 require_once '../plib/classes/FakeSystemChecker.php';
 
+require_once './classes/Model\TextBlocks.php';
 require_once './classes/AdminController.php';
 require_once './classes/BoilerplateController.php';
 require_once './classes/Dic.php';
 require_once './classes/InfoController.php';
-require_once './classes/TextBlocks.php';
 
 const CMSIMPLE_XH_VERSION = "1.8";
 const CMSIMPLE_URL = "http://example.com/";

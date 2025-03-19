@@ -2,7 +2,7 @@
 
 namespace Boilerplate;
 
-use ApprovalTests\Approvals;
+use Boilerplate\Model\TextBlocks;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\MockObject\Stub;
 use PHPUnit\Framework\TestCase;

@@ -19,7 +19,7 @@
  * along with Boilerplate_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Boilerplate;
+namespace Boilerplate\Model;
 
 class TextBlocks
 {

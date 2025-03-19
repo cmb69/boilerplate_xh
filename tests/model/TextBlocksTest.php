@@ -1,6 +1,6 @@
 <?php
 
-namespace Boilerplate;
+namespace Boilerplate\Model;
 
 use org\bovigo\vfs\vfsStreamWrapper;
 use org\bovigo\vfs\vfsStreamDirectory;
