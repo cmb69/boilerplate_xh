@@ -19,4 +19,4 @@ require_once './classes/Dic.php';
 require_once './classes/InfoController.php';
 
 const CMSIMPLE_XH_VERSION = "1.8";
-const BOILERPLATE_VERSION = "2.1";
+const BOILERPLATE_VERSION = "2.2-dev";

@@ -21,7 +21,7 @@
 
 use Boilerplate\Dic;
 
-const BOILERPLATE_VERSION = "2.1";
+const BOILERPLATE_VERSION = "2.2-dev";
 
 function boilerplate(string $name): string
 {
