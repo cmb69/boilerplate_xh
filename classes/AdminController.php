@@ -23,14 +23,12 @@ namespace Boilerplate;
 
 use Plib\Request;
 use Plib\Response;
+use Plib\Url;
 use Plib\View;
 use XH\CSRFProtection;
 
 class AdminController
 {
-    /** @var string */
-    private $scriptName;
-
     /** @var string */
     private $editorHeight;
 
@@ -44,13 +42,11 @@ class AdminController
     private $view;
 
     public function __construct(
-        string $scriptName,
         string $editorHeight,
         TextBlocks $model,
         CSRFProtection $csrfProtector,
         View $view
     ) {
-        $this->scriptName = $scriptName;
         $this->editorHeight = $editorHeight;
         $this->model = $model;
         $this->csrfProtector = $csrfProtector;
@@ -61,53 +57,54 @@ class AdminController
     {
         switch ($action) {
             case 'new':
-                return $this->newTextBlock($request->post("boilerplate_name") ?? "");
+                return $this->newTextBlock($request, $request->post("boilerplate_name") ?? "");
             case 'edit':
-                return $this->editTextBlock($request->get("boilerplate_name") ?? "");
+                return $this->editTextBlock($request, $request->get("boilerplate_name") ?? "");
             case 'save':
                 return $this->saveTextBlock($request, $request->post("boilerplate_name") ?? "");
             case 'delete':
-                return $this->deleteTextBlock($request->post("boilerplate_name") ?? "");
+                return $this->deleteTextBlock($request, $request->post("boilerplate_name") ?? "");
             default:
-                return Response::create($this->renderMainAdministration());
+                return Response::create($this->renderMainAdministration($request->url()));
         }
     }
 
-    private function newTextBlock(string $name): Response
+    private function newTextBlock(Request $request, string $name): Response
     {
         $this->csrfProtector->check();
         if (!$this->model->isValidName($name)) {
             return Response::create($this->view->message("fail", 'error_invalid_name', $name)
-                . $this->renderMainAdministration());
+                . $this->renderMainAdministration($request->url()));
         }
         if ($this->model->exists($name)) {
             return Response::create($this->view->message("fail", 'error_already_exists', $name)
-                . $this->renderMainAdministration());
+                . $this->renderMainAdministration($request->url()));
         }
-        if ($this->model->write($name, '') === false) {
+        if (!$this->model->write($name, '')) {
             return Response::create($this->view->message("fail", 'error_cant_write', $name)
-                . $this->renderMainAdministration());
+                . $this->renderMainAdministration($request->url()));
         }
-        return Response::redirect(CMSIMPLE_URL . "?boilerplate&admin=plugin_main&action=edit&boilerplate_name=$name");
+        $url = $request->url()->with("admin", "plugin_main")->with("action", "edit")->with("boilerplate_name", $name);
+        return Response::redirect($url->absolute());
     }
 
-    private function editTextBlock(string $name, ?string $content = null): Response
+    private function editTextBlock(Request $request, string $name, ?string $content = null): Response
     {
         if (!isset($content)) {
             if (($content = $this->model->read($name)) === false) {
                 return Response::create($this->view->message("fail", 'error_cant_read', $name)
-                    . $this->renderMainAdministration());
+                    . $this->renderMainAdministration($request->url()));
             }
         }
-        $o = $this->renderEditor($name, $content);
+        $o = $this->renderEditor($request, $name, $content);
         return Response::create($o);
     }
 
-    private function renderEditor(string $name, string $content): string
+    private function renderEditor(Request $request, string $name, string $content): string
     {
         $o = $this->view->render('edit', [
             "name" => $name,
-            "url" =>  "{$this->scriptName}?&amp;boilerplate",
+            "url" => $request->url()->without("action")->relative(),
             "editorHeight" => $this->editorHeight,
             "content" => XH_hsc($content),
             "csrf_token_input" => $this->csrfProtector->tokenInput(),
@@ -128,33 +125,34 @@ class AdminController
         $content = $request->post("boilerplate_text") ?? "";
         if (!$this->model->write($name, $content)) {
             return Response::create($this->view->message("fail", 'error_cant_write', $name)
-                . $this->renderEditor($name, $content));
+                . $this->renderEditor($request, $name, $content));
         }
-        return Response::redirect(CMSIMPLE_URL . '?boilerplate&admin=plugin_main&action=plugin_tx');
+        return Response::redirect($request->url()->with("action", "plugin_tx")->absolute());
     }
 
-    private function deleteTextBlock(string $name): Response
+    private function deleteTextBlock(Request $request, string $name): Response
     {
         $this->csrfProtector->check();
         if (!$this->model->delete($name)) {
             return Response::create($this->view->message("fail", 'error_cant_delete', $name)
-                . $this->renderMainAdministration());
+                . $this->renderMainAdministration($request->url()));
         }
-        return Response::redirect(CMSIMPLE_URL . '?boilerplate&admin=plugin_main&action=plugin_tx');
+        return Response::redirect(
+            $request->url()->with("admin", "plugin_main")->with("action", "plugin_tx")->absolute()
+        );
     }
 
-    private function renderMainAdministration(): string
+    private function renderMainAdministration(Url $url): string
     {
-        $baseURL = $this->scriptName . '?&amp;boilerplate&amp;admin=plugin_main&amp;action=';
         $boilerplates = [];
         foreach ($this->model->names() as $name) {
             $boilerplates[$name] = [
-                'editURL' => $baseURL . 'edit&amp;boilerplate_name=' . $name,
-                'deleteURL' => $baseURL . 'delete&amp;boilerplate_name=' . $name
+                'editURL' => $url->with("action", "edit")->with("boilerplate_name", $name)->relative(),
+                'deleteURL' => $url->with("action", "delete")->with("boilerplate_name", $name)->relative(),
             ];
         }
         return $this->view->render('admin', [
-            "url" => $this->scriptName . '?&amp;boilerplate',
+            "url" => $url->without("admin")->without("action")->relative(),
             "boilerplates" => $boilerplates,
             "csrf_token_input" => $this->csrfProtector->tokenInput(),
         ]);

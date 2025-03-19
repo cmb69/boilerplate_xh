@@ -30,7 +30,7 @@ class AdminControllerTest extends TestCase
         $this->csrfProtection = $this->createStub(CSRFProtection::class);
         $this->view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["boilerplate"]);
         $this->sut = $this->getMockBuilder(AdminController::class)
-            ->setConstructorArgs(["/", "600", $this->textBlocks, $this->csrfProtection, $this->view])
+            ->setConstructorArgs(["600", $this->textBlocks, $this->csrfProtection, $this->view])
             ->onlyMethods(["initEditor"])
             ->getMock();
     }
@@ -68,9 +68,13 @@ class AdminControllerTest extends TestCase
         $this->textBlocks->method("isValidName")->willReturn(true);
         $this->textBlocks->method("exists")->willReturn(false);
         $this->textBlocks->method("write")->willReturn(true);
-        $response = ($this->sut)(new FakeRequest(["post" => ["boilerplate_name" => "foo"]]), "new");
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&boilerplate&admin=plugin_main&action=edit&boilerplate_name=foo",
+            "post" => ["boilerplate_name" => "foo"],
+        ]);
+        $response = ($this->sut)($request, "new");
         $this->assertSame(
-            CMSIMPLE_URL . "?boilerplate&admin=plugin_main&action=edit&boilerplate_name=foo",
+            "http://example.com/?&boilerplate&admin=plugin_main&action=edit&boilerplate_name=foo",
             $response->location()
         );
     }
@@ -89,7 +93,9 @@ class AdminControllerTest extends TestCase
             "<input type=\"hidden\" name=\"xh_csrf_token\" value=\"9b923b4ec202f67066fe734993b6a9a4\">"
         );
         $this->sut->expects($this->once())->method("initEditor");
-        $request = new FakeRequest(["url" => "http://example.com/?&boilerplate_name=foo"]);
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&boilerplate&admin=plugin_main&boilerplate_name=foo",
+        ]);
         Approvals::verifyHtml(($this->sut)($request, "edit")->output());
     }
 
@@ -106,8 +112,14 @@ class AdminControllerTest extends TestCase
     {
         $this->csrfProtection->expects($this->once())->method("check");
         $this->textBlocks->method("write")->willReturn(true);
-        $response = ($this->sut)(new FakeRequest(), "save");
-        $this->assertSame(CMSIMPLE_URL . "?boilerplate&admin=plugin_main&action=plugin_tx", $response->location());
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&boilerplate&admin=plugin_main&boilerplate_name=foo",
+        ]);
+        $response = ($this->sut)($request, "save");
+        $this->assertSame(
+            "http://example.com/?&boilerplate&admin=plugin_main&boilerplate_name=foo&action=plugin_tx",
+            $response->location()
+        );
     }
 
     public function testDeleteTextBlockFailure(): void
@@ -122,13 +134,18 @@ class AdminControllerTest extends TestCase
     {
         $this->csrfProtection->expects($this->once())->method("check");
         $this->textBlocks->method("delete")->with("foo")->willReturn(true);
-        $response = ($this->sut)(new FakeRequest(["post" => ["boilerplate_name" => "foo"]]), "delete");
-        $this->assertSame(CMSIMPLE_URL . "?boilerplate&admin=plugin_main&action=plugin_tx", $response->location());
+        $request = new FakeRequest([
+            "url" => "http://example.com/?&boilerplate&admin=plugin_main",
+            "post" => ["boilerplate_name" => "foo"],
+        ]);
+        $response = ($this->sut)($request, "delete");
+        $this->assertSame("http://example.com/?&boilerplate&admin=plugin_main&action=plugin_tx", $response->location());
     }
 
     public function testRenderMainAdministration(): void
     {
         $this->textBlocks->method("names")->willReturn(["foo", "bar"]);
-        Approvals::verifyHtml(($this->sut)(new FakeRequest(), "")->output());
+        $request = new FakeRequest(["url" => "http://example.com/?&boilerplate&admin=plugin_main&action=plugin_tx"]);
+        Approvals::verifyHtml(($this->sut)($request, "")->output());
     }
 }

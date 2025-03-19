@@ -45,10 +45,9 @@ class Dic
 
     public static function makeAdminController(): AdminController
     {
-        global $sn, $cf, $_XH_csrfProtection;
+        global $cf, $_XH_csrfProtection;
 
         return new AdminController(
-            $sn,
             $cf["editor"]["height"],
             self::textBlocks(),
             $_XH_csrfProtection,

@@ -4,7 +4,7 @@
   <table>
     <tr>
       <td>
-        <form action="/?&amp;boilerplate" method="post" onsubmit="return confirm(document.getElementById('boilerplate_admin').dataset.deleteConfirmation);">
+        <form action="/?&boilerplate" method="post" onsubmit="return confirm(document.getElementById('boilerplate_admin').dataset.deleteConfirmation);">
           <button>Delete</button>
           <input type="hidden" name="admin" value="plugin_main">
           <input type="hidden" name="action" value="delete">
@@ -12,7 +12,7 @@
                   </form>
       </td>
       <td>
-        <a href="/?&amp;boilerplate&amp;admin=plugin_main&amp;action=edit&amp;boilerplate_name=foo" title="Edit">foo</a>
+        <a href="/?&boilerplate&admin=plugin_main&action=edit&boilerplate_name=foo" title="Edit">foo</a>
       </td>
       <td>
         <input type="text" readonly="readonly" value="{{{boilerplate('foo')}}}"
@@ -21,7 +21,7 @@
     </tr>
     <tr>
       <td>
-        <form action="/?&amp;boilerplate" method="post" onsubmit="return confirm(document.getElementById('boilerplate_admin').dataset.deleteConfirmation);">
+        <form action="/?&boilerplate" method="post" onsubmit="return confirm(document.getElementById('boilerplate_admin').dataset.deleteConfirmation);">
           <button>Delete</button>
           <input type="hidden" name="admin" value="plugin_main">
           <input type="hidden" name="action" value="delete">
@@ -29,7 +29,7 @@
                   </form>
       </td>
       <td>
-        <a href="/?&amp;boilerplate&amp;admin=plugin_main&amp;action=edit&amp;boilerplate_name=bar" title="Edit">bar</a>
+        <a href="/?&boilerplate&admin=plugin_main&action=edit&boilerplate_name=bar" title="Edit">bar</a>
       </td>
       <td>
         <input type="text" readonly="readonly" value="{{{boilerplate('bar')}}}"
@@ -37,7 +37,7 @@
       </td>
     </tr>
   </table>
-  <form action="/?&amp;boilerplate" method="post">
+  <form action="/?&boilerplate" method="post">
     <input type="text" name="boilerplate_name">
     <input type="hidden" name="admin" value="plugin_main">
     <input type="hidden" name="action" value="new">
