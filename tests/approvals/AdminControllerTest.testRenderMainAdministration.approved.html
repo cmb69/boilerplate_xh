@@ -4,15 +4,15 @@
   <table>
     <tr>
       <td>
-        <form action="/?&boilerplate" method="post" onsubmit="return confirm(document.getElementById('boilerplate_admin').dataset.deleteConfirmation);">
+        <form action="/?&amp;boilerplate" method="post" onsubmit="return confirm(document.getElementById('boilerplate_admin').dataset.deleteConfirmation);">
           <button>Delete</button>
           <input type="hidden" name="admin" value="plugin_main">
           <input type="hidden" name="action" value="delete">
           <input type="hidden" name="boilerplate_name" value="foo">
-                  </form>
+          <input type="hidden" name="xh_csrf_token" value="9b923b4ec202f67066fe734993b6a9a4">        </form>
       </td>
       <td>
-        <a href="/?&boilerplate&admin=plugin_main&action=edit&boilerplate_name=foo" title="Edit">foo</a>
+        <a href="/?&amp;boilerplate&amp;admin=plugin_main&amp;action=edit&amp;boilerplate_name=foo" title="Edit">foo</a>
       </td>
       <td>
         <input type="text" readonly="readonly" value="{{{boilerplate('foo')}}}"
@@ -21,15 +21,15 @@
     </tr>
     <tr>
       <td>
-        <form action="/?&boilerplate" method="post" onsubmit="return confirm(document.getElementById('boilerplate_admin').dataset.deleteConfirmation);">
+        <form action="/?&amp;boilerplate" method="post" onsubmit="return confirm(document.getElementById('boilerplate_admin').dataset.deleteConfirmation);">
           <button>Delete</button>
           <input type="hidden" name="admin" value="plugin_main">
           <input type="hidden" name="action" value="delete">
           <input type="hidden" name="boilerplate_name" value="bar">
-                  </form>
+          <input type="hidden" name="xh_csrf_token" value="9b923b4ec202f67066fe734993b6a9a4">        </form>
       </td>
       <td>
-        <a href="/?&boilerplate&admin=plugin_main&action=edit&boilerplate_name=bar" title="Edit">bar</a>
+        <a href="/?&amp;boilerplate&amp;admin=plugin_main&amp;action=edit&amp;boilerplate_name=bar" title="Edit">bar</a>
       </td>
       <td>
         <input type="text" readonly="readonly" value="{{{boilerplate('bar')}}}"
@@ -37,10 +37,10 @@
       </td>
     </tr>
   </table>
-  <form action="/?&boilerplate" method="post">
+  <form action="/?&amp;boilerplate" method="post">
     <input type="text" name="boilerplate_name">
     <input type="hidden" name="admin" value="plugin_main">
     <input type="hidden" name="action" value="new">
-        <input type="submit" class="submit" value="Create">
+    <input type="hidden" name="xh_csrf_token" value="9b923b4ec202f67066fe734993b6a9a4">    <input type="submit" class="submit" value="Create">
   </form>
 </div>

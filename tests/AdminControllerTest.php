@@ -28,6 +28,9 @@ class AdminControllerTest extends TestCase
     {
         $this->textBlocks = $this->createStub(TextBlocks::class);
         $this->csrfProtection = $this->createStub(CSRFProtection::class);
+        $this->csrfProtection->method("tokenInput")->willReturn(
+            "<input type=\"hidden\" name=\"xh_csrf_token\" value=\"9b923b4ec202f67066fe734993b6a9a4\">"
+        );
         $this->view = new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["boilerplate"]);
         $this->sut = $this->getMockBuilder(AdminController::class)
             ->setConstructorArgs(["600", $this->textBlocks, $this->csrfProtection, $this->view])
@@ -89,9 +92,6 @@ class AdminControllerTest extends TestCase
     public function testEditTextBlockSuccess(): void
     {
         $this->textBlocks->method("read")->willReturn("<p>some content</p>");
-        $this->csrfProtection->method("tokenInput")->willReturn(
-            "<input type=\"hidden\" name=\"xh_csrf_token\" value=\"9b923b4ec202f67066fe734993b6a9a4\">"
-        );
         $this->sut->expects($this->once())->method("initEditor");
         $request = new FakeRequest([
             "url" => "http://example.com/?&boilerplate&admin=plugin_main&boilerplate_name=foo",
