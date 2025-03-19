@@ -94,7 +94,7 @@ class TextBlocks
             return false;
         }
         ftruncate($stream, 0);
-        $res = (bool) fwrite($stream, $content);
+        $res = fwrite($stream, $content) !== false;
         flock($stream, LOCK_UN);
         fclose($stream);
         return $res;
